@@ -39,14 +39,14 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
     #container {
     text-align: center;
-    
+    background-color: #eee;
     position: absolute;
     left: 0;
     right: 0;
-    top: 20%;
+    top: 50%;
     transform: translateY(-50%);
     }
 
