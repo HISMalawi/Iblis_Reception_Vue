@@ -64,10 +64,9 @@ export default defineComponent({
       position: absolute;
       left: 0;
       right: 0;
-      height: 100%;
       top: 50px;
       padding-bottom: 150px;
-      overflow-y: scroll;
+      overflow-y: auto;
     
       /* transform: translateY(-50%); */
     }
