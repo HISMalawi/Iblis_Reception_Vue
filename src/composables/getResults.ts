@@ -1,8 +1,9 @@
 import { ref } from "vue";
+import Result from "@/types/result";
 
 const getResults = () => {
     
-    const results = ref([]);
+    const results = ref<Result[]>([]);
     const errorMsg = ref<string>('');
 
     const load = async () => {
