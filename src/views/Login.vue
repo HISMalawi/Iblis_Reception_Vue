@@ -23,7 +23,7 @@
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                 <form class="space-y-6" action="#" method="POST">
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">
+                    <label for="email" class="block text-lg font-medium text-gray-700">
                     Email address
                     </label>
                     <div class="mt-1">
@@ -32,7 +32,7 @@
                 </div>
 
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">
+                    <label for="password" class="block text-lg font-medium text-gray-700">
                     Password
                     </label>
                     <div class="mt-1">
@@ -85,5 +85,9 @@ export default defineComponent({
 <style>
 .login {
     text-align: left;
+}
+
+.login input {
+    font-size: 28px;
 }
 </style>

@@ -8,12 +8,12 @@
     <div class="max-w-3xl mx-auto">
       <!-- Content goes here -->
       <form class="space-y-8 divide-y divide-gray-200">
-        <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+        <div class=" bg-white py-8 px-4 shadow sm:rounded-lg space-y-8 divide-y divide-gray-200 sm:space-y-5">
         
 
           <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
             <div>
-              <h3 class="text-4xl leading-6 font-bold text-gray-900">
+              <h3 class="text-4xl mb-10 leading-6 font-bold text-gray-900">
                 Patient Information
               </h3>
               
@@ -97,7 +97,7 @@
         </div>
 
         <div class="pt-5">
-          <div class="flex justify-end pt-10">
+          <div class="flex justify-end pt-5">
             <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-3xl font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Cancel
             </button>
@@ -136,6 +136,7 @@ export default defineComponent({
 
   font-size: 28px;
   padding: 10px;
+  border: 1px solid rgba(128, 128, 128, 0.39);
 
 }
 
