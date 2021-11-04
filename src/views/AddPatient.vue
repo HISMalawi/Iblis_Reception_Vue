@@ -92,12 +92,12 @@
                       <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
                     </div>
                   </div>
+
                 </div>
               </div>
-            </div>
 
-            <div class="pt-5">
-              <div class="flex justify-end pt-5">
+              <div class="pt-5">
+              <div class="flex justify-center pt-5">
                 <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-3xl font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Cancel
                 </button>
@@ -106,6 +106,9 @@
                 </button>
               </div>
             </div>
+            </div>
+
+            
           </form>
         </div>
       </div>

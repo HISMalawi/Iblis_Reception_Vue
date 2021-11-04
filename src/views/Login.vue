@@ -84,7 +84,9 @@ export default defineComponent({
 
 <style>
 .login {
+    padding-top: 10%;
     text-align: left;
+    
 }
 
 .login input {
