@@ -57,14 +57,17 @@ export default defineComponent({
 
 <style>
     #container {
-      text-align: center;
-      background-color: #eee;
+
+      text-align: center; 
+      /* background-color: #eee;  */
+      background:none;
       position: absolute;
       left: 0;
       right: 0;
       height: 100%;
-      top: 150px;
+      top: 50px;
       padding-bottom: 150px;
+      overflow-y: scroll;
     
       /* transform: translateY(-50%); */
     }

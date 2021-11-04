@@ -59,6 +59,9 @@ export default defineComponent({
 </script>
 
 <style>
+.home {
+  padding-top: 10%;
+}
 
 .home ion-icon {
 

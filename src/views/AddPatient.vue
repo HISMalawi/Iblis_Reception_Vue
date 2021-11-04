@@ -127,6 +127,9 @@ export default defineComponent({
 </script>
 
 <style>
+.add-patient {
+  padding-top: 10%;
+}
 .add-patient input {
 
   font-size: 28px;
