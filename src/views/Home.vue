@@ -7,7 +7,7 @@
       <!-- Content goes here -->
           <ion-nav-link router-link="/add_patient" class="bg-white shadow mb-10 relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <ion-icon :icon="personAdd"></ion-icon>
-            <span class="mt-2 block text-sm font-medium text-gray-900">
+            <span class="mt-2 block text-lg font-bold text-gray-900">
               Add Patient
             </span>
           </ion-nav-link>
@@ -15,7 +15,7 @@
 
           <ion-nav-link router-link="/create_order" class="bg-white shadow elative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <ion-icon :icon="fileTrayFull"></ion-icon>
-            <span class="mt-2 block text-sm font-medium text-gray-900">
+            <span class="mt-2 block text-lg font-bold text-gray-900">
               Create Order
             </span>
           </ion-nav-link>
@@ -56,6 +56,10 @@ export default defineComponent({
 .home ion-icon {
 
   font-size: 64px;
+}
+
+.home ion-nav-link {
+    cursor: pointer;
 }
 
 </style>
