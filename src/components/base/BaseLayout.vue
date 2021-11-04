@@ -62,8 +62,11 @@ export default defineComponent({
       position: absolute;
       left: 0;
       right: 0;
-      top: 40%;
-      transform: translateY(-50%);
+      height: 100%;
+      top: 150px;
+      padding-bottom: 150px;
+    
+      /* transform: translateY(-50%); */
     }
 
 </style>
