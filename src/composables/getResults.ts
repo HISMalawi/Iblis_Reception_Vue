@@ -3,7 +3,7 @@ import { ref } from "vue";
 const getResults = () => {
     
     const results = ref([]);
-    const errorMsg = ref('');
+    const errorMsg = ref<string>('');
 
     const load = async () => {
 
