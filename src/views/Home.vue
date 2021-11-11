@@ -1,6 +1,8 @@
 <template>
+  
   <div class="home">
-      sdvdvn;
+
+  
   </div>
 </template>
 
@@ -15,8 +17,5 @@ export default defineComponent({
 </script>
 
 <style>
-  .home {
-    background-color: black;
- 
-  }
+  
 </style>

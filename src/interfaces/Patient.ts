@@ -1,4 +1,4 @@
-interface Patient {
+export interface Patient {
 
     id: string,
     firstname: string,
@@ -6,5 +6,3 @@ interface Patient {
     gender:string
 
 }
-
-export default Patient
