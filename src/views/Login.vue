@@ -46,13 +46,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
-import { AuthRequest } from "@/interfaces/AuthRequest";
+import { defineComponent, reactive } from "vue"
+import { AuthRequest } from "@/interfaces/AuthRequest"
+import { useRouter } from "vue-router"
+// import { useStore } from "@/store"
 
 export default defineComponent({
   name: "Login",
   components: {},
   setup() {
+
+      // const store = useStore()
+      const router = useRouter()
 
       const authCred: AuthRequest  = reactive({
         username:"",
@@ -63,6 +68,9 @@ export default defineComponent({
 
         console.log(authCred.username)
         console.log(authCred.password)
+
+        router.push('/')
+
       }
 
       return { authCred , Authenticate }
