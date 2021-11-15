@@ -130,7 +130,7 @@
               <button class="button is-link is-medium">Save</button>
             </div>
             <div class="control">
-              <button class="button is-link is-light is-medium">Cancel</button>
+              <button @click="ClosePatientRegForm" class="button is-link is-light is-medium">Cancel</button>
             </div>
           </div>
         </div>
@@ -141,10 +141,22 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useStore } from "vuex"
 
 export default defineComponent({
   name: "RegisterPatient",
   components: {},
+  setup(){
+
+    const store = useStore()
+
+    const ClosePatientRegForm = () => {
+
+        store.commit("REGISTERING_PATIENT", false)
+    }
+
+    return { ClosePatientRegForm }
+  }
 });
 </script>
 

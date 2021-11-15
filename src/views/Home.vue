@@ -35,40 +35,54 @@
                 </div>
               </div>
 
-              <div class="tool-card card tile is-child notification is-success">
-                <ul class="tools">
-                  <li class="is-clickable">Register Patient</li>
+              <div class="tool-card is-child notification">
+                <ul class="tools is-primary">
+                  <li @click="OpenPatientRegForm" class="is-clickable">Register Patient</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        
-            <!-- Start FOrms -->
-            <register-patient/>
-        
 
-        <div class="tile is-4 is-parent">
-          <article
-            class="search-results-card card tile is-child notification is-info"
-          >
-            <p class="subtitle">Patient Details</p>
-          </article>
-        </div>
+        <register-patient v-if="$store.state.registeringPatient" />
+        <patient-search-results v-if="$store.state.searchingPatient" />
+        <patient-details v-if="$store.state.viewingPatient"/>
+
+        
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import RegisterPatient from "@/views/RegisterPatient.vue";
+import { defineComponent } from "vue"
+import { useStore } from "vuex"
+import RegisterPatient from "@/views/RegisterPatient.vue"
+import PatientSearchResults from "@/views/PatientSearchResults.vue"
+import PatientDetails from "@/views/PatientDetails.vue"
 
 export default defineComponent({
   name: "Home",
   components: {
-    RegisterPatient
+    RegisterPatient,
+    PatientSearchResults,
+    PatientDetails
   },
+  setup() {
+    const store = useStore()
+
+    const OpenPatientRegForm = () => {
+
+        store.commit("REGISTERING_PATIENT", true)
+    }
+
+    const ClosePatientRegForm = () => {
+
+        store.commit("REGISTERING_PATIENT", false)
+    }
+
+    return { OpenPatientRegForm, ClosePatientRegForm }
+  }
 });
 </script>
 
@@ -104,16 +118,18 @@ export default defineComponent({
 
 .home .tool-card {
   max-width: 530px;
+  background: none;
 }
 
 .home .tools li {
   display: inline-block;
   padding: 2px 14px;
-  border: 2px solid rgb(248, 245, 245);
+  border: 3px solid #3796ce;
   border-radius: 40px;
-  background-color: white;
+  background-color: #3796ce;
   color: rgba(31, 27, 27, 0.685);
   margin-right: 10px;
+  color: white;
 }
 
 /* .home .controlls-tile .tile {
