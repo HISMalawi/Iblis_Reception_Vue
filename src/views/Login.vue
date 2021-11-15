@@ -6,7 +6,9 @@
           <div class="field has-text-centered">
             <figure class="image  is-inline-block">
               <img src="../assets/lock.png" />
+              <p class="help is-danger">Invalid credentials</p>
             </figure>
+            
           </div>
           <form @submit.prevent="Authenticate">
             <div class="field">
