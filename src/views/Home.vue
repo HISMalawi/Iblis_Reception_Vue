@@ -21,7 +21,7 @@
                         />
                       </div>
                       <div class="control">
-                        <a class="button is-info is-medium"> Search </a>
+                        <a @click="OpenPatientSearchResultsView" class="button is-info is-medium"> Search </a>
                       </div>
                     </div>
                   </div>
@@ -73,6 +73,7 @@ export default defineComponent({
 
     const OpenPatientRegForm = () => {
 
+        store.commit("SEARCHING_PATIENT", false)
         store.commit("REGISTERING_PATIENT", true)
     }
 
@@ -81,7 +82,13 @@ export default defineComponent({
         store.commit("REGISTERING_PATIENT", false)
     }
 
-    return { OpenPatientRegForm, ClosePatientRegForm }
+    const OpenPatientSearchResultsView = () => {
+
+        store.commit("REGISTERING_PATIENT", false)
+        store.commit("SEARCHING_PATIENT", true)
+    }
+
+    return { OpenPatientRegForm, ClosePatientRegForm, OpenPatientSearchResultsView }
   }
 });
 </script>
@@ -100,15 +107,6 @@ export default defineComponent({
   margin: 0 auto;
 }
 
-/* .home .search-results-card {
-  height: calc(100vh - 53%);
-  display:none;
-}
-
-.home .patient-details-card {
-  height: calc(100vh - 83%);
-  display:none;
-} */
 .home .tools {
   list-style: none;
   text-align: left;

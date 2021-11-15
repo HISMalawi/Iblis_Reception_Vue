@@ -12,7 +12,11 @@ export const store = createStore({
 
     REGISTERING_PATIENT(state, value) {
       state.registeringPatient = value
-    }
+    },
+
+    SEARCHING_PATIENT(state, value) {
+      state.searchingPatient = value
+    },
   },
   actions: {
   },
