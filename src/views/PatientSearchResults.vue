@@ -7,6 +7,7 @@
         <p class="subtitle">Search Results</p>
         <div class="content has-text-left">
           <!-- Content -->
+          <patient-search-result/>
 
         </div>
       </div>
@@ -16,9 +17,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import PatientSearchResult from '@/views/PatientSearchResult.vue'
 
 export default defineComponent({
     name: "PatientSearchResults",
+    components: {
+      PatientSearchResult
+    }
 })
 </script>
 
