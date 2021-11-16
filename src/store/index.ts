@@ -17,6 +17,10 @@ export const store = createStore({
     SEARCHING_PATIENT(state, value) {
       state.searchingPatient = value
     },
+    VIEWING_PATIENT(state, value){
+      state.viewingPatient = value
+    }
+    
   },
   actions: {
   },

@@ -69,11 +69,13 @@ export default defineComponent({
     PatientDetails
   },
   setup() {
+
     const store = useStore()
 
     const OpenPatientRegForm = () => {
 
         store.commit("SEARCHING_PATIENT", false)
+        store.commit("VIEWING_PATIENT", false)
         store.commit("REGISTERING_PATIENT", true)
     }
 
