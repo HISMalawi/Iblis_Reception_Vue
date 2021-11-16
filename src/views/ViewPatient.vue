@@ -1,7 +1,7 @@
 <template>
   <div class="patient-details tile is-5 is-parent">
     <article
-      class="search-results-card card tile is-child notification is-info"
+      class="search-results-card card tile is-child notification"
     >
       <p class="subtitle">Patient Name</p>
 
@@ -12,15 +12,22 @@
           <li><a>View Order</a></li>
         </ul>
       </div>
+
+      <place-order/>
+      
     </article>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PlaceOrder from "@/views/PlaceOrder.vue"
 
 export default defineComponent({
   name: "ViewPatient",
+  components : {
+    PlaceOrder,   
+  }
 });
 </script>
 
