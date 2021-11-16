@@ -5,7 +5,10 @@ export const store = createStore({
 
     registeringPatient : false,
     searchingPatient : false,
-    viewingPatient : false
+    viewingPatient : false,
+    viewingPatientDetails : true,
+    createPatientOrder : false,
+    viewPatientOrders : false,
 
   },
   mutations: {
@@ -19,6 +22,15 @@ export const store = createStore({
     },
     VIEWING_PATIENT(state, value){
       state.viewingPatient = value
+    },
+    OPEN_PATIENT_DETAILS(state, value){
+      state.viewingPatientDetails = value
+    },
+    OPEN_PATIENT_PLACE_ORDER(state, value){
+      state.createPatientOrder = value
+    },
+    OPEN_PATIENT_VIEW_ORDERS(state, value){
+      state.viewPatientOrders = value
     }
     
   },

@@ -1,14 +1,11 @@
 <template>
   <div class="tile is-4 is-parent">
-    <article
-      class="patient-details-card tile is-child notification"
-    >
+    <article class="patient-search-results tile is-child notification">
+      <p class="pageTitle subtitle card">Search Results</p>
       <div class="content">
-        <p class="pageTitle subtitle card">Search Results</p>
         <div class="content has-text-left">
           <!-- Content -->
-          <patient-search-result/>
-
+          <patient-search-result />
         </div>
       </div>
     </article>
@@ -16,25 +13,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import PatientSearchResult from '@/views/PatientSearchResult.vue'
+import { defineComponent } from "vue";
+import PatientSearchResult from "@/views/PatientSearchResult.vue";
 
 export default defineComponent({
-    name: "PatientSearchResults",
-    components: {
-      PatientSearchResult
-    }
-})
+  name: "PatientSearchResults",
+  components: {
+    PatientSearchResult,
+  },
+});
 </script>
 
 <style>
-.patient-details-card {
-  background: none;
+.patient-search-results {
+  background: none !important;
 }
 
-.patient-details-card .pageTitle{
+.patient-search-results .pageTitle {
   padding: 20px 10px;
   margin-top: 0px;
 }
-
 </style>
