@@ -46,7 +46,7 @@
 
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
-        <patient-details v-if="$store.state.viewingPatient"/>
+        <view-patient v-if="$store.state.viewingPatient"/>
 
         
       </div>
@@ -59,14 +59,14 @@ import { defineComponent } from "vue"
 import { useStore } from "vuex"
 import RegisterPatient from "@/views/RegisterPatient.vue"
 import PatientSearchResults from "@/views/PatientSearchResults.vue"
-import PatientDetails from "@/views/PatientDetails.vue"
+import ViewPatient from "@/views/ViewPatient.vue"
 
 export default defineComponent({
   name: "Home",
   components: {
     RegisterPatient,
     PatientSearchResults,
-    PatientDetails
+    ViewPatient
   },
   setup() {
 

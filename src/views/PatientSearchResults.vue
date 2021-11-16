@@ -1,5 +1,5 @@
 <template>
-  <div class="tile is-5 is-parent">
+  <div class="tile is-4 is-parent">
     <article
       class="patient-details-card card tile is-child notification is-primary"
     >
