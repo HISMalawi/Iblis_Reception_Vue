@@ -30,7 +30,22 @@ const toggleViews = () => {
         
     }
 
-    return { OpenPatientDetails, OpenCreatePatientOrder, OpenViewPatientOrders }
+    const OpenPatientSearchResultsView = () => {
+        store.commit("REGISTERING_PATIENT", false);
+        store.commit("SEARCHING_PATIENT", true);
+      };
+
+    const OpenPatientRegForm = () => {
+    store.commit("SEARCHING_PATIENT", false);
+    store.commit("VIEWING_PATIENT", false);
+    store.commit("REGISTERING_PATIENT", true);
+    };
+
+    const ClosePatientRegForm = () => {
+    store.commit("REGISTERING_PATIENT", false);
+    };
+
+    return { OpenPatientSearchResultsView, OpenPatientDetails, OpenCreatePatientOrder, OpenViewPatientOrders, OpenPatientRegForm, ClosePatientRegForm }
     
     
 }
