@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, watchEffect } from "vue"
 import { useStore } from "vuex"
 import RegisterPatient from "@/views/RegisterPatient.vue"
 import PatientSearchResults from "@/views/PatientSearchResults.vue"
@@ -74,9 +74,12 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
 
-    if (!store.getters.isLoggedIn()) {
-      router.push('/login')
-    }
+
+    watchEffect(() => {
+      if (!store.getters.isLoggedIn()) {
+        router.push("/login");
+      }
+    });
 
     const OpenPatientRegForm = () => {
 

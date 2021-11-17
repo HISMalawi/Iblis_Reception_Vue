@@ -11,6 +11,7 @@ const authenticate = () => {
     email: "",
     name: "",
     role: "",
+    token: "",
   });
 
   const message = ref<string>("");
@@ -23,7 +24,6 @@ const authenticate = () => {
         password: creditials.password,
       })
       .then(function (response: any) {
-
         if (response.statusText === "OK") {
           code.value = response["data"].code;
 
@@ -32,17 +32,15 @@ const authenticate = () => {
             user.email = response["data"].email;
             user.name = response["data"].name;
             user.role = response["data"].role;
+            user.token = response["data"].token;
 
             message.value = response["data"].message;
-            
-            store.commit("LOGIN", user)
 
+            store.commit("LOGIN", user);
           } else {
             message.value = response["data"].message;
           }
-          
-        } 
-
+        }
       })
       .catch(function (error: any) {
         message.value = error.message;

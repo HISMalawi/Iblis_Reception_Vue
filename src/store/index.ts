@@ -11,7 +11,8 @@ let user: User  = reactive({
   username : "",
   email : "",
   name: "",
-  role: ""
+  role: "",
+  token: ""
 });
 
 export const store = createStore({
