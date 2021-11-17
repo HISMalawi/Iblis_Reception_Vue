@@ -10,7 +10,7 @@
             </figure>
             
           </div>
-          <form @submit.prevent="Authenticate">
+          <form @submit.prevent="Signin">
             <div class="field">
               <p class="control has-icons-left has-icons-right">
                 <input class="input is-medium" type="text" placeholder="Username" v-model="authCred.username" />
@@ -51,14 +51,17 @@
 import { defineComponent, reactive } from "vue"
 import { AuthRequest } from "@/interfaces/AuthRequest"
 import { useRouter } from "vue-router"
-// import { useStore } from "@/store"
+import { useStore } from "vuex"
+import Authenticate from "@/composables/authenticate"
 
 export default defineComponent({
   name: "Login",
   components: {},
   setup() {
 
-      // const store = useStore()
+      
+
+      const store = useStore()
       const router = useRouter()
 
       const authCred: AuthRequest  = reactive({
@@ -66,16 +69,20 @@ export default defineComponent({
         password:""
       });
 
-      const Authenticate = () => {
+      const Signin = () => {
+
+        const { login } = Authenticate()
 
         console.log(authCred.username)
         console.log(authCred.password)
 
-        router.push('/')
+        //router.push('/')
+
+        login(authCred)
 
       }
 
-      return { authCred , Authenticate }
+      return { authCred , Signin }
   }
 });
 </script>

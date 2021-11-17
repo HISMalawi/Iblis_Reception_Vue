@@ -1,4 +1,18 @@
 import { createStore } from 'vuex'
+import { User } from '@/interfaces/User'
+import { reactive } from 'vue';
+
+const axios = require('axios').create({
+  baseURL: process.env.VUE_APP_SERVICE_BASE_URL,
+  timeout: process.env.VUE_APP_REQUEST_TIMEOUT
+});
+
+let user: User  = reactive({
+  username : "",
+  email : "",
+  name: "",
+  role: ""
+});
 
 export const store = createStore({
   state: {
@@ -9,6 +23,9 @@ export const store = createStore({
     viewingPatientDetails : true,
     createPatientOrder : false,
     viewPatientOrders : false,
+    user : user,
+    loggedIn: false,
+    axios : axios
 
   },
   mutations: {
@@ -31,8 +48,21 @@ export const store = createStore({
     },
     OPEN_PATIENT_VIEW_ORDERS(state, value){
       state.viewPatientOrders = value
+    },LOGIN(state, user: User){
+      state.user = user
     }
     
+  },
+  getters: {
+
+    isLoggedIn: (state) => () => {
+      return state.loggedIn
+    },
+
+    getAxios: (state) => () => {
+      return state.axios
+    },
+
   },
   actions: {
   },
