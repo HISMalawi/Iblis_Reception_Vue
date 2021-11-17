@@ -60,6 +60,7 @@ import { useStore } from "vuex"
 import RegisterPatient from "@/views/RegisterPatient.vue"
 import PatientSearchResults from "@/views/PatientSearchResults.vue"
 import ViewPatient from "@/views/ViewPatient.vue"
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: "Home",
@@ -71,6 +72,11 @@ export default defineComponent({
   setup() {
 
     const store = useStore()
+    const router = useRouter()
+
+    if (!store.getters.isLoggedIn()) {
+      router.push('/login')
+    }
 
     const OpenPatientRegForm = () => {
 

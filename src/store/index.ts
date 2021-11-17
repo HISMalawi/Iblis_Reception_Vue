@@ -50,6 +50,7 @@ export const store = createStore({
       state.viewPatientOrders = value
     },LOGIN(state, user: User){
       state.user = user
+      state.loggedIn = true
     }
     
   },

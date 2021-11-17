@@ -1,32 +1,55 @@
 import { AuthRequest } from "@/interfaces/AuthRequest";
 import { User } from "@/interfaces/User";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { store } from "@/store";
 
-
 const authenticate = () => {
+  const axios = store.getters.getAxios();
 
-    const axios = store.getters.getAxios()
+  const user: User = reactive({
+    username: "",
+    email: "",
+    name: "",
+    role: "",
+  });
 
-    const errorMsg = ref<string>('');
+  const message = ref<string>("");
+  const code = ref<string>("");
 
-    const login = (creditials :AuthRequest) => {
+  const login = (creditials: AuthRequest) => {
+    axios
+      .post("/users/authenticate", {
+        username: creditials.username,
+        password: creditials.password,
+      })
+      .then(function (response: any) {
 
-        axios.post('/users/authenticate', {
-            username: creditials.username,
-            password: creditials.password
-          })
-          .then(function (response: any) {
-            console.log(response);
-          })
-          .catch(function (error: any) {
-            console.log(error);
-          });
+        if (response.statusText === "OK") {
+          code.value = response["data"].code;
 
-    }
-    
-    return { login }
-}
+          if (code.value == "200") {
+            user.username = response["data"].username;
+            user.email = response["data"].email;
+            user.name = response["data"].name;
+            user.role = response["data"].role;
 
+            message.value = response["data"].message;
+            
+            store.commit("LOGIN", user)
 
-export default authenticate 
+          } else {
+            message.value = response["data"].message;
+          }
+          
+        } 
+
+      })
+      .catch(function (error: any) {
+        message.value = error.message;
+      });
+  };
+
+  return { login, message };
+};
+
+export default authenticate;
