@@ -53,16 +53,34 @@ const state: State = {
 export enum MutationTypes {
   INC_COUNTER = "SET_COUNTER",
   LOGIN = "LOGIN_USER",
+  SEARCH_PATIENT = "SEARCHING_PATIENT",
+  VIEW_PATIENT = "VIEWING_PATIENT",
+  REGISTER_PATIENT = "REGISTERING_PATIENT",
+  OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
+  OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
+  OPEN_PATIENT_VIEW_ORDERS = "OPENING_PATIENT_VIEW_ORDERS",
 }
 
 export enum ActionTypes {
   INC_COUNTER = "SET_COUNTER",
   LOGIN = "LOGIN_USER",
+  SEARCH_PATIENT = "SEARCHING_PATIENT",
+  VIEW_PATIENT = "VIEWING_PATIENT",
+  REGISTER_PATIENT = "REGISTERING_PATIENT",
+  OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
+  OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
+  OPEN_PATIENT_VIEW_ORDERS = "OPENING_PATIENT_VIEW_ORDERS",
 }
 
 export type Mutations<S = State> = {
   [MutationTypes.INC_COUNTER](state: S, payload: number): void;
   [MutationTypes.LOGIN](state: S, payload: User): void;
+  [MutationTypes.SEARCH_PATIENT](state: S, payload: boolean): void;
+  [MutationTypes.VIEW_PATIENT](state: S, payload: boolean): void;
+  [MutationTypes.REGISTER_PATIENT](state: S, payload: boolean): void;
+  [MutationTypes.OPEN_PATIENT_DETAILS](state: S, payload: boolean): void;
+  [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: S, payload: boolean): void;
+  [MutationTypes.OPEN_PATIENT_VIEW_ORDERS](state: S, payload: boolean): void;
 };
 
 const mutations: MutationTree<State> & Mutations = {
@@ -72,6 +90,24 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.LOGIN](state: State, payload: User) {
     state.user = payload;
     state.loggedIn = true;
+  },
+  [MutationTypes.SEARCH_PATIENT](state: State, payload: boolean) {
+    state.searchingPatient = payload;
+  },
+  [MutationTypes.VIEW_PATIENT](state: State, payload: boolean) {
+    state.viewingPatient = payload;
+  },
+  [MutationTypes.REGISTER_PATIENT](state: State, payload: boolean) {
+    state.registeringPatient = payload;
+  },
+  [MutationTypes.OPEN_PATIENT_DETAILS](state: State, payload: boolean) {
+    state.viewingPatientDetails = payload;
+  },
+  [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: State, payload: boolean) {
+    state.createPatientOrder = payload;
+  },
+  [MutationTypes.OPEN_PATIENT_VIEW_ORDERS](state: State, payload: boolean) {
+    state.viewPatientOrders = payload;
   },
 };
 

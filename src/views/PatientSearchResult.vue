@@ -24,13 +24,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useStore } from "vuex";
 import toggleViews from "@/composables/toggleViews"
 
 export default defineComponent({
   name: "PatientSearchResult",
   setup() {
-    const store = useStore();
 
     const { OpenPatientDetails } = toggleViews()
 
@@ -48,8 +46,9 @@ export default defineComponent({
     ];
 
     const showPatientDetails = () => {
-      store.commit("VIEWING_PATIENT", true);
+
       OpenPatientDetails(true)
+
     };
 
     return { posts, showPatientDetails };

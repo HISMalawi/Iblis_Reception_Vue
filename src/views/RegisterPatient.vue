@@ -149,14 +149,15 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { useStore } from "vuex";
+import toggleViews from "@/composables/toggleViews";
 import { PatientReg } from "@/interfaces/PatientReg";
 
 export default defineComponent({
   name: "RegisterPatient",
   components: {},
   setup() {
-    const store = useStore();
+
+    const { ClosePatientRegForm } = toggleViews();
 
     const patientDetails: PatientReg = reactive({
 
@@ -172,15 +173,11 @@ export default defineComponent({
 
     });
 
-    const ClosePatientRegForm = () => {
-      store.commit("REGISTERING_PATIENT", false);
-    };
-
     const SavePatient = () => {
       console.log("WOrking");
     };
 
-    return { ClosePatientRegForm, patientDetails };
+    return { ClosePatientRegForm , patientDetails };
   },
 });
 </script>

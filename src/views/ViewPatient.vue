@@ -7,9 +7,9 @@
 
       <div class="tabs is-medium">
         <ul>
-          <li @click="OpenPatientDetails" class="is-active"><a>Details</a></li>
-          <li @click="OpenCreatePatientOrder" ><a>Order</a></li>
-          <li @click="OpenViewPatientOrders"><a>View Order</a></li>
+          <li @click="OpenPatientDetailsIn" class="is-active"><a>Details</a></li>
+          <li @click="OpenCreatePatientOrderIn" ><a>Order</a></li>
+          <li @click="OpenViewPatientOrdersIn"><a>View Order</a></li>
         </ul>
       </div>
 
@@ -23,11 +23,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
-import { useStore } from "vuex"
 import PlaceOrder from "@/views/PlaceOrder.vue"
 import ViewPatientDetails from "@/views/ViewPatientDetails.vue"
 import ViewOrders from "@/views/ViewOrders.vue"
+import toggleViews from "@/composables/toggleViews"
 
 export default defineComponent({
   name: "ViewPatient",
@@ -38,38 +37,25 @@ export default defineComponent({
   },
   setup() {
 
-    const store = useStore()
+    const { OpenPatientDetails, OpenCreatePatientOrder, OpenViewPatientOrders } = toggleViews()
 
-    const OpenPatientDetails = () => {
+    const OpenPatientDetailsIn = () => {
 
-        store.commit("OPEN_PATIENT_VIEW_ORDERS", false)
-        store.commit("OPEN_PATIENT_PLACE_ORDER", false)
-
-        store.commit("OPEN_PATIENT_DETAILS", true)
+          OpenPatientDetails(true)
     }
 
+    const OpenCreatePatientOrderIn = () => {
 
-
-    const OpenCreatePatientOrder = () => {
-
-        store.commit("OPEN_PATIENT_DETAILS", false)
-        store.commit("OPEN_PATIENT_VIEW_ORDERS", false)
-
-        store.commit("OPEN_PATIENT_PLACE_ORDER", true)
-        
+         OpenCreatePatientOrder(true)
     }
 
-    const OpenViewPatientOrders = () => {
+    const OpenViewPatientOrdersIn = () => {
 
-        store.commit("OPEN_PATIENT_DETAILS", false)
-        store.commit("OPEN_PATIENT_PLACE_ORDER", false)
-
-        store.commit("OPEN_PATIENT_VIEW_ORDERS", true)
-        
+        OpenViewPatientOrders(true)
     }
-
-
-    return { OpenPatientDetails, OpenCreatePatientOrder, OpenViewPatientOrders }
+      
+    
+    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenViewPatientOrdersIn }
   }
 });
 </script>
