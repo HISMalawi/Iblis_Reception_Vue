@@ -58,7 +58,7 @@
 import { defineComponent, reactive, ref, watchEffect } from "vue";
 import { AuthRequest } from "@/interfaces/AuthRequest";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+import { useStore } from "@/store";
 import Authenticate from "@/composables/authenticate";
 
 export default defineComponent({
@@ -80,7 +80,7 @@ export default defineComponent({
     };
 
     watchEffect(() => {
-      if (store.getters.isLoggedIn()) {
+      if (store.getters.isLoggedIn) {
         router.push("/");
       }
     });

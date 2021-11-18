@@ -1,45 +1,51 @@
 import { AuthRequest } from "@/interfaces/AuthRequest";
 import { User } from "@/interfaces/User";
 import { reactive, ref } from "vue";
-import { store } from "@/store";
+import { MutationTypes, useStore } from "@/store";
+
+const store = useStore();
 
 const authenticate = () => {
-  const axios = store.getters.getAxios();
 
-  const user: User = reactive({
+  const axios = ref(store.getters.axios);
+
+  const user: User = {
     username: "",
     email: "",
     name: "",
     role: "",
     token: "",
-  });
+  };
 
   const message = ref<string>("");
   const code = ref<string>("");
 
   const login = (creditials: AuthRequest) => {
-    axios
+    axios.value
       .post("/users/authenticate", {
         username: creditials.username,
         password: creditials.password,
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
-          code.value = response["data"].code;
+          code.value = response.data.code;
+
+          const responseData = response.data.data;
 
           if (code.value == "200") {
-            user.username = response["data"].username;
-            user.email = response["data"].email;
-            user.name = response["data"].name;
-            user.role = response["data"].role;
-            user.token = response["data"].token;
+            user.username = responseData[0].username;
+            user.email = responseData[0].email;
+            user.name = responseData[0].name;
+            user.role = responseData[0].role;
+            user.token = responseData[0].token;
 
-            message.value = response["data"].message;
-
-            store.commit("LOGIN", user);
+            message.value = response.data.message;
+            
+            store.commit(MutationTypes.LOGIN, user);
           } else {
-            message.value = response["data"].message;
+            message.value = response.data.message;
           }
+
         }
       })
       .catch(function (error: any) {

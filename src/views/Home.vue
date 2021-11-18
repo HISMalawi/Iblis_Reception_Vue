@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watchEffect } from "vue";
-import { useStore } from "vuex";
+import { defineComponent, ref, watchEffect } from "vue";
+import { useStore } from "@/store";
 import RegisterPatient from "@/views/RegisterPatient.vue";
 import PatientSearchResults from "@/views/PatientSearchResults.vue";
 import ViewPatient from "@/views/ViewPatient.vue";
@@ -45,8 +45,10 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
+    const isLoggedIn = ref(store.getters.isLoggedIn);
+
     watchEffect(() => {
-      if (!store.getters.isLoggedIn()) {
+      if (!isLoggedIn.value) {
         router.push("/login");
       }
     });
