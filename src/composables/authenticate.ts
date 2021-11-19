@@ -1,6 +1,6 @@
 import { AuthRequest } from "@/interfaces/AuthRequest";
 import { User } from "@/interfaces/User";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { MutationTypes, useStore } from "@/store";
 
 const store = useStore();
