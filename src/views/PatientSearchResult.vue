@@ -1,57 +1,63 @@
 <template>
   <div class="patient-search-result">
     <div
-      v-for="post in posts"
-      :key="post.id"
+      v-for="patient in patients"
+      :key="patient.id"
       class="media is-clickable"
-      v-on:click="showPatientDetails"
+      v-on:click="showPatientDetails(patient)"
     >
-      <div class="media-left">
+      <div class="media-left" v-if="patient.gender == 0">
         <figure class="image is-48x48">
           <img
-            src="https://bulma.io/images/placeholders/96x96.png"
+            src="../assets/male.png"
+            alt="Placeholder image"
+          />
+        </figure>
+      </div>
+
+      <div class="media-left" v-if="patient.gender == 1">
+        <figure class="image is-48x48">
+          <img
+            src="../assets/female.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">John Smith</p>
-        <p class="subtitle is-6">@johnsmith</p>
+        <p class="title is-4">{{patient.name}}</p>
+        <p class="subtitle is-6" v-if="patient.gender == 1">Female</p>
+        <p class="subtitle is-6" v-if="patient.gender == 0">Male</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, inject} from "vue";
 import toggleViews from "@/composables/toggleViews"
+import SearchPatient from "@/composables/searchPatient"
+import { Patient } from "@/interfaces/Patient";
+import { MutationTypes, useStore } from "@/store";
 
 export default defineComponent({
   name: "PatientSearchResult",
   setup() {
 
+    const store = useStore();
+
     const { OpenPatientDetails } = toggleViews()
 
-    const posts = [
-      {
-        id: 1,
-        firstname: "Blessings",
-        lastname: "Chidambe",
-      },
-      {
-        id: 2,
-        firstname: "Blessings",
-        lastname: "Chidambe",
-      },
-    ];
+    const { patients } = SearchPatient()
 
-    const showPatientDetails = () => {
+    const showPatientDetails = (patient: Patient) => {
+
+      store.commit(MutationTypes.SET_SELECTED_PATIENT, patient)
 
       OpenPatientDetails(true)
 
     };
 
-    return { posts, showPatientDetails };
+    return { patients, showPatientDetails };
   },
 });
 </script>

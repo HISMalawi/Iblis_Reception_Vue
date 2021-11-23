@@ -8,15 +8,11 @@
               class="input is-medium"
               type="text"
               placeholder="Search Patient"
+              v-model="searchString"
             />
           </div>
           <div class="control">
-            <a
-              @click="OpenPatientSearchResultsView"
-              class="button is-info is-medium"
-            >
-              Search
-            </a>
+            <a @click="Search" class="button is-info is-medium"> Search </a>
           </div>
         </div>
       </div>
@@ -31,21 +27,31 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-import toggleViews from "@/composables/toggleViews"
+import { defineComponent, provide, ref } from "vue";
+import toggleViews from "@/composables/toggleViews";
+import SearchPatient from "@/composables/searchPatient";
 
 export default defineComponent({
   name: "SearchPanel",
   setup() {
+    const searchString = ref<string>("");
 
-      const { OpenPatientSearchResultsView } = toggleViews()
+    const { search, patients } = SearchPatient();
 
-      return { OpenPatientSearchResultsView }
+    const { OpenPatientSearchResultsView } = toggleViews();
+
+    const Search = () => {
+      search(searchString.value);
+      OpenPatientSearchResultsView();
+      console.log(patients);
+    };
+
+
+    return { Search, searchString };
   },
 });
 </script>
 <style>
-
 .search-card {
   max-height: 130px;
   max-width: 530px !important;

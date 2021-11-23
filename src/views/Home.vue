@@ -42,6 +42,7 @@ export default defineComponent({
     ToolPanel,
   },
   setup() {
+
     const store = useStore();
     const router = useRouter();
 
@@ -52,6 +53,7 @@ export default defineComponent({
         router.push("/login");
       }
     });
+
 
   },
 });

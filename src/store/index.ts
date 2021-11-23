@@ -10,18 +10,38 @@ import {
 } from "vuex";
 import { User } from "@/interfaces/User";
 import { Axios } from "axios";
+import { Patient } from "@/interfaces/Patient";
 
 const axios = require("axios").create({
   baseURL: process.env.VUE_APP_SERVICE_BASE_URL,
   timeout: process.env.VUE_APP_REQUEST_TIMEOUT,
 });
 
-let user: User = {
+const user: User = {
   username: "",
   email: "",
   name: "",
   role: "",
   token: "",
+};
+
+const patient: Patient = {
+  address: "",
+  created_at: "",
+  created_by: 0,
+  deleted_at: "",
+  dob: "",
+  dob_estimated: 0,
+  email: "",
+  external_patient_number: "",
+  first_name_code: "",
+  gender: 0,
+  id: 0,
+  last_name_code: "",
+  name: "",
+  patient_number: "",
+  phone_number: "",
+  updated_at: "",
 };
 
 export type State = {
@@ -35,6 +55,7 @@ export type State = {
   user: User;
   loggedIn: boolean;
   axios: Axios;
+  selectedPatient: Patient;
 };
 
 const state: State = {
@@ -48,6 +69,7 @@ const state: State = {
   user: user,
   loggedIn: false,
   axios: axios,
+  selectedPatient: patient,
 };
 
 export enum MutationTypes {
@@ -59,6 +81,7 @@ export enum MutationTypes {
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
   OPEN_PATIENT_VIEW_ORDERS = "OPENING_PATIENT_VIEW_ORDERS",
+  SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
 }
 
 export enum ActionTypes {
@@ -70,6 +93,7 @@ export enum ActionTypes {
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
   OPEN_PATIENT_VIEW_ORDERS = "OPENING_PATIENT_VIEW_ORDERS",
+  SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
 }
 
 export type Mutations<S = State> = {
@@ -81,6 +105,7 @@ export type Mutations<S = State> = {
   [MutationTypes.OPEN_PATIENT_DETAILS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_VIEW_ORDERS](state: S, payload: boolean): void;
+  [MutationTypes.SET_SELECTED_PATIENT](state: S, payload: Patient): void;
 };
 
 const mutations: MutationTree<State> & Mutations = {
@@ -109,6 +134,9 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.OPEN_PATIENT_VIEW_ORDERS](state: State, payload: boolean) {
     state.viewPatientOrders = payload;
   },
+  [MutationTypes.SET_SELECTED_PATIENT](state: State, payload: Patient) {
+    state.selectedPatient = payload;
+  },
 };
 
 type AugmentedActionContext = {
@@ -124,10 +152,9 @@ export interface Actions {
     payload: number
   ): void;
 
-  [ActionTypes.LOGIN](
-    { commit }: AugmentedActionContext,
-    payload: User
-  ): void;
+  [ActionTypes.LOGIN]({ commit }: AugmentedActionContext, payload: User): void;
+
+  [ActionTypes.SET_SELECTED_PATIENT]({ commit }: AugmentedActionContext, payload: Patient): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -137,6 +164,9 @@ export const actions: ActionTree<State, State> & Actions = {
   [ActionTypes.LOGIN]({ commit }, payload: User) {
     commit(MutationTypes.LOGIN, payload);
   },
+  [ActionTypes.SET_SELECTED_PATIENT]({ commit }, payload: Patient) {
+    commit(MutationTypes.SET_SELECTED_PATIENT, payload);
+  },
 };
 
 export type Getters = {
@@ -144,6 +174,7 @@ export type Getters = {
   user(state: State): User;
   axios(state: State): Axios;
   isLoggedIn(state: State): boolean;
+  selectedPatient(state: State): Patient;
 };
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -158,6 +189,9 @@ export const getters: GetterTree<State, State> & Getters = {
   },
   isLoggedIn: (state) => {
     return state.loggedIn;
+  },
+  selectedPatient: (state) => {
+    return state.selectedPatient;
   },
 };
 
