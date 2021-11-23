@@ -41,9 +41,17 @@ export default defineComponent({
     const { OpenPatientSearchResultsView } = toggleViews();
 
     const Search = () => {
-      search(searchString.value);
-      OpenPatientSearchResultsView();
-      console.log(patients);
+
+      if (searchString.value == "") {
+        
+      } else {
+
+        search(searchString.value);
+        OpenPatientSearchResultsView();
+        
+      }
+      
+    
     };
 
 

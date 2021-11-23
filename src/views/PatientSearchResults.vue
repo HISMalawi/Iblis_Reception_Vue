@@ -2,12 +2,12 @@
   <div class="tile is-4 is-parent">
     <article class="patient-search-results tile is-child notification">
       <p class="pageTitle subtitle card">Search Results</p>
-      <div class="content">
+    
         <div class="content has-text-left">
           <!-- Content -->
           <patient-search-result />
         </div>
-      </div>
+      
     </article>
   </div>
 </template>
@@ -27,10 +27,18 @@ export default defineComponent({
 <style>
 .patient-search-results {
   background: none !important;
+  
 }
 
 .patient-search-results .pageTitle {
   padding: 20px 10px;
   margin-top: 0px;
 }
+
+.patient-search-results .content{
+
+  overflow-y: auto;
+  height: 1600px;
+}
+
 </style>

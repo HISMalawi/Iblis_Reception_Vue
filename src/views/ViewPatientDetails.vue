@@ -3,44 +3,19 @@
     <div class="field">
       <label class="label">External Patient No.</label>
       <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="text" />
+        <input class="input is-success is-medium" type="text" v-model="$store.state.selectedPatient.external_patient_number" />
 
         <span class="icon is-small is-right">
           <i class="fas fa-check"></i>
         </span>
       </div>
-      <p class="help is-danger">This External No is invalid</p>
+  
     </div>
-    <div class="field">
-      <label class="label">First Name</label>
-      <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="text" />
-        <span class="icon is-small is-left">
-          <i class="fas fa-user"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fas fa-check"></i>
-        </span>
-      </div>
-      <p class="help is-danger">This First Name is invalid</p>
-    </div>
-    <div class="field">
-      <label class="label">Last Name</label>
-      <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="text" />
-        <span class="icon is-small is-left">
-          <i class="fas fa-user"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fas fa-check"></i>
-        </span>
-      </div>
-      <p class="help is-danger">This Last Name is invalid</p>
-    </div>
+    
     <div class="field">
       <label class="label">Date of Birth</label>
       <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="text" />
+        <input class="input is-success is-medium" v-model="$store.state.selectedPatient.dob" type="text" />
         <span class="icon is-small is-left">
           <i class="fas fa-user"></i>
         </span>
@@ -48,7 +23,7 @@
           <i class="fas fa-check"></i>
         </span>
       </div>
-      <p class="help is-danger">This DOB is invalid</p>
+ 
     </div>
     <div class="field">
       <label class="label">Age</label>
@@ -61,7 +36,7 @@
           <i class="fas fa-check"></i>
         </span>
       </div>
-      <p class="help is-danger">This Age is invalid</p>
+    
     </div>
     <div class="field">
       <label class="label">Sex</label>
@@ -75,12 +50,11 @@
           Female
         </label>
       </div>
-      <p class="help is-danger">This field is required</p>
     </div>
     <div class="field">
       <label class="label">Physical Address</label>
       <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="text" />
+        <input class="input is-success is-medium" v-model="$store.state.selectedPatient.address" type="text" />
         <span class="icon is-small is-left">
           <i class="fas fa-user"></i>
         </span>
@@ -88,12 +62,11 @@
           <i class="fas fa-check"></i>
         </span>
       </div>
-      <p class="help is-danger">This Physical address is invalid</p>
     </div>
     <div class="field">
       <label class="label">Phone Number</label>
       <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="text" />
+        <input class="input is-success is-medium" v-model="$store.state.selectedPatient.phone_number" type="text" />
         <span class="icon is-small is-left">
           <i class="fas fa-user"></i>
         </span>
@@ -101,12 +74,12 @@
           <i class="fas fa-check"></i>
         </span>
       </div>
-      <p class="help is-danger">This Phone Number is invalid</p>
+     
     </div>
     <div class="field">
       <label class="label">Email</label>
       <div class="control has-icons-right">
-        <input class="input is-success is-medium" type="email" />
+        <input class="input is-success is-medium" v-model="$store.state.selectedPatient.email"  type="email" />
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -114,7 +87,6 @@
           <i class="fas fa-exclamation-triangle"></i>
         </span>
       </div>
-      <p class="help is-danger">This Email is invalid</p>
     </div>
   </div>
 </template>

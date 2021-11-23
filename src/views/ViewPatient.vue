@@ -3,7 +3,7 @@
     <article
       class="search-results-card card tile is-child notification"
     >
-      <p class="subtitle">Patient Name</p>
+      <p class="subtitle">{{ $store.state.selectedPatient.name }}</p>
 
       <div class="tabs is-medium">
         <ul>
