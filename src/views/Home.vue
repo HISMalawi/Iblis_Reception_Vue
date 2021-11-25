@@ -61,7 +61,7 @@ export default defineComponent({
 
 <style>
 .home {
-  height: calc(100% - 20%);
+  height: calc(100% - 15%);
   width: 90%;
   padding: 10px;
 }

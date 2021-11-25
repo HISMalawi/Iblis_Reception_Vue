@@ -1,13 +1,13 @@
 <template>
   <div class="content has-text-left">
-    <form @submit.prevent="">
+    <form @submit.prevent="addOrder">
       <div class="field">
         <label class="label">Visit Type</label>
         <div class="control">
           <div class="select is-medium is-fullwidth">
-            <select>
-              <option>--- Select Visit Type ---</option>
-              <option>With options</option>
+            <select v-model="selectedVisitType">
+              <option :value="0">--- Select Visit Type ---</option>
+              <option :value="visitType.id" v-for="visitType in visitTypes" :key="visitType.id">{{visitType.name}}</option>
             </select>
           </div>
         </div>
@@ -16,9 +16,9 @@
         <label class="label">Requesting Ward / Location</label>
         <div class="control">
           <div class="select is-medium is-fullwidth">
-            <select>
-              <option>--- Select Ward / Location ---</option>
-              <option>With options</option>
+            <select v-model="selectedWard">
+              <option :value="0">--- Select Ward / Location ---</option>
+              <option :value="ward.id" v-for="ward in Wards" :key="ward.id">{{ward.name}}</option>
             </select>
           </div>
         </div>
@@ -57,10 +57,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
+import GetVisitTypes from "@/composables/getVisitTypes";
+import GetWards from "@/composables/getWards";
 
 export default defineComponent({
   name: "PlaceOrder",
-  components: {},
+  setup() {
+
+    const { visitTypes, fetch } = GetVisitTypes()
+
+    const selectedVisitType = ref(0)
+
+    const selectedWard = ref(0)
+
+    const { Wards, fetchWards } = GetWards()
+
+    watch(() => [selectedVisitType.value != selectedVisitType.value], () => {
+
+      selectedWard.value = 0
+
+      fetchWards(selectedVisitType.value)
+
+
+    })
+
+
+    const addOrder = () => {
+
+      console.log("Add Order...")
+    }
+
+    fetch()
+
+    return { visitTypes, selectedWard, selectedVisitType, Wards, addOrder}
+  },
 });
 </script>
