@@ -7,7 +7,13 @@
           <div class="select is-medium is-fullwidth">
             <select v-model="selectedVisitType">
               <option :value="0">--- Select Visit Type ---</option>
-              <option :value="visitType.id" v-for="visitType in visitTypes" :key="visitType.id">{{visitType.name}}</option>
+              <option
+                :value="visitType.id"
+                v-for="visitType in visitTypes"
+                :key="visitType.id"
+              >
+                {{ visitType.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -18,7 +24,9 @@
           <div class="select is-medium is-fullwidth">
             <select v-model="selectedWard">
               <option :value="0">--- Select Ward / Location ---</option>
-              <option :value="ward.id" v-for="ward in Wards" :key="ward.id">{{ward.name}}</option>
+              <option :value="ward.id" v-for="ward in Wards" :key="ward.id">
+                {{ ward.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -33,18 +41,41 @@
           </span>
         </div>
       </div>
-      <div class="field">
+      <div class="field mb-6">
         <label class="label">Specimen Type</label>
         <div class="control">
           <div class="select is-medium is-fullwidth">
             <select v-model="selectedSpecimenType">
               <option :value="0">--- Select Specimen Type ---</option>
-              <option :value="specimenType.id" v-for="specimenType in specimenTypes" :key="specimenType.id">{{specimenType.name}}</option>
+              <option
+                :value="specimenType.id"
+                v-for="specimenType in specimenTypes"
+                :key="specimenType.id"
+              >
+                {{ specimenType.name }}
+              </option>
             </select>
           </div>
         </div>
       </div>
+      <div class="field mb-6">
+        <label class="label">Select Test(s)</label>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tests</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
+          <tbody>
+            <tr v-for="Test in Tests" :key="Test.id">
+              <td>{{Test.name}}</td>
+              <td><input type="checkbox" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="field is-grouped">
         <div class="control">
           <button type="submit" class="button is-link is-medium">Save</button>
@@ -62,42 +93,60 @@ import { defineComponent, ref, watch } from "vue";
 import GetVisitTypes from "@/composables/getVisitTypes";
 import GetSpecimenTypes from "@/composables/getSpecimenTypes";
 import GetWards from "@/composables/getWards";
+import GetTests from "@/composables/getTests";
 
 export default defineComponent({
   name: "PlaceOrder",
   setup() {
 
-    const { visitTypes, fetchVisitTypes } = GetVisitTypes()
+    const { fetchTests, Tests } = GetTests();
 
-    const { fetchSpecimenTypes, specimenTypes } = GetSpecimenTypes()
+    const { visitTypes, fetchVisitTypes } = GetVisitTypes();
 
-    const selectedVisitType = ref(0)
+    const { fetchSpecimenTypes, specimenTypes } = GetSpecimenTypes();
 
-    const selectedWard = ref(0)
+    const selectedVisitType = ref(0);
 
-    const selectedSpecimenType = ref(0)
+    const selectedWard = ref(0);
 
-    const { Wards, fetchWards } = GetWards()
+    const selectedSpecimenType = ref(0);
 
-    watch(() => [selectedVisitType.value != selectedVisitType.value], () => {
+    const { Wards, fetchWards } = GetWards();
 
-      selectedWard.value = 0
+    watch(
+      () => [selectedVisitType.value != selectedVisitType.value],
+      () => {
+        selectedWard.value = 0;
 
-      fetchWards(selectedVisitType.value)
+        fetchWards(selectedVisitType.value);
+      }
+    );
 
+    watch(
+      () => [selectedSpecimenType.value != selectedSpecimenType.value],
+      () => {
 
-    })
-
+        fetchTests(selectedSpecimenType.value);
+      }
+    );
 
     const addOrder = () => {
+      console.log(specimenTypes);
+    };
 
-      console.log(specimenTypes)
-    }
+    fetchVisitTypes();
+    fetchSpecimenTypes();
 
-    fetchVisitTypes()
-    fetchSpecimenTypes()
-
-    return { visitTypes, specimenTypes, selectedWard, selectedVisitType, selectedSpecimenType, Wards, addOrder}
+    return {
+      visitTypes,
+      specimenTypes,
+      selectedWard,
+      selectedVisitType,
+      selectedSpecimenType,
+      Wards,
+      Tests,
+      addOrder,
+    };
   },
 });
 </script>
