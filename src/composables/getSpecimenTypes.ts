@@ -1,12 +1,12 @@
 import { ref } from "vue";
 import { useStore } from "@/store";
-import { VisitType } from "@/interfaces/VisitType";
+import { SpecimenType } from "@/interfaces/SpecimenType";
 
 const store = useStore();
 
-const visitTypes = ref<VisitType[]>([]);
+const specimenTypes = ref<SpecimenType[]>([]);
 
-const getVisitTypes = () => {
+const getSpecimenTypes = () => {
 
   const axios = ref(store.getters.axios)
 
@@ -15,9 +15,9 @@ const getVisitTypes = () => {
   const message = ref<string>("");
   const code = ref<string>("");
 
-  const fetchVisitTypes = () => {
+  const fetchSpecimenTypes = () => {
     axios.value
-      .post("/visit_types", {
+      .post("/specimen_types", {
         token: token.value,
       })
       .then(function (response: any) {
@@ -27,11 +27,9 @@ const getVisitTypes = () => {
 
           const responseData = response.data.data;
 
-          // console.log(responseData[0][0])
-
           if (code.value == "200") {
 
-            visitTypes.value = responseData[0]
+            specimenTypes.value = responseData[0]
 
             message.value = response.data.message;
           } else {
@@ -45,7 +43,7 @@ const getVisitTypes = () => {
       });
   };
 
-  return { fetchVisitTypes, message, visitTypes };
+  return { fetchSpecimenTypes, message, specimenTypes };
 };
 
-export default getVisitTypes;
+export default getSpecimenTypes;

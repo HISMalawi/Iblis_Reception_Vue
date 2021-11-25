@@ -35,12 +35,13 @@
       </div>
       <div class="field">
         <label class="label">Specimen Type</label>
-        <div class="control has-icons-right">
-          <input class="input is-success is-medium" type="text" />
-
-          <span class="icon is-small is-right">
-            <i class="fas fa-check"></i>
-          </span>
+        <div class="control">
+          <div class="select is-medium is-fullwidth">
+            <select v-model="selectedSpecimenType">
+              <option :value="0">--- Select Specimen Type ---</option>
+              <option :value="specimenType.id" v-for="specimenType in specimenTypes" :key="specimenType.id">{{specimenType.name}}</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -59,17 +60,22 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import GetVisitTypes from "@/composables/getVisitTypes";
+import GetSpecimenTypes from "@/composables/getSpecimenTypes";
 import GetWards from "@/composables/getWards";
 
 export default defineComponent({
   name: "PlaceOrder",
   setup() {
 
-    const { visitTypes, fetch } = GetVisitTypes()
+    const { visitTypes, fetchVisitTypes } = GetVisitTypes()
+
+    const { fetchSpecimenTypes, specimenTypes } = GetSpecimenTypes()
 
     const selectedVisitType = ref(0)
 
     const selectedWard = ref(0)
+
+    const selectedSpecimenType = ref(0)
 
     const { Wards, fetchWards } = GetWards()
 
@@ -85,12 +91,13 @@ export default defineComponent({
 
     const addOrder = () => {
 
-      console.log("Add Order...")
+      console.log(specimenTypes)
     }
 
-    fetch()
+    fetchVisitTypes()
+    fetchSpecimenTypes()
 
-    return { visitTypes, selectedWard, selectedVisitType, Wards, addOrder}
+    return { visitTypes, specimenTypes, selectedWard, selectedVisitType, selectedSpecimenType, Wards, addOrder}
   },
 });
 </script>
