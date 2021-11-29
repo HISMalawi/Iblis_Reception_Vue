@@ -77,14 +77,14 @@
                 >Previous</a
               >
               <a
-                v-if="page < pages.length"
+                v-if="page < pages.length && page !== pages.length"
                 class="pagination-next"
                 @click="page++"
                 >Next page</a
               >
               <ul class="pagination-list">
                 <li v-for="pagex in numberOfPages" :key="pagex" @click="page = pagex">
-                  <a
+                  <a :class="page == pagex ? 'is-current' : ''"
                     class="pagination-link"
                     aria-label="Page 1"
                     aria-current="page"
@@ -182,8 +182,6 @@ export default defineComponent({
       }
     };
 
-    setPages();
-
     const paginatedTests = computed(() => {
       let xpage: number = page.value;
       let xperPage = perPage.value;
@@ -191,6 +189,12 @@ export default defineComponent({
       let to = xpage * xperPage;
       return Tests.value.slice(from, to);
     });
+
+    const test = () => {
+      console.log("Test")
+    }
+
+
 
     return {
       visitTypes,
@@ -205,6 +209,7 @@ export default defineComponent({
       page,
       pages,
       paginatedTests,
+      test,
     };
   },
 });
