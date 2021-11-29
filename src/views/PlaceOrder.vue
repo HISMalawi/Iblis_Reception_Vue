@@ -77,7 +77,7 @@
                 >Previous</a
               >
               <a
-                v-if="page < pages.length && page !== pages.length"
+                v-if="page < pages.length && numberOfPages > 1 && numberOfPages !== page"
                 class="pagination-next"
                 @click="page++"
                 >Next page</a
@@ -116,7 +116,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, onBeforeMount, ref, watch } from "vue";
 import GetVisitTypes from "@/composables/getVisitTypes";
 import GetSpecimenTypes from "@/composables/getSpecimenTypes";
 import GetWards from "@/composables/getWards";
@@ -157,6 +157,13 @@ export default defineComponent({
     watch(
       () => [selectedSpecimenType.value != selectedSpecimenType.value],
       () => {
+        if (selectedSpecimenType.value == 0) {
+          
+          Tests.value.length = 0
+          numberOfPages.value = 0
+          
+        }
+        page.value = 1
         fetchTests(selectedSpecimenType.value);
       }
     );
@@ -164,6 +171,7 @@ export default defineComponent({
     watch(
       () => [Tests.value != Tests.value],
       () => {
+
         setPages();
       }
     );
@@ -190,11 +198,9 @@ export default defineComponent({
       return Tests.value.slice(from, to);
     });
 
-    const test = () => {
-      console.log("Test")
-    }
-
-
+    onBeforeMount(() => {
+      paginatedTests.value.length = 0
+    })
 
     return {
       visitTypes,
@@ -209,7 +215,7 @@ export default defineComponent({
       page,
       pages,
       paginatedTests,
-      test,
+
     };
   },
 });
