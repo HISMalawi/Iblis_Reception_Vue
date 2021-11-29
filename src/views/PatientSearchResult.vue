@@ -3,7 +3,7 @@
     <div
       v-for="patient in patients"
       :key="patient.id"
-      class="media is-clickable"
+      class="media is-clickable py-5"
       v-on:click="showPatientDetails(patient)"
     >
       <div class="media-left" v-if="patient.gender == 0">

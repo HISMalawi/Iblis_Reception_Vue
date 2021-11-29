@@ -67,10 +67,36 @@
               <th>Actions</th>
             </tr>
           </thead>
+          <tfoot>
+            <nav class="pagination" role="navigation" aria-label="pagination">
+              <a
+                class="pagination-previous is-disabled"
+                title="This is the first page"
+                >Previous</a
+              >
+              <a class="pagination-next">Next page</a>
+              <ul class="pagination-list">
+                <li>
+                  <a
+                    class="pagination-link is-current"
+                    aria-label="Page 1"
+                    aria-current="page"
+                    >1</a
+                  >
+                </li>
+                <li>
+                  <a class="pagination-link" aria-label="Goto page 2">2</a>
+                </li>
+                <li>
+                  <a class="pagination-link" aria-label="Goto page 3">3</a>
+                </li>
+              </ul>
+            </nav>
+          </tfoot>
 
           <tbody>
             <tr v-for="Test in Tests" :key="Test.id">
-              <td>{{Test.name}}</td>
+              <td>{{ Test.name }}</td>
               <td><input type="checkbox" /></td>
             </tr>
           </tbody>
@@ -97,8 +123,8 @@ import GetTests from "@/composables/getTests";
 
 export default defineComponent({
   name: "PlaceOrder",
+  components: {},
   setup() {
-
     const { fetchTests, Tests } = GetTests();
 
     const { visitTypes, fetchVisitTypes } = GetVisitTypes();
@@ -125,7 +151,6 @@ export default defineComponent({
     watch(
       () => [selectedSpecimenType.value != selectedSpecimenType.value],
       () => {
-
         fetchTests(selectedSpecimenType.value);
       }
     );
