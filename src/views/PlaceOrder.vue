@@ -70,32 +70,33 @@
           <tfoot>
             <nav class="pagination" role="navigation" aria-label="pagination">
               <a
+                v-if="page != 1"
+                @click="page--"
                 class="pagination-previous is-disabled"
                 title="This is the first page"
                 >Previous</a
               >
-              <a class="pagination-next">Next page</a>
+              <a
+                v-if="page < pages.length"
+                class="pagination-next"
+                @click="page++"
+                >Next page</a
+              >
               <ul class="pagination-list">
-                <li>
+                <li v-for="pagex in numberOfPages" :key="pagex" @click="page = pagex">
                   <a
-                    class="pagination-link is-current"
+                    class="pagination-link"
                     aria-label="Page 1"
                     aria-current="page"
-                    >1</a
+                    >{{ pagex }}</a
                   >
-                </li>
-                <li>
-                  <a class="pagination-link" aria-label="Goto page 2">2</a>
-                </li>
-                <li>
-                  <a class="pagination-link" aria-label="Goto page 3">3</a>
                 </li>
               </ul>
             </nav>
           </tfoot>
 
           <tbody>
-            <tr v-for="Test in Tests" :key="Test.id">
+            <tr v-for="Test in paginatedTests" :key="Test.id">
               <td>{{ Test.name }}</td>
               <td><input type="checkbox" /></td>
             </tr>
@@ -115,7 +116,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import GetVisitTypes from "@/composables/getVisitTypes";
 import GetSpecimenTypes from "@/composables/getSpecimenTypes";
 import GetWards from "@/composables/getWards";
@@ -125,6 +126,11 @@ export default defineComponent({
   name: "PlaceOrder",
   components: {},
   setup() {
+    const page = ref<number>(1);
+    const perPage = ref<number>(15);
+    const pages = ref<number[]>([]);
+    const numberOfPages = ref<number>(0);
+
     const { fetchTests, Tests } = GetTests();
 
     const { visitTypes, fetchVisitTypes } = GetVisitTypes();
@@ -155,12 +161,36 @@ export default defineComponent({
       }
     );
 
+    watch(
+      () => [Tests.value != Tests.value],
+      () => {
+        setPages();
+      }
+    );
+
     const addOrder = () => {
       console.log(specimenTypes);
     };
 
     fetchVisitTypes();
     fetchSpecimenTypes();
+
+    const setPages = () => {
+      numberOfPages.value = Math.ceil(Tests.value.length / perPage.value);
+      for (let index = 1; index <= numberOfPages.value; index++) {
+        pages.value.push(index);
+      }
+    };
+
+    setPages();
+
+    const paginatedTests = computed(() => {
+      let xpage: number = page.value;
+      let xperPage = perPage.value;
+      let from = xpage * xperPage - xperPage;
+      let to = xpage * xperPage;
+      return Tests.value.slice(from, to);
+    });
 
     return {
       visitTypes,
@@ -169,8 +199,12 @@ export default defineComponent({
       selectedVisitType,
       selectedSpecimenType,
       Wards,
-      Tests,
       addOrder,
+      numberOfPages,
+      perPage,
+      page,
+      pages,
+      paginatedTests,
     };
   },
 });
