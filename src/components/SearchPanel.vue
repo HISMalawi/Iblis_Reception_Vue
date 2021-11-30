@@ -27,7 +27,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, provide, ref } from "vue";
+import { defineComponent, provide, ref, watch } from "vue";
 import toggleViews from "@/composables/toggleViews";
 import SearchPatient from "@/composables/searchPatient";
 
@@ -41,19 +41,26 @@ export default defineComponent({
     const { OpenPatientSearchResultsView } = toggleViews();
 
     const Search = () => {
-
       if (searchString.value == "") {
-        
       } else {
-
         search(searchString.value);
         OpenPatientSearchResultsView();
-        
       }
-      
-    
     };
 
+    watch(
+      () => [searchString.value != searchString.value],
+      () => {
+        setTimeout(() => {
+          
+          if (searchString.value == "") {
+          } else {
+            search(searchString.value);
+            OpenPatientSearchResultsView();
+          }
+        }, 500);
+      }
+    );
 
     return { Search, searchString };
   },
