@@ -97,8 +97,8 @@
 
           <tbody>
             <tr v-for="Test in paginatedTests" :key="Test.id">
-              <td>{{ Test.name }}</td>
-              <td><input type="checkbox" /></td>
+              <td><label :for="Test.id">{{ Test.name }}</label></td>
+              <td><input type="checkbox" :id="Test.id" :value="Test.id" v-model="checkedTests" /></td>
             </tr>
           </tbody>
         </table>
@@ -126,6 +126,8 @@ export default defineComponent({
   name: "PlaceOrder",
   components: {},
   setup() {
+
+    const checkedTests = ref<number[]>([]);
     const page = ref<number>(1);
     const perPage = ref<number>(15);
     const pages = ref<number[]>([]);
@@ -163,7 +165,10 @@ export default defineComponent({
           numberOfPages.value = 0
           
         }
+
+        checkedTests.value.length = 0
         page.value = 1
+        
         fetchTests(selectedSpecimenType.value);
       }
     );
@@ -177,7 +182,7 @@ export default defineComponent({
     );
 
     const addOrder = () => {
-      console.log(specimenTypes);
+      console.log(checkedTests.value);
     };
 
     fetchVisitTypes();
@@ -215,7 +220,7 @@ export default defineComponent({
       page,
       pages,
       paginatedTests,
-
+      checkedTests,
     };
   },
 });
