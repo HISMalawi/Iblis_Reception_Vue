@@ -7,9 +7,9 @@
 
       <div class="tabs is-medium">
         <ul>
-          <li :class="linkDetails ? 'is-active' : ''" @click="OpenPatientDetailsIn"><a>Details</a></li>
-          <li :class="linkOrder ? 'is-active' : ''" @click="OpenCreatePatientOrderIn" ><a>Order</a></li>
-          <li :class="linkViewOrder ? 'is-active' : ''" @click="OpenViewPatientOrdersIn"><a>View Order</a></li>
+          <li :class="$store.state.viewingPatientDetails ? 'is-active' : ''" @click="OpenPatientDetailsIn"><a>Details</a></li>
+          <li :class="$store.state.createPatientOrder ? 'is-active' : ''" @click="OpenCreatePatientOrderIn" ><a>Order</a></li>
+          <li :class="$store.state.viewPatientOrders ? 'is-active' : ''" @click="OpenViewPatientOrdersIn"><a>View Order</a></li>
         </ul>
       </div>
 
@@ -37,42 +37,30 @@ export default defineComponent({
   },
   setup() {
 
-    const linkDetails = ref(true)
-    const linkOrder = ref(false)
-    const linkViewOrder = ref(false)
+
 
     const { OpenPatientDetails, OpenCreatePatientOrder, OpenViewPatientOrders } = toggleViews()
 
     const OpenPatientDetailsIn = () => {
 
           OpenPatientDetails(true)
-          linkDetails.value = true
-
-          linkOrder.value = false
-          linkViewOrder.value = false
           
     }
 
     const OpenCreatePatientOrderIn = () => {
 
          OpenCreatePatientOrder(true)
-         linkOrder.value = true
-
-         linkViewOrder.value = false
-         linkDetails.value = false
+     
     }
 
     const OpenViewPatientOrdersIn = () => {
 
         OpenViewPatientOrders(true)
-        linkViewOrder.value = true
 
-        linkOrder.value = false
-        linkDetails.value = false
     }
 
     
-    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenViewPatientOrdersIn, linkDetails, linkOrder, linkViewOrder}
+    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenViewPatientOrdersIn }
   }
 });
 </script>
