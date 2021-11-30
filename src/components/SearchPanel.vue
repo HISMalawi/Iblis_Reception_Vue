@@ -38,7 +38,8 @@ export default defineComponent({
 
     const { search, patients } = SearchPatient();
 
-    const { OpenPatientSearchResultsView } = toggleViews();
+    const { OpenPatientSearchResultsView, ClosePatientSearchResultsView } =
+      toggleViews();
 
     const Search = () => {
       if (searchString.value == "") {
@@ -52,8 +53,8 @@ export default defineComponent({
       () => [searchString.value != searchString.value],
       () => {
         setTimeout(() => {
-          
           if (searchString.value == "") {
+            ClosePatientSearchResultsView();
           } else {
             search(searchString.value);
             OpenPatientSearchResultsView();
