@@ -39,6 +39,7 @@ export default defineComponent({
 
   overflow-y: auto;
   height: 1600px;
+  padding: 0 20px;
 }
 
 </style>
