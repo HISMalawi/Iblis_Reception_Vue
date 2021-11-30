@@ -139,7 +139,7 @@
       </div>
       <div class="field is-grouped">
         <div class="control">
-          <button type="submit" class="button is-link is-medium">Save</button>
+          <button type="submit" class="button is-info is-medium">Save</button>
         </div>
         <div class="control">
           <button class="button is-link is-light is-medium">Cancel</button>
