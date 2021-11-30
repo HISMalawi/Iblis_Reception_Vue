@@ -27,26 +27,55 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, provide, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import toggleViews from "@/composables/toggleViews";
 import SearchPatient from "@/composables/searchPatient";
+import { Patient } from "@/interfaces/Patient";
+import { MutationTypes, useStore } from "@/store";
 
 export default defineComponent({
   name: "SearchPanel",
   setup() {
+    const store = useStore();
+
+    const defaultPatient: Patient = {
+      address: "",
+      created_at: "",
+      created_by: 0,
+      deleted_at: "",
+      dob: "",
+      dob_estimated: 0,
+      email: "",
+      external_patient_number: "",
+      first_name_code: "",
+      gender: 0,
+      id: 0,
+      last_name_code: "",
+      name: "",
+      patient_number: "",
+      phone_number: "",
+      updated_at: "",
+    };
+
     const searchString = ref<string>("");
 
     const { search, patients } = SearchPatient();
 
-    const { OpenPatientSearchResultsView, ClosePatientSearchResultsView } =
-      toggleViews();
+    const {
+      OpenPatientSearchResultsView,
+      ClosePatientSearchResultsView,
+      OpenPatientDetails,
+    } = toggleViews();
 
     const Search = () => {
       if (searchString.value == "") {
       } else {
         search(searchString.value);
+        OpenPatientDetails(false);
         OpenPatientSearchResultsView();
       }
+
+      store.commit(MutationTypes.SET_SELECTED_PATIENT, defaultPatient);
     };
 
     watch(
@@ -54,11 +83,15 @@ export default defineComponent({
       () => {
         setTimeout(() => {
           if (searchString.value == "") {
+            OpenPatientDetails(false);
             ClosePatientSearchResultsView();
           } else {
             search(searchString.value);
+            OpenPatientDetails(false);
             OpenPatientSearchResultsView();
           }
+
+          store.commit(MutationTypes.SET_SELECTED_PATIENT, defaultPatient);
         }, 500);
       }
     );
