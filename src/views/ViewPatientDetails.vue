@@ -42,11 +42,11 @@
       <label class="label">Sex</label>
       <div class="control">
         <label class="radio">
-          <input disabled type="radio" name="question" />
+          <input disabled type="radio" name="question" :checked="$store.state.selectedPatient.gender == 0"/>
           Male
         </label>
         <label class="radio">
-          <input disabled type="radio" name="question" />
+          <input disabled type="radio" name="question" :checked="$store.state.selectedPatient.gender == 1" />
           Female
         </label>
       </div>

@@ -4,6 +4,7 @@
       v-for="patient in patients"
       :key="patient.id"
       class="media is-clickable py-5"
+      :class="patient.id == $store.state.selectedPatient.id ? 'selected' : ''"
       v-on:click="showPatientDetails(patient)"
     >
       <div class="media-left" v-if="patient.gender == 0">
@@ -51,6 +52,10 @@ export default defineComponent({
 
     const showPatientDetails = (patient: Patient) => {
 
+      let formattedPatient: Patient = patient
+
+      formattedPatient.dob = patient.dob == null ?  '' : patient.dob.replace(/T/, ' ').replace(/\..+/, '').substr(0,10) 
+     
       store.commit(MutationTypes.SET_SELECTED_PATIENT, patient)
 
       OpenPatientDetails(true)
@@ -66,4 +71,13 @@ export default defineComponent({
   .patient-search-result {
     padding-top: 15px;
   }
+
+  .patient-search-result .media:hover {
+    background-color: rgba(0, 0, 0, 0.185);
+  }
+
+  .patient-search-result > .selected {
+    background-color: rgba(0, 0, 0, 0.185);
+  }
+
 </style>
