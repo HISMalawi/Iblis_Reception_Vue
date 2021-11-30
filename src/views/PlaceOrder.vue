@@ -119,10 +119,11 @@
           <tbody>
             <tr v-for="Test in paginatedTests" :key="Test.id">
               <td>
-                <label :for="Test.id">{{ Test.name }}</label>
+                <label class= "order_tests" :for="Test.id">{{ Test.name }}</label>
               </td>
               <td>
                 <input
+                  class= "order_tests"
                   type="checkbox"
                   :id="Test.id"
                   :value="Test.id"
@@ -318,3 +319,9 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.order_tests:hover {
+  cursor: pointer;
+}
+
+</style>
