@@ -1,10 +1,10 @@
 <template>
   <div class="content has-text-left">
     <form @submit.prevent="addOrder">
-      <div class="field">
+      <div class="field mb-5">
         <label class="label">Visit Type</label>
         <div class="control">
-          <div class="select is-medium is-fullwidth">
+          <div class="select is-medium is-fullwidth" :class="errors.includes('visit_type') ? 'is-danger': ''">
             <select v-model="selectedVisitType">
               <option :value="0">--- Select Visit Type ---</option>
               <option
@@ -17,11 +17,14 @@
             </select>
           </div>
         </div>
+        <p v-if="errors.includes('visit_type')" class="help is-danger">
+          Visit Type is required
+        </p>
       </div>
-      <div class="field">
+      <div class="field mb-5">
         <label class="label">Requesting Ward / Location</label>
         <div class="control">
-          <div class="select is-medium is-fullwidth">
+          <div class="select is-medium is-fullwidth" :class="errors.includes('requesting_location') ? 'is-danger': ''">
             <select v-model="selectedWard">
               <option :value="0">--- Select Ward / Location ---</option>
               <option :value="ward.id" v-for="ward in Wards" :key="ward.id">
@@ -30,21 +33,27 @@
             </select>
           </div>
         </div>
+        <p v-if="errors.includes('requesting_location')" class="help is-danger">
+          Requesting Ward / Location is required
+        </p>
       </div>
-      <div class="field">
+      <div class="field mb-5">
         <label class="label">Requesting Physician</label>
         <div class="control has-icons-right">
-          <input class="input is-success is-medium" type="text" />
+          <input v-model="requestingPhysician" class="input is-success is-medium" :class="errors.includes('requesting_physician') ? 'is-danger': ''" type="text" />
 
           <span class="icon is-small is-right">
             <i class="fas fa-check"></i>
           </span>
         </div>
+        <p v-if="errors.includes('requesting_physician')" class="help is-danger">
+          Requesting Physician is required
+        </p>
       </div>
       <div class="field mb-6">
         <label class="label">Specimen Type</label>
         <div class="control">
-          <div class="select is-medium is-fullwidth">
+          <div class="select is-medium is-fullwidth" :class="errors.includes('specimen_type') ? 'is-danger': ''">
             <select v-model="selectedSpecimenType">
               <option :value="0">--- Select Specimen Type ---</option>
               <option
@@ -57,6 +66,9 @@
             </select>
           </div>
         </div>
+        <p v-if="errors.includes('specimen_type')" class="help is-danger">
+          Specimen Type is required
+        </p>
       </div>
       <div class="field mb-6">
         <label class="label">Select Test(s)</label>
@@ -77,14 +89,23 @@
                 >Previous</a
               >
               <a
-                v-if="page < pages.length && numberOfPages > 1 && numberOfPages !== page"
+                v-if="
+                  page < pages.length &&
+                  numberOfPages > 1 &&
+                  numberOfPages !== page
+                "
                 class="pagination-next"
                 @click="page++"
                 >Next page</a
               >
               <ul class="pagination-list">
-                <li v-for="pagex in numberOfPages" :key="pagex" @click="page = pagex">
-                  <a :class="page == pagex ? 'is-current' : ''"
+                <li
+                  v-for="pagex in numberOfPages"
+                  :key="pagex"
+                  @click="page = pagex"
+                >
+                  <a
+                    :class="page == pagex ? 'is-current' : ''"
                     class="pagination-link"
                     aria-label="Page 1"
                     aria-current="page"
@@ -97,11 +118,23 @@
 
           <tbody>
             <tr v-for="Test in paginatedTests" :key="Test.id">
-              <td><label :for="Test.id">{{ Test.name }}</label></td>
-              <td><input type="checkbox" :id="Test.id" :value="Test.id" v-model="checkedTests" /></td>
+              <td>
+                <label :for="Test.id">{{ Test.name }}</label>
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  :id="Test.id"
+                  :value="Test.id"
+                  v-model="checkedTests"
+                />
+              </td>
             </tr>
           </tbody>
         </table>
+        <p v-if="errors.includes('tests')" class="help is-danger">
+          Test(s) is required
+        </p>
       </div>
       <div class="field is-grouped">
         <div class="control">
@@ -126,12 +159,13 @@ export default defineComponent({
   name: "PlaceOrder",
   components: {},
   setup() {
-
     const checkedTests = ref<number[]>([]);
     const page = ref<number>(1);
     const perPage = ref<number>(15);
     const pages = ref<number[]>([]);
     const numberOfPages = ref<number>(0);
+
+    const errors = ref<string[]>([]);
 
     const { fetchTests, Tests } = GetTests();
 
@@ -145,11 +179,15 @@ export default defineComponent({
 
     const selectedSpecimenType = ref(0);
 
+    const requestingPhysician = ref('');
+
     const { Wards, fetchWards } = GetWards();
 
     watch(
       () => [selectedVisitType.value != selectedVisitType.value],
       () => {
+
+        removeError('visit_type')
         selectedWard.value = 0;
 
         fetchWards(selectedVisitType.value);
@@ -157,18 +195,26 @@ export default defineComponent({
     );
 
     watch(
+      () => [selectedWard.value != selectedWard.value],
+      () => {
+
+        removeError('requesting_location')
+      }
+    );
+
+    watch(
       () => [selectedSpecimenType.value != selectedSpecimenType.value],
       () => {
         if (selectedSpecimenType.value == 0) {
-          
-          Tests.value.length = 0
-          numberOfPages.value = 0
-          
+          Tests.value.length = 0;
+          numberOfPages.value = 0;
         }
 
-        checkedTests.value.length = 0
-        page.value = 1
-        
+        removeError('specimen_type')
+
+        checkedTests.value.length = 0;
+        page.value = 1;
+
         fetchTests(selectedSpecimenType.value);
       }
     );
@@ -176,14 +222,23 @@ export default defineComponent({
     watch(
       () => [Tests.value != Tests.value],
       () => {
-
         setPages();
       }
     );
 
-    const addOrder = () => {
-      console.log(checkedTests.value);
-    };
+    watch(
+      () => [requestingPhysician.value != requestingPhysician.value],
+      () => {
+        removeError('requesting_physician')
+      }
+    );
+
+    watch(
+      () => [checkedTests.value != checkedTests.value],
+      () => {
+        removeError('tests')
+      }
+    );
 
     fetchVisitTypes();
     fetchSpecimenTypes();
@@ -204,8 +259,44 @@ export default defineComponent({
     });
 
     onBeforeMount(() => {
-      paginatedTests.value.length = 0
-    })
+      paginatedTests.value.length = 0;
+    });
+
+    const removeError = (value: string) => {
+      const index = errors.value.indexOf(value);
+      if (index > -1) {
+        errors.value.splice(index, 1);
+      }
+    };
+
+    const addOrder = () => {
+
+      if (selectedVisitType.value == 0) {
+        errors.value.push("visit_type");
+      }
+
+      if (selectedWard.value == 0) {
+        errors.value.push("requesting_location");
+      }
+
+      if (requestingPhysician.value == '') {
+        errors.value.push("requesting_physician");
+      }
+
+      if (selectedSpecimenType.value == 0) {
+        errors.value.push("specimen_type");
+      }
+
+      if (checkedTests.value.length == 0) {
+        errors.value.push("tests");
+      }
+      
+      if (errors.value.length == 0) {
+
+        console.log("Add Order...")
+        
+      }
+    };
 
     return {
       visitTypes,
@@ -221,6 +312,8 @@ export default defineComponent({
       pages,
       paginatedTests,
       checkedTests,
+      errors,
+      requestingPhysician,
     };
   },
 });
