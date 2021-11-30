@@ -9,7 +9,7 @@
         <ul>
           <li :class="$store.state.viewingPatientDetails ? 'is-active' : ''" @click="OpenPatientDetailsIn"><a>Details</a></li>
           <li :class="$store.state.createPatientOrder ? 'is-active' : ''" @click="OpenCreatePatientOrderIn" ><a>Order</a></li>
-          <li :class="$store.state.viewPatientOrders ? 'is-active' : ''" @click="OpenViewPatientOrdersIn"><a>View Order</a></li>
+          <li :class="$store.state.viewPatientOrders ? 'is-active' : ''" @click="OpenViewPatientOrdersIn"><a>View Orders</a></li>
         </ul>
       </div>
 
