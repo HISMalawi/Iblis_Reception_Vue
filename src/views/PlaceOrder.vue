@@ -4,7 +4,10 @@
       <div class="field mb-5">
         <label class="label">Visit Type</label>
         <div class="control">
-          <div class="select is-medium is-fullwidth" :class="errors.includes('visit_type') ? 'is-danger': ''">
+          <div
+            class="select is-medium is-fullwidth"
+            :class="errors.includes('visit_type') ? 'is-danger' : ''"
+          >
             <select v-model="selectedVisitType">
               <option :value="0">--- Select Visit Type ---</option>
               <option
@@ -24,7 +27,10 @@
       <div class="field mb-5">
         <label class="label">Requesting Ward / Location</label>
         <div class="control">
-          <div class="select is-medium is-fullwidth" :class="errors.includes('requesting_location') ? 'is-danger': ''">
+          <div
+            class="select is-medium is-fullwidth"
+            :class="errors.includes('requesting_location') ? 'is-danger' : ''"
+          >
             <select v-model="selectedWard">
               <option :value="0">--- Select Ward / Location ---</option>
               <option :value="ward.id" v-for="ward in Wards" :key="ward.id">
@@ -40,20 +46,31 @@
       <div class="field mb-5">
         <label class="label">Requesting Physician</label>
         <div class="control has-icons-right">
-          <input v-model="requestingPhysician" class="input is-success is-medium" :class="errors.includes('requesting_physician') ? 'is-danger': ''" type="text" />
+          <input
+            v-model="requestingPhysician"
+            class="input is-success is-medium"
+            :class="errors.includes('requesting_physician') ? 'is-danger' : ''"
+            type="text"
+          />
 
           <span class="icon is-small is-right">
             <i class="fas fa-check"></i>
           </span>
         </div>
-        <p v-if="errors.includes('requesting_physician')" class="help is-danger">
+        <p
+          v-if="errors.includes('requesting_physician')"
+          class="help is-danger"
+        >
           Requesting Physician is required
         </p>
       </div>
       <div class="field mb-6">
         <label class="label">Specimen Type</label>
         <div class="control">
-          <div class="select is-medium is-fullwidth" :class="errors.includes('specimen_type') ? 'is-danger': ''">
+          <div
+            class="select is-medium is-fullwidth"
+            :class="errors.includes('specimen_type') ? 'is-danger' : ''"
+          >
             <select v-model="selectedSpecimenType">
               <option :value="0">--- Select Specimen Type ---</option>
               <option
@@ -80,7 +97,11 @@
             </tr>
           </thead>
           <tfoot>
-            <nav class="pagination mb-4" role="navigation" aria-label="pagination">
+            <nav
+              class="pagination mb-4"
+              role="navigation"
+              aria-label="pagination"
+            >
               <a
                 v-if="page != 1"
                 @click="page--"
@@ -119,11 +140,13 @@
           <tbody>
             <tr v-for="Test in paginatedTests" :key="Test.id">
               <td>
-                <label class= "order_tests" :for="Test.id">{{ Test.name }}</label>
+                <label class="order_tests" :for="Test.id">{{
+                  Test.name
+                }}</label>
               </td>
               <td>
                 <input
-                  class= "order_tests"
+                  class="order_tests cb"
                   type="checkbox"
                   :id="Test.id"
                   :value="Test.id"
@@ -139,7 +162,9 @@
       </div>
       <div class="field is-grouped">
         <div class="control">
-          <button type="submit" class="button is-primary is-medium">Save</button>
+          <button type="submit" class="button is-primary is-medium">
+            Save
+          </button>
         </div>
         <div class="control">
           <button class="button is-link is-light is-medium">Cancel</button>
@@ -180,15 +205,14 @@ export default defineComponent({
 
     const selectedSpecimenType = ref(0);
 
-    const requestingPhysician = ref('');
+    const requestingPhysician = ref("");
 
     const { Wards, fetchWards } = GetWards();
 
     watch(
       () => [selectedVisitType.value != selectedVisitType.value],
       () => {
-
-        removeError('visit_type')
+        removeError("visit_type");
         selectedWard.value = 0;
 
         fetchWards(selectedVisitType.value);
@@ -198,8 +222,7 @@ export default defineComponent({
     watch(
       () => [selectedWard.value != selectedWard.value],
       () => {
-
-        removeError('requesting_location')
+        removeError("requesting_location");
       }
     );
 
@@ -211,7 +234,7 @@ export default defineComponent({
           numberOfPages.value = 0;
         }
 
-        removeError('specimen_type')
+        removeError("specimen_type");
 
         checkedTests.value.length = 0;
         page.value = 1;
@@ -230,14 +253,14 @@ export default defineComponent({
     watch(
       () => [requestingPhysician.value != requestingPhysician.value],
       () => {
-        removeError('requesting_physician')
+        removeError("requesting_physician");
       }
     );
 
     watch(
       () => [checkedTests.value != checkedTests.value],
       () => {
-        removeError('tests')
+        removeError("tests");
       }
     );
 
@@ -271,7 +294,6 @@ export default defineComponent({
     };
 
     const addOrder = () => {
-
       if (selectedVisitType.value == 0) {
         errors.value.push("visit_type");
       }
@@ -280,7 +302,7 @@ export default defineComponent({
         errors.value.push("requesting_location");
       }
 
-      if (requestingPhysician.value == '') {
+      if (requestingPhysician.value == "") {
         errors.value.push("requesting_physician");
       }
 
@@ -291,11 +313,9 @@ export default defineComponent({
       if (checkedTests.value.length == 0) {
         errors.value.push("tests");
       }
-      
-      if (errors.value.length == 0) {
 
-        console.log("Add Order...")
-        
+      if (errors.value.length == 0) {
+        console.log("Add Order...");
       }
     };
 
@@ -324,4 +344,16 @@ export default defineComponent({
   cursor: pointer;
 }
 
+.cb {
+  width: 17px;
+  height: 17px;
+}
+
+.pagination-next {
+  text-decoration: none !important;
+}
+
+.pagination-previous {
+  text-decoration: none !important;
+}
 </style>

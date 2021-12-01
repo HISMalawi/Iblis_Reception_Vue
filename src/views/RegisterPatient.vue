@@ -8,7 +8,7 @@
 
         <div v-if="code !== ''" class="notification is-primary">
           <button class="delete"></button>
-          {{message}}
+          {{ message }}
         </div>
 
         <div class="content has-text-left">
@@ -234,14 +234,13 @@ export default defineComponent({
   name: "RegisterPatient",
   components: {},
   setup() {
-
-    const { save, code ,message } = AddPatient();
+    const { save, code, message } = AddPatient();
 
     const errors = ref<string[]>([]);
 
     const { ClosePatientRegForm } = toggleViews();
 
-    const age = ref('');
+    const age = ref("");
 
     const patientDetails: PatientReg = reactive({
       externalPatientNumber: "",
@@ -273,17 +272,14 @@ export default defineComponent({
         patientDetails.physicalAddress,
         patientDetails.phoneNumber,
         patientDetails.email,
-
       ],
       () => {
-        code.value = ""
+        code.value = "";
       }
     );
 
     watch(
-      () => [
-        patientDetails.externalPatientNumber
-      ],
+      () => [patientDetails.externalPatientNumber],
       () => {
         removeError("external_number");
       }
@@ -348,8 +344,7 @@ export default defineComponent({
     );
 
     const SavePatient = () => {
-
-      errors.value.length = 0
+      errors.value.length = 0;
 
       if (patientDetails.externalPatientNumber == "") {
         errors.value.push("external_number");
@@ -394,24 +389,29 @@ export default defineComponent({
 
         save(patientDetails);
 
-        patientDetails.externalPatientNumber = ""
-        patientDetails.firstname = ""
-        patientDetails.lastname = ""
-        patientDetails.dob = ""
-        age.value = ""
-        patientDetails.gender = ""
-        patientDetails.physicalAddress = ""
-        patientDetails.phoneNumber = ""
-        patientDetails.email = ""
-
+        patientDetails.externalPatientNumber = "";
+        patientDetails.firstname = "";
+        patientDetails.lastname = "";
+        patientDetails.dob = "";
+        age.value = "";
+        patientDetails.gender = "";
+        patientDetails.physicalAddress = "";
+        patientDetails.phoneNumber = "";
+        patientDetails.email = "";
       }
     };
 
-    return { ClosePatientRegForm, patientDetails, age, errors, SavePatient, code, message };
+    return {
+      ClosePatientRegForm,
+      patientDetails,
+      age,
+      errors,
+      SavePatient,
+      code,
+      message,
+    };
   },
 });
 </script>
 
-<style>
-
-</style>
+<style></style>
