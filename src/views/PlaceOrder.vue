@@ -210,7 +210,7 @@ export default defineComponent({
     const { Wards, fetchWards } = GetWards();
 
     watch(
-      () => [selectedVisitType.value != selectedVisitType.value],
+      () => [selectedVisitType.value],
       () => {
         removeError("visit_type");
         selectedWard.value = 0;
@@ -220,14 +220,14 @@ export default defineComponent({
     );
 
     watch(
-      () => [selectedWard.value != selectedWard.value],
+      () => [selectedWard.value],
       () => {
         removeError("requesting_location");
       }
     );
 
     watch(
-      () => [selectedSpecimenType.value != selectedSpecimenType.value],
+      () => [selectedSpecimenType.value],
       () => {
         if (selectedSpecimenType.value == 0) {
           Tests.value.length = 0;
@@ -244,21 +244,21 @@ export default defineComponent({
     );
 
     watch(
-      () => [Tests.value != Tests.value],
+      () => [Tests.value],
       () => {
         setPages();
       }
     );
 
     watch(
-      () => [requestingPhysician.value != requestingPhysician.value],
+      () => [requestingPhysician.value],
       () => {
         removeError("requesting_physician");
       }
     );
 
     watch(
-      () => [checkedTests.value != checkedTests.value],
+      () => [checkedTests.value],
       () => {
         removeError("tests");
       }
@@ -296,7 +296,7 @@ export default defineComponent({
     const addOrder = () => {
 
       errors.value.length == 0
-      
+
       if (selectedVisitType.value == 0) {
         errors.value.push("visit_type");
       }
