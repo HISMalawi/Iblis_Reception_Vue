@@ -13,7 +13,7 @@
 
         <div class="content has-text-left">
           <!-- Content -->
-          <form ref="form" @submit.prevent="SavePatient">
+          <form @submit.prevent="SavePatient">
             <div class="field">
               <label class="label">External Patient No.</label>
               <div class="control has-icons-right">
@@ -235,8 +235,6 @@ export default defineComponent({
   components: {},
   setup() {
 
-    const form = ref(null)
-
     const { save, code ,message } = AddPatient();
 
     const errors = ref<string[]>([]);
@@ -350,7 +348,7 @@ export default defineComponent({
     );
 
     const SavePatient = () => {
-      
+
       errors.value.length = 0
 
       if (patientDetails.externalPatientNumber == "") {
@@ -409,7 +407,7 @@ export default defineComponent({
       }
     };
 
-    return { form, ClosePatientRegForm, patientDetails, age, errors, SavePatient, code, message };
+    return { ClosePatientRegForm, patientDetails, age, errors, SavePatient, code, message };
   },
 });
 </script>
