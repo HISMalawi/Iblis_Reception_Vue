@@ -294,6 +294,9 @@ export default defineComponent({
     };
 
     const addOrder = () => {
+
+      errors.value.length == 0
+      
       if (selectedVisitType.value == 0) {
         errors.value.push("visit_type");
       }
