@@ -54,9 +54,15 @@ export default defineComponent({
 
       let formattedPatient: Patient = patient
 
-      formattedPatient.dob = patient.dob == null ?  '' : patient.dob.replace(/T/, ' ').replace(/\..+/, '').substr(0,10) 
-     
-      store.commit(MutationTypes.SET_SELECTED_PATIENT, patient)
+      if (patient.dob == null) {
+         formattedPatient.dob = ''
+      } else {
+
+        formattedPatient.dob = patient.dob.length > 10 ? patient.dob.replace(/T/, ' ').replace(/\..+/, '').substr(0,10) : patient.dob
+
+      }
+
+      store.commit(MutationTypes.SET_SELECTED_PATIENT, formattedPatient)
 
       OpenPatientDetails(true)
 

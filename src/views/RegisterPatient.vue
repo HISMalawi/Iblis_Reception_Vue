@@ -1,10 +1,16 @@
 <template>
   <div class="tile is-4 is-parent">
     <article
-      class="patient-details-card card tile is-child notification is-primary"
+      class="patient-details-card custom-bg card tile is-child notification"
     >
       <div class="content">
         <p class="subtitle">Register Patient</p>
+
+        <div v-if="code !== ''" class="notification is-primary">
+          <button class="delete"></button>
+          {{message}}
+        </div>
+
         <div class="content has-text-left">
           <!-- Content -->
           <form @submit.prevent="SavePatient">
@@ -22,7 +28,12 @@
                   <i class="fas fa-check"></i>
                 </span>
               </div>
-              <p v-if="errors.includes('external_number')" class="help is-danger">This External No is invalid</p>
+              <p
+                v-if="errors.includes('external_number')"
+                class="help is-danger"
+              >
+                This External No is invalid
+              </p>
             </div>
             <div class="field">
               <label class="label">First Name</label>
@@ -88,9 +99,9 @@
               <label class="label">Age</label>
               <div class="control has-icons-right">
                 <input
-                  v-model="patientDetails.age"
+                  v-model="age"
                   class="input is-success is-medium"
-                  type="text"
+                  type="number"
                   :class="errors.includes('age') ? 'is-danger' : ''"
                 />
                 <span class="icon is-small is-left">
@@ -186,12 +197,14 @@
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
               </div>
-              <p v-if="errors.includes('email')" class="help is-danger">Email is required</p>
+              <p v-if="errors.includes('email')" class="help is-danger">
+                Email is required
+              </p>
             </div>
 
             <div class="field is-grouped">
               <div class="control">
-                <button type="submit" class="button is-link is-medium">
+                <button type="submit" class="button is-primary is-medium">
                   Save
                 </button>
               </div>
@@ -215,14 +228,19 @@
 import { defineComponent, reactive, ref, watch } from "vue";
 import toggleViews from "@/composables/toggleViews";
 import { PatientReg } from "@/interfaces/PatientReg";
+import AddPatient from "@/composables/addPatient";
 
 export default defineComponent({
   name: "RegisterPatient",
   components: {},
   setup() {
+    const { save, code ,message } = AddPatient();
+
     const errors = ref<string[]>([]);
 
     const { ClosePatientRegForm } = toggleViews();
+
+    const age = ref('');
 
     const patientDetails: PatientReg = reactive({
       externalPatientNumber: "",
@@ -244,7 +262,20 @@ export default defineComponent({
     };
 
     watch(
-      () => [patientDetails.externalPatientNumber != patientDetails.externalPatientNumber],
+      () => [
+        patientDetails !=
+          patientDetails,
+      ],
+      () => {
+        code.value = ""
+      }
+    );
+
+    watch(
+      () => [
+        patientDetails.externalPatientNumber !=
+          patientDetails.externalPatientNumber,
+      ],
       () => {
         removeError("external_number");
       }
@@ -273,7 +304,7 @@ export default defineComponent({
     );
 
     watch(
-      () => [patientDetails.age != patientDetails.age],
+      () => [age.value != age.value],
       () => {
         removeError("age");
         removeError("dob");
@@ -309,7 +340,6 @@ export default defineComponent({
     );
 
     const SavePatient = () => {
-
       if (patientDetails.externalPatientNumber == "") {
         errors.value.push("external_number");
       }
@@ -322,11 +352,11 @@ export default defineComponent({
         errors.value.push("lastname");
       }
 
-      if (patientDetails.dob == "" && patientDetails.age == -1) {
+      if (patientDetails.dob == "" && age.value == "") {
         errors.value.push("dob");
       }
 
-      if (patientDetails.age == -1 && patientDetails.dob == "") {
+      if (age.value == "" && patientDetails.dob == "") {
         errors.value.push("age");
       }
 
@@ -347,15 +377,30 @@ export default defineComponent({
       }
 
       if (errors.value.length == 0) {
+        if (patientDetails.dob == "" && age.value !== null) {
+          patientDetails.age = Number(age.value);
+        }
 
-        console.log("Add Patient..")
-        
+        save(patientDetails);
+
+        patientDetails.externalPatientNumber = ""
+        patientDetails.firstname = ""
+        patientDetails.lastname = ""
+        patientDetails.dob = ""
+        age.value = ""
+        patientDetails.gender = ""
+        patientDetails.physicalAddress = ""
+        patientDetails.phoneNumber = ""
+        patientDetails.email = ""
+
       }
     };
 
-    return { ClosePatientRegForm, patientDetails, errors, SavePatient };
+    return { ClosePatientRegForm, patientDetails, age, errors, SavePatient, code, message };
   },
 });
 </script>
 
-<style></style>
+<style>
+
+</style>

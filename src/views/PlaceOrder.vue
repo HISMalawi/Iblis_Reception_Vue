@@ -72,7 +72,7 @@
       </div>
       <div class="field mb-6">
         <label class="label">Select Test(s)</label>
-        <table class="table">
+        <table class="table custom-bg">
           <thead>
             <tr>
               <th>Tests</th>
@@ -80,7 +80,7 @@
             </tr>
           </thead>
           <tfoot>
-            <nav class="pagination" role="navigation" aria-label="pagination">
+            <nav class="pagination mb-4" role="navigation" aria-label="pagination">
               <a
                 v-if="page != 1"
                 @click="page--"
@@ -139,7 +139,7 @@
       </div>
       <div class="field is-grouped">
         <div class="control">
-          <button type="submit" class="button is-info is-medium">Save</button>
+          <button type="submit" class="button is-primary is-medium">Save</button>
         </div>
         <div class="control">
           <button class="button is-link is-light is-medium">Cancel</button>

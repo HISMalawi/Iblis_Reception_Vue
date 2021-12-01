@@ -1,5 +1,5 @@
 <template>
-  <div class="search-card card tile is-child notification is-primary">
+  <div class="search-card custom-bg card tile is-child notification">
     <div class="card-content control has-icons-left has-icons-right">
       <div class="content">
         <div class="field has-addons">
@@ -12,7 +12,7 @@
             />
           </div>
           <div class="control">
-            <a @click="Search" class="button is-info is-medium"> Search </a>
+            <a @click="Search" class="button is-primary is-medium"> Search </a>
           </div>
         </div>
       </div>

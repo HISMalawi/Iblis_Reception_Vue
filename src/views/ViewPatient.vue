@@ -1,7 +1,7 @@
 <template>
   <div class="patient-details tile is-5 is-parent">
     <article
-      class="search-results-card card tile is-child notification"
+      class="search-results-card custom-bg card tile is-child notification"
     >
       <p class="subtitle">{{ $store.state.selectedPatient.name }}</p>
 
@@ -72,4 +72,5 @@ export default defineComponent({
   text-decoration: none !important;
 
 }
+
 </style>

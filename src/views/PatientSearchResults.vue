@@ -1,7 +1,7 @@
 <template>
   <div class="tile is-4 is-parent">
-    <article class="patient-search-results tile is-child notification">
-      <p class="pageTitle subtitle card">Search Results</p>
+    <article class="patient-search-results custom-bg tile is-child notification">
+      <p class="pageTitle subtitle">Search Results</p>
     
         <div class="content has-text-left">
           <!-- Content -->
@@ -25,15 +25,12 @@ export default defineComponent({
 </script>
 
 <style>
-.patient-search-results {
-  background: none !important;
-  
-}
 
-.patient-search-results .pageTitle {
+
+/* .patient-search-results .pageTitle {
   padding: 20px 10px;
   margin-top: 0px;
-}
+} */
 
 .patient-search-results .content{
 

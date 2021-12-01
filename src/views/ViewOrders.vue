@@ -9,7 +9,7 @@
         />
       </p>
       <p class="control">
-        <a class="button is-info is-medium"> Search </a>
+        <a class="button is-primary is-medium"> Search </a>
       </p>
     </div>
 

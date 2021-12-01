@@ -25,6 +25,8 @@ const user: User = {
   token: "",
 };
 
+// const date: Date = new Date();
+
 const patient: Patient = {
   address: "",
   created_at: "",
