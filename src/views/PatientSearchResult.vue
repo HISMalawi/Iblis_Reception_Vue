@@ -79,7 +79,7 @@ export default defineComponent({
   }
 
   .patient-search-result .media:hover {
-    background-color: rgba(0, 0, 0, 0.185);
+    background-color: rgba(0, 0, 0, 0.075);
   }
 
   .patient-search-result > .selected {
