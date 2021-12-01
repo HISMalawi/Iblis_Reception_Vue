@@ -13,7 +13,7 @@
 
         <div class="content has-text-left">
           <!-- Content -->
-          <form @submit.prevent="SavePatient">
+          <form ref="form" @submit.prevent="SavePatient">
             <div class="field">
               <label class="label">External Patient No.</label>
               <div class="control has-icons-right">
@@ -234,6 +234,9 @@ export default defineComponent({
   name: "RegisterPatient",
   components: {},
   setup() {
+
+    const form = ref(null)
+
     const { save, code ,message } = AddPatient();
 
     const errors = ref<string[]>([]);
@@ -263,8 +266,16 @@ export default defineComponent({
 
     watch(
       () => [
-        patientDetails !=
-          patientDetails,
+        patientDetails.externalPatientNumber,
+        patientDetails.firstname,
+        patientDetails.lastname,
+        patientDetails.dob,
+        age.value,
+        patientDetails.gender,
+        patientDetails.physicalAddress,
+        patientDetails.phoneNumber,
+        patientDetails.email,
+
       ],
       () => {
         code.value = ""
@@ -273,8 +284,7 @@ export default defineComponent({
 
     watch(
       () => [
-        patientDetails.externalPatientNumber !=
-          patientDetails.externalPatientNumber,
+        patientDetails.externalPatientNumber
       ],
       () => {
         removeError("external_number");
@@ -282,21 +292,21 @@ export default defineComponent({
     );
 
     watch(
-      () => [patientDetails.firstname != patientDetails.firstname],
+      () => [patientDetails.firstname],
       () => {
         removeError("firstname");
       }
     );
 
     watch(
-      () => [patientDetails.lastname != patientDetails.lastname],
+      () => [patientDetails.lastname],
       () => {
         removeError("lastname");
       }
     );
 
     watch(
-      () => [patientDetails.dob != patientDetails.dob],
+      () => [patientDetails.dob],
       () => {
         removeError("dob");
         removeError("age");
@@ -304,7 +314,7 @@ export default defineComponent({
     );
 
     watch(
-      () => [age.value != age.value],
+      () => [age.value],
       () => {
         removeError("age");
         removeError("dob");
@@ -312,34 +322,37 @@ export default defineComponent({
     );
 
     watch(
-      () => [patientDetails.gender != patientDetails.gender],
+      () => [patientDetails.gender],
       () => {
         removeError("gender");
       }
     );
 
     watch(
-      () => [patientDetails.physicalAddress != patientDetails.physicalAddress],
+      () => [patientDetails.physicalAddress],
       () => {
         removeError("address");
       }
     );
 
     watch(
-      () => [patientDetails.phoneNumber != patientDetails.phoneNumber],
+      () => [patientDetails.phoneNumber],
       () => {
         removeError("phone");
       }
     );
 
     watch(
-      () => [patientDetails.email != patientDetails.email],
+      () => [patientDetails.email],
       () => {
         removeError("email");
       }
     );
 
     const SavePatient = () => {
+      
+      errors.value.length = 0
+
       if (patientDetails.externalPatientNumber == "") {
         errors.value.push("external_number");
       }
@@ -396,7 +409,7 @@ export default defineComponent({
       }
     };
 
-    return { ClosePatientRegForm, patientDetails, age, errors, SavePatient, code, message };
+    return { form, ClosePatientRegForm, patientDetails, age, errors, SavePatient, code, message };
   },
 });
 </script>
