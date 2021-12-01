@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, watchEffect } from "vue";
+import { defineComponent, reactive, watchEffect } from "vue";
 import { AuthRequest } from "@/interfaces/AuthRequest";
 import { useRouter } from "vue-router";
 import { useStore } from "@/store";

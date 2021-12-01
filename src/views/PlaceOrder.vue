@@ -149,7 +149,7 @@
                   class="order_tests cb"
                   type="checkbox"
                   :id="Test.id"
-                  :value="Test.id"
+                  :value="Test"
                   v-model="checkedTests"
                 />
               </td>
@@ -180,12 +180,24 @@ import GetVisitTypes from "@/composables/getVisitTypes";
 import GetSpecimenTypes from "@/composables/getSpecimenTypes";
 import GetWards from "@/composables/getWards";
 import GetTests from "@/composables/getTests";
+import { Order } from "@/interfaces/Order";
+import { Test } from "@/interfaces/Test";
+import CreateOrder from "@/composables/createOrder";
+import { MutationTypes, useStore } from "@/store";
+import { Patient } from "@/interfaces/Patient";
 
 export default defineComponent({
   name: "PlaceOrder",
   components: {},
   setup() {
-    const checkedTests = ref<number[]>([]);
+
+    const store = useStore()
+
+    let selectedPatient: Patient = store.getters.selectedPatient
+
+    const { save, message, code  } = CreateOrder()
+
+    const checkedTests = ref<Test[]>([]);
     const page = ref<number>(1);
     const perPage = ref<number>(15);
     const pages = ref<number[]>([]);
@@ -318,7 +330,18 @@ export default defineComponent({
       }
 
       if (errors.value.length == 0) {
-        console.log("Add Order...");
+        let order: Order = {
+          visit_type_id: selectedVisitType.value,
+          requesting_location_id:selectedWard.value,
+          requesting_physician: requestingPhysician.value,
+          specimen_type_id: selectedSpecimenType.value,
+          tests: checkedTests.value,
+          patient:selectedPatient,
+        };
+
+        save(order)
+
+        console.log(message)
       }
     };
 

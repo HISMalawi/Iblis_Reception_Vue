@@ -1,10 +1,8 @@
 import { ref } from "vue";
 import { useStore } from "@/store";
-import { Test } from "@/interfaces/Test";
+import { Order } from "@/interfaces/Order";
 
 const store = useStore();
-
-const Tests = ref<Test[]>([]);
 
 const createOrder = () => {
 
@@ -15,11 +13,11 @@ const createOrder = () => {
   const message = ref<string>("");
   const code = ref<string>("");
 
-  const fetchTests = (specimen_type_id: number) => {
+  const save = (order: Order) => {
     axios.value
-      .post("/tests", {
+      .put("/orders/create", {
         token: token.value,
-        specimen_type_id:specimen_type_id,
+        order:order,
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
@@ -31,11 +29,12 @@ const createOrder = () => {
 
           if (code.value == "200") {
 
-            Tests.value = responseData[0]
+            message.value = response.data.message;
+
+          } else {
 
             message.value = response.data.message;
-          } else {
-            message.value = response.data.message;
+            
           }
 
         }
@@ -45,7 +44,7 @@ const createOrder = () => {
       });
   };
 
-  return { fetchTests, message, Tests };
+  return { save, message, code };
 };
 
 
