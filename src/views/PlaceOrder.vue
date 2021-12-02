@@ -173,7 +173,7 @@
           </button>
         </div>
         <div class="control">
-          <button class="button is-link is-light is-medium">Cancel</button>
+          <button @click="ClearForm"  type="reset" class="button is-link is-light is-medium">Cancel</button>
         </div>
       </div>
     </form>
@@ -360,7 +360,15 @@ export default defineComponent({
 
         save(order);
 
-        selectedVisitType.value = {
+        ClearForm()
+
+        
+      }
+    };
+
+    const ClearForm = () => {
+
+      selectedVisitType.value = {
           id: 0,
           name: "--- Select Visit Type ---",
           created_at: "",
@@ -377,8 +385,8 @@ export default defineComponent({
         selectedSpecimenType.value = 0;
 
         checkedTests.value.length == 0;
-      }
-    };
+
+    }
 
     return {
       visitTypes,
@@ -398,6 +406,7 @@ export default defineComponent({
       requestingPhysician,
       message,
       code,
+      ClearForm,
     };
   },
 });
