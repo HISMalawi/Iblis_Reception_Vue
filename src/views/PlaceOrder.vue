@@ -1,5 +1,9 @@
 <template>
   <div class="content has-text-left">
+    <div v-if="code !== ''" class="notification is-primary">
+      <button class="delete"></button>
+      {{ message }}
+    </div>
     <form @submit.prevent="addOrder">
       <div class="field mb-5">
         <label class="label">Visit Type</label>
@@ -9,7 +13,9 @@
             :class="errors.includes('visit_type') ? 'is-danger' : ''"
           >
             <select v-model="selectedVisitType">
-              <!-- <option :value="0">{{ visitType.name }}</option> -->
+              <option :value="selectedVisitType">
+                {{ selectedVisitType.name }}
+              </option>
               <option
                 :value="visitType"
                 v-for="visitType in visitTypes"
@@ -31,8 +37,8 @@
             class="select is-medium is-fullwidth"
             :class="errors.includes('requesting_location') ? 'is-danger' : ''"
           >
-            <select v-model="selectedWard" :disabled="selectedVisitType.id == 0">
-              <!-- <option :value="0">--- Select Ward / Location ---</option> -->
+            <select v-model="selectedWard">
+              <option :value="selectedWard">{{ selectedWard.name }}</option>
               <option :value="ward" v-for="ward in Wards" :key="ward.id">
                 {{ ward.name }}
               </option>
@@ -193,14 +199,13 @@ export default defineComponent({
   name: "PlaceOrder",
   components: {},
   setup() {
+    const store = useStore();
 
-    const store = useStore()
+    let selectedPatient: Patient = store.getters.selectedPatient;
 
-    let selectedPatient: Patient = store.getters.selectedPatient
+    const user: User = store.getters.user;
 
-    const user: User = store.getters.user
-
-    const { save, message, code  } = CreateOrder()
+    const { save, message, code } = CreateOrder();
 
     const checkedTests = ref<Test[]>([]);
     const page = ref<number>(1);
@@ -216,18 +221,16 @@ export default defineComponent({
 
     const { fetchSpecimenTypes, specimenTypes } = GetSpecimenTypes();
 
-    let selectedVisitType = ref<VisitType>(
-      {
-        id: 0,
-        name: "--- Select Specimen Type ---",
-        created_at: "",
-        updated_at: "",
-      }
-    );
+    let selectedVisitType = ref<VisitType>({
+      id: 0,
+      name: "--- Select Visit Type ---",
+      created_at: "",
+      updated_at: "",
+    });
 
     const selectedWard = ref<Ward>({
       id: 0,
-      name: "--- Select Specimen Type ---",
+      name: "--- Select Ward / Location ---",
     });
 
     const selectedSpecimenType = ref(0);
@@ -321,8 +324,7 @@ export default defineComponent({
     };
 
     const addOrder = () => {
-
-      errors.value.length == 0
+      errors.value.length == 0;
 
       if (selectedVisitType.value.id == 0) {
         errors.value.push("visit_type");
@@ -347,17 +349,33 @@ export default defineComponent({
       if (errors.value.length == 0) {
         let order: Order = {
           visit_type: selectedVisitType.value,
-          requesting_location:selectedWard.value,
+          requesting_location: selectedWard.value,
           requesting_physician: requestingPhysician.value,
           specimen_type_id: selectedSpecimenType.value,
           tests: checkedTests.value,
-          patient:selectedPatient,
-          user:user,
+          patient: selectedPatient,
+          user: user,
         };
 
-        save(order)
+        save(order);
 
-        console.log(message)
+        selectedVisitType.value = {
+          id: 0,
+          name: "--- Select Visit Type ---",
+          created_at: "",
+          updated_at: "",
+        };
+
+        selectedWard.value = {
+          id: 0,
+          name: "--- Select Ward / Location ---",
+        };
+
+        requestingPhysician.value = "";
+
+        selectedSpecimenType.value = 0;
+
+        checkedTests.value.length == 0;
       }
     };
 
@@ -377,6 +395,8 @@ export default defineComponent({
       checkedTests,
       errors,
       requestingPhysician,
+      message,
+      code,
     };
   },
 });
