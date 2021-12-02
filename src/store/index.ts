@@ -18,6 +18,7 @@ const axios = require("axios").create({
 });
 
 const user: User = {
+  id: 0,
   username: "",
   email: "",
   name: "",

@@ -10,6 +10,7 @@ const authenticate = () => {
   const axios = ref(store.getters.axios);
 
   const user: User = {
+    id: 0,
     username: "",
     email: "",
     name: "",
@@ -33,6 +34,7 @@ const authenticate = () => {
           const responseData = response.data.data;
 
           if (code.value == "200") {
+            user.id = responseData[0].id;
             user.username = responseData[0].username;
             user.email = responseData[0].email;
             user.name = responseData[0].name;
