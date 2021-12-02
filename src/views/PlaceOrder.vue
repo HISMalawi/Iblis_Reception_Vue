@@ -183,8 +183,9 @@ import GetTests from "@/composables/getTests";
 import { Order } from "@/interfaces/Order";
 import { Test } from "@/interfaces/Test";
 import CreateOrder from "@/composables/createOrder";
-import { MutationTypes, useStore } from "@/store";
+import { useStore } from "@/store";
 import { Patient } from "@/interfaces/Patient";
+import { User } from "@/interfaces/User";
 
 export default defineComponent({
   name: "PlaceOrder",
@@ -194,6 +195,8 @@ export default defineComponent({
     const store = useStore()
 
     let selectedPatient: Patient = store.getters.selectedPatient
+
+    const user: User = store.getters.user
 
     const { save, message, code  } = CreateOrder()
 
@@ -337,6 +340,7 @@ export default defineComponent({
           specimen_type_id: selectedSpecimenType.value,
           tests: checkedTests.value,
           patient:selectedPatient,
+          user:user,
         };
 
         save(order)
