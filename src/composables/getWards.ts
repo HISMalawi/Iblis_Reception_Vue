@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { useStore } from "@/store";
 import { Ward } from "@/interfaces/Ward";
+import { VisitType } from "@/interfaces/VisitType";
 
 const store = useStore();
 
@@ -15,11 +16,11 @@ const getWards = () => {
   const message = ref<string>("");
   const code = ref<string>("");
 
-  const fetchWards = (id: number) => {
+  const fetchWards = (visit_type: VisitType) => {
     axios.value
       .post("/wards", {
         token: token.value,
-        id:id,
+        id:visit_type.id,
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {

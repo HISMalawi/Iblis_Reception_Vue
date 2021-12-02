@@ -6,7 +6,6 @@ import { MutationTypes, useStore } from "@/store";
 const store = useStore();
 
 const authenticate = () => {
-
   const axios = ref(store.getters.axios);
 
   let user: User = {
@@ -33,18 +32,15 @@ const authenticate = () => {
 
           const responseData = response.data.data;
 
-
           if (code.value == "200") {
-       
             user = responseData[0];
 
             message.value = response.data.message;
-            
+
             store.commit(MutationTypes.LOGIN, user);
           } else {
             message.value = response.data.message;
           }
-
         }
       })
       .catch(function (error: any) {

@@ -9,9 +9,9 @@
             :class="errors.includes('visit_type') ? 'is-danger' : ''"
           >
             <select v-model="selectedVisitType">
-              <option :value="0">--- Select Visit Type ---</option>
+              <!-- <option :value="0">{{ visitType.name }}</option> -->
               <option
-                :value="visitType.id"
+                :value="visitType"
                 v-for="visitType in visitTypes"
                 :key="visitType.id"
               >
@@ -31,9 +31,9 @@
             class="select is-medium is-fullwidth"
             :class="errors.includes('requesting_location') ? 'is-danger' : ''"
           >
-            <select v-model="selectedWard">
-              <option :value="0">--- Select Ward / Location ---</option>
-              <option :value="ward.id" v-for="ward in Wards" :key="ward.id">
+            <select v-model="selectedWard" :disabled="selectedVisitType.id == 0">
+              <!-- <option :value="0">--- Select Ward / Location ---</option> -->
+              <option :value="ward" v-for="ward in Wards" :key="ward.id">
                 {{ ward.name }}
               </option>
             </select>
@@ -186,6 +186,8 @@ import CreateOrder from "@/composables/createOrder";
 import { useStore } from "@/store";
 import { Patient } from "@/interfaces/Patient";
 import { User } from "@/interfaces/User";
+import { Ward } from "@/interfaces/Ward";
+import { VisitType } from "@/interfaces/VisitType";
 
 export default defineComponent({
   name: "PlaceOrder",
@@ -214,9 +216,19 @@ export default defineComponent({
 
     const { fetchSpecimenTypes, specimenTypes } = GetSpecimenTypes();
 
-    const selectedVisitType = ref(0);
+    let selectedVisitType = ref<VisitType>(
+      {
+        id: 0,
+        name: "--- Select Specimen Type ---",
+        created_at: "",
+        updated_at: "",
+      }
+    );
 
-    const selectedWard = ref(0);
+    const selectedWard = ref<Ward>({
+      id: 0,
+      name: "--- Select Specimen Type ---",
+    });
 
     const selectedSpecimenType = ref(0);
 
@@ -228,7 +240,7 @@ export default defineComponent({
       () => [selectedVisitType.value],
       () => {
         removeError("visit_type");
-        selectedWard.value = 0;
+        selectedWard.value.id = 0;
 
         fetchWards(selectedVisitType.value);
       }
@@ -312,11 +324,11 @@ export default defineComponent({
 
       errors.value.length == 0
 
-      if (selectedVisitType.value == 0) {
+      if (selectedVisitType.value.id == 0) {
         errors.value.push("visit_type");
       }
 
-      if (selectedWard.value == 0) {
+      if (selectedWard.value.id == 0) {
         errors.value.push("requesting_location");
       }
 
@@ -334,8 +346,8 @@ export default defineComponent({
 
       if (errors.value.length == 0) {
         let order: Order = {
-          visit_type_id: selectedVisitType.value,
-          requesting_location_id:selectedWard.value,
+          visit_type: selectedVisitType.value,
+          requesting_location:selectedWard.value,
           requesting_physician: requestingPhysician.value,
           specimen_type_id: selectedSpecimenType.value,
           tests: checkedTests.value,
