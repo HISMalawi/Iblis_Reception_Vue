@@ -78,23 +78,23 @@ export default defineComponent({
       store.commit(MutationTypes.SET_SELECTED_PATIENT, defaultPatient);
     };
 
-    // watch(
-    //   () => [searchString.value],
-    //   () => {
-    //     setTimeout(() => {
-    //       if (searchString.value == "") {
-    //         OpenPatientDetails(false);
-    //         ClosePatientSearchResultsView();
-    //       } else {
-    //         search(searchString.value);
-    //         OpenPatientDetails(false);
-    //         OpenPatientSearchResultsView();
-    //       }
+    watch(
+      () => [searchString.value],
+      () => {
+        setTimeout(() => {
+          if (searchString.value == "") {
+            OpenPatientDetails(false);
+            ClosePatientSearchResultsView();
+          } else {
+            // search(searchString.value);
+            OpenPatientDetails(false);
+            OpenPatientSearchResultsView();
+          }
 
-    //       store.commit(MutationTypes.SET_SELECTED_PATIENT, defaultPatient);
-    //     }, 500);
-    //   }
-    // );
+          store.commit(MutationTypes.SET_SELECTED_PATIENT, defaultPatient);
+        }, 500);
+      }
+    );
 
     return { Search, searchString };
   },
