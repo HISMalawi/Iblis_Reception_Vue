@@ -1,6 +1,12 @@
 <template>
-  <div class="content has-text-left">
-    <div class="field is-grouped">
+
+  <div class="tile is-4 is-parent">
+    <article class="patient-search-results custom-bg tile is-child notification">
+      <p class="pageTitle subtitle">View Orders</p>
+    
+        <div class="content has-text-left">
+          <!-- Content -->
+          <div class="field is-grouped">
       <p class="control is-expanded">
         <input
           class="input is-medium"
@@ -43,7 +49,11 @@
         </tbody>
       </table>
     </div>
+        </div>
+      
+    </article>
   </div>
+
 </template>
 
 <script lang="ts">

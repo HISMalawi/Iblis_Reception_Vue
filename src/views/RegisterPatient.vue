@@ -81,7 +81,7 @@
                 <input
                   v-model="patientDetails.dob"
                   class="input is-success is-medium"
-                  type="text"
+                  type="date"
                   :class="errors.includes('dob') ? 'is-danger' : ''"
                 />
                 <span class="icon is-small is-left">

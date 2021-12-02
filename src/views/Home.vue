@@ -13,7 +13,7 @@
             </div>
           </div>
         </div>
-
+        <view-orders v-if="$store.state.viewingOrders"/>
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
         <view-patient v-if="$store.state.viewingPatient" />
@@ -27,6 +27,7 @@ import { defineComponent, ref, watchEffect } from "vue";
 import { useStore } from "@/store";
 import RegisterPatient from "@/views/RegisterPatient.vue";
 import PatientSearchResults from "@/views/PatientSearchResults.vue";
+import ViewOrders from "@/views/ViewOrders.vue";
 import ViewPatient from "@/views/ViewPatient.vue";
 import SearchPanel from "@/components/SearchPanel.vue"
 import ToolPanel from "@/components/ToolPane.vue"
@@ -40,6 +41,7 @@ export default defineComponent({
     ViewPatient,
     SearchPanel,
     ToolPanel,
+    ViewOrders,
   },
   setup() {
 

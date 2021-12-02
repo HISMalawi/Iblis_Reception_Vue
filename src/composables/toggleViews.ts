@@ -4,7 +4,6 @@ const toggleViews = () => {
   const store = useStore();
 
   const OpenPatientDetails = (value: boolean) => {
-    store.commit(MutationTypes.OPEN_PATIENT_VIEW_ORDERS, !value);
     store.commit(MutationTypes.OPEN_PATIENT_PLACE_ORDER, !value);
     store.commit(MutationTypes.VIEW_PATIENT, value);
     store.commit(MutationTypes.OPEN_PATIENT_DETAILS, value);
@@ -12,18 +11,12 @@ const toggleViews = () => {
 
   const OpenCreatePatientOrder = (value: boolean) => {
     store.commit(MutationTypes.OPEN_PATIENT_DETAILS, !value);
-    store.commit(MutationTypes.OPEN_PATIENT_VIEW_ORDERS, !value);
     store.commit(MutationTypes.OPEN_PATIENT_PLACE_ORDER, value);
   };
 
-  const OpenViewPatientOrders = (value: boolean) => {
-    store.commit(MutationTypes.OPEN_PATIENT_DETAILS, !value);
-    store.commit(MutationTypes.OPEN_PATIENT_PLACE_ORDER, !value);
-
-    store.commit(MutationTypes.OPEN_PATIENT_VIEW_ORDERS, value);
-  };
 
   const OpenPatientSearchResultsView = () => {
+    store.commit(MutationTypes.VIEW_ORDERS, false);
     store.commit(MutationTypes.REGISTER_PATIENT, false);
     store.commit(MutationTypes.SEARCH_PATIENT, true);
   };
@@ -34,9 +27,18 @@ const toggleViews = () => {
   };
 
   const OpenPatientRegForm = () => {
+    store.commit(MutationTypes.VIEW_ORDERS, false);
     store.commit(MutationTypes.SEARCH_PATIENT, false);
     store.commit(MutationTypes.VIEW_PATIENT, false);
     store.commit(MutationTypes.REGISTER_PATIENT, true);
+  };
+
+  const OpenViewOrdersView = () => {
+    store.commit(MutationTypes.SEARCH_PATIENT, false);
+    store.commit(MutationTypes.VIEW_PATIENT, false);
+    store.commit(MutationTypes.REGISTER_PATIENT, false);
+
+    store.commit(MutationTypes.VIEW_ORDERS, true);
   };
 
   const ClosePatientRegForm = () => {
@@ -48,9 +50,9 @@ const toggleViews = () => {
     ClosePatientSearchResultsView,
     OpenPatientDetails,
     OpenCreatePatientOrder,
-    OpenViewPatientOrders,
     OpenPatientRegForm,
     ClosePatientRegForm,
+    OpenViewOrdersView,
   };
 };
 

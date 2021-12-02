@@ -1,7 +1,8 @@
 <template>
-  <div class="tool-card is-child notification">
+  <div class="tool-card is-child  custom-bg">
     <ul class="tools is-primary">
       <li @click="OpenPatientRegForm" class="is-clickable">Register Patient</li>
+      <li @click="OpenViewOrdersView" class="is-clickable">View Order</li>
     </ul>
   </div>
 </template>
@@ -12,14 +13,18 @@ import toggleViews from "@/composables/toggleViews";
 export default defineComponent({
   name: "ToolPanel",
   setup() {
-    const { OpenPatientRegForm, ClosePatientRegForm } = toggleViews();
+    const { OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView } = toggleViews();
 
-    return { OpenPatientRegForm, ClosePatientRegForm };
+    return { OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView };
   },
 });
 </script>
 
 <style>
+
+.tool-card {
+  height: 150px;
+}
 
 .tools {
   list-style: none;

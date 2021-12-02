@@ -7,70 +7,60 @@
 
       <div class="tabs is-medium">
         <ul>
-          <li :class="$store.state.viewingPatientDetails ? 'is-active' : ''" @click="OpenPatientDetailsIn"><a>Details</a></li>
-          <li :class="$store.state.createPatientOrder ? 'is-active' : ''" @click="OpenCreatePatientOrderIn" ><a>Order</a></li>
-          <li :class="$store.state.viewPatientOrders ? 'is-active' : ''" @click="OpenViewPatientOrdersIn"><a>View Orders</a></li>
+          <li
+            :class="$store.state.viewingPatientDetails ? 'is-active' : ''"
+            @click="OpenPatientDetailsIn"
+          >
+            <a>Details</a>
+          </li>
+          <li
+            :class="$store.state.createPatientOrder ? 'is-active' : ''"
+            @click="OpenCreatePatientOrderIn"
+          >
+            <a>Order</a>
+          </li>
         </ul>
       </div>
 
-      <place-order v-if="$store.state.createPatientOrder"/>
-      <view-patient-details v-if="$store.state.viewingPatientDetails"/>
-      <view-orders v-if="$store.state.viewPatientOrders"/>
-      
+      <place-order v-if="$store.state.createPatientOrder" />
+      <view-patient-details v-if="$store.state.viewingPatientDetails" />
     </article>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import PlaceOrder from "@/views/PlaceOrder.vue"
-import ViewPatientDetails from "@/views/ViewPatientDetails.vue"
-import ViewOrders from "@/views/ViewOrders.vue"
-import toggleViews from "@/composables/toggleViews"
+import PlaceOrder from "@/views/PlaceOrder.vue";
+import ViewPatientDetails from "@/views/ViewPatientDetails.vue";
+import toggleViews from "@/composables/toggleViews";
 
 export default defineComponent({
   name: "ViewPatient",
-  components : {
-    PlaceOrder, 
+  components: {
+    PlaceOrder,
     ViewPatientDetails,
-    ViewOrders 
   },
   setup() {
-
-
-
-    const { OpenPatientDetails, OpenCreatePatientOrder, OpenViewPatientOrders } = toggleViews()
+    const {
+      OpenPatientDetails,
+      OpenCreatePatientOrder,
+    } = toggleViews();
 
     const OpenPatientDetailsIn = () => {
-
-          OpenPatientDetails(true)
-          
-    }
+      OpenPatientDetails(true);
+    };
 
     const OpenCreatePatientOrderIn = () => {
+      OpenCreatePatientOrder(true);
+    };
 
-         OpenCreatePatientOrder(true)
-     
-    }
-
-    const OpenViewPatientOrdersIn = () => {
-
-        OpenViewPatientOrders(true)
-
-    }
-
-    
-    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenViewPatientOrdersIn }
-  }
+    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn };
+  },
 });
 </script>
 
 <style>
-
 .patient-details li a {
-  
   text-decoration: none !important;
-
 }
-
 </style>

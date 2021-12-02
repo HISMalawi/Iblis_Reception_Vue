@@ -1,5 +1,5 @@
 <template>
-  <div class="search-card custom-bg card tile is-child notification">
+  <div class="search-card custom-bg card tile is-child">
     <div class="card-content control has-icons-left has-icons-right">
       <div class="content">
         <div class="field has-addons">
