@@ -88,7 +88,7 @@ export default defineComponent({
           } else {
             // search(searchString.value);
             OpenPatientDetails(false);
-            OpenPatientSearchResultsView();
+            //OpenPatientSearchResultsView();
           }
 
           store.commit(MutationTypes.SET_SELECTED_PATIENT, defaultPatient);
