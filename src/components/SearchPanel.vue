@@ -1,7 +1,7 @@
 <template>
   <div class="search-card custom-bg card tile is-child">
     <div class="card-content control has-icons-left has-icons-right">
-      <div class="content">
+      <div>
         <div class="field has-addons">
           <div class="control">
             <input
