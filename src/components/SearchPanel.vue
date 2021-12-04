@@ -68,6 +68,9 @@ export default defineComponent({
     } = toggleViews();
 
     const Search = () => {
+      
+      patients.value.length = 0
+
       if (searchString.value == "") {
       } else {
         search(searchString.value);
