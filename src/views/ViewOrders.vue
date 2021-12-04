@@ -12,10 +12,11 @@
           class="input is-medium"
           type="text"
           placeholder="Tracking Number"
+          v-model="searchString"
         />
       </p>
       <p class="control">
-        <a class="button is-primary is-medium"> Search </a>
+        <a @click="Search" class="button is-primary is-medium"> Search </a>
       </p>
     </div>
 
@@ -29,23 +30,23 @@
         </thead>
 
         <tbody>
-          <tr>
+          <tr v-for="order in orders" :key="order.id">
             <td>
-              <label>63947062406702689260</label>
+              <label>{{order.tracking_number}}</label>
             </td>
             <td>
               <button class="button is-warning is-small" disabled>View Results</button>
             </td>
           </tr>
 
-          <tr>
+          <!-- <tr>
             <td>
               <label>63947063506702689260</label>
             </td>
             <td>
               <button class="button results-available is-small">View Results</button>
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -57,11 +58,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import SearchOrder from "@/composables/searchOrder";
 
 export default defineComponent({
   name: "ViewOrders",
   components: {},
+  setup(){
+    const searchString = ref<string>("");
+
+    const {search, orders, message} = SearchOrder()
+
+    const Search = () => {
+
+      orders.value.length = 0
+      
+      if (searchString.value == "") {
+      } else {
+
+        search(searchString.value);
+      }
+
+    };
+
+    return {orders, Search, searchString}
+  }
 });
 </script>
 <style>
