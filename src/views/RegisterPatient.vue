@@ -1,7 +1,7 @@
 <template>
-  <div class="tile is-4 is-parent">
+  <div class="register-patient tile is-4 is-parent">
     <article
-      class="patient-details-card custom-bg card tile is-child notification"
+      class="custom-height custom-bg card tile is-child"
     >
       <div class="content">
         <p class="subtitle">Register Patient</p>
@@ -11,10 +11,10 @@
           {{ message }}
         </div>
 
-        <div class="content has-text-left">
+        <div class="has-text-left">
           <!-- Content -->
           <form @submit.prevent="SavePatient">
-            <div class="field">
+           <div class="field">
               <label class="label">External Patient No.</label>
               <div class="control has-icons-right">
                 <input
@@ -44,12 +44,6 @@
                   type="text"
                   :class="errors.includes('firstname') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
-                </span>
               </div>
               <p v-if="errors.includes('firstname')" class="help is-danger">
                 First Name is required
@@ -64,12 +58,7 @@
                   type="text"
                   :class="errors.includes('lastname') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
-                </span>
+                
               </div>
               <p v-if="errors.includes('lastname')" class="help is-danger">
                 Last Name is required
@@ -84,12 +73,6 @@
                   type="date"
                   :class="errors.includes('dob') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
-                </span>
               </div>
               <p v-if="errors.includes('dob')" class="help is-danger">
                 Date Of Birth is required
@@ -104,12 +87,6 @@
                   type="number"
                   :class="errors.includes('age') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
-                </span>
               </div>
               <p v-if="errors.includes('age')" class="help is-danger">
                 Age is required
@@ -150,12 +127,6 @@
                   type="text"
                   :class="errors.includes('address') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
-                </span>
               </div>
               <p v-if="errors.includes('address')" class="help is-danger">
                 Physical address is required
@@ -170,12 +141,6 @@
                   type="text"
                   :class="errors.includes('phone') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
-                </span>
               </div>
               <p v-if="errors.includes('phone')" class="help is-danger">
                 Phone Number is required
@@ -190,12 +155,6 @@
                   type="email"
                   :class="errors.includes('email') ? 'is-danger' : ''"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
-                </span>
               </div>
               <p v-if="errors.includes('email')" class="help is-danger">
                 Email is required
@@ -217,6 +176,7 @@
                 </button>
               </div>
             </div>
+            
           </form>
         </div>
       </div>
@@ -414,4 +374,9 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.register-patient article {
+  padding: 30px;
+}
+
+</style>

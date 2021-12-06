@@ -1,6 +1,6 @@
 <template>
-  <div class="tile is-4 is-parent">
-    <article class="patient-search-results custom-bg tile is-child notification">
+  <div class="patients-serch-results tile is-4 is-parent">
+    <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Search Results</p>
     
         <div class="content has-text-left">
@@ -26,17 +26,9 @@ export default defineComponent({
 
 <style>
 
-
-/* .patient-search-results .pageTitle {
-  padding: 20px 10px;
-  margin-top: 0px;
-} */
-
-.patient-search-results .content{
-
-  overflow-y: auto;
-  height: 1600px;
-  padding: 0 20px;
+.patients-serch-results article {
+  padding: 30px;
 }
 
 </style>
+

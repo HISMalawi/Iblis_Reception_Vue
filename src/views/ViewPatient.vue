@@ -1,7 +1,7 @@
 <template>
   <div class="patient-details tile is-5 is-parent">
     <article
-      class="search-results-card custom-bg card tile is-child notification"
+      class="custom-bg card tile is-child"
     >
       <p class="subtitle">{{ $store.state.selectedPatient.name }}</p>
 
@@ -62,5 +62,9 @@ export default defineComponent({
 <style>
 .patient-details li a {
   text-decoration: none !important;
+}
+
+.patient-details article {
+  padding: 30px !important;
 }
 </style>

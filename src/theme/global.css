@@ -24,3 +24,10 @@ html {
 
     background: rgba(255, 255, 255, 0.863) !important;
 }
+
+.custom-height .content {
+
+    overflow-y: auto;
+    height: 1600px;
+    padding: 0 20px;
+}

@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from "vue";
+import { defineComponent, onBeforeMount, ref, watchEffect } from "vue";
 import { useStore } from "@/store";
 import RegisterPatient from "@/views/RegisterPatient.vue";
 import PatientSearchResults from "@/views/PatientSearchResults.vue";
@@ -55,6 +55,14 @@ export default defineComponent({
         router.push("/login");
       }
     });
+
+    onBeforeMount(()=>{
+      
+      if (!isLoggedIn.value) {
+        router.push("/login");
+      }
+
+    })
 
 
   },
