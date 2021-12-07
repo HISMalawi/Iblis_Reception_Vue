@@ -51,17 +51,15 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
-    const isLoggedIn = ref(store.getters.isLoggedIn);
-
     watchEffect(() => {
-      if (!isLoggedIn.value) {
+      if (!store.getters.isLoggedIn) {
         router.push("/login");
       }
     });
 
     onBeforeMount(()=>{
       
-      if (!isLoggedIn.value) {
+      if (!store.getters.isLoggedIn) {
         router.push("/login");
       }
 

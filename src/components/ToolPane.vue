@@ -1,21 +1,34 @@
 <template>
-  <div class="tool-card is-child  custom-bg">
+  <div class="tool-card is-child panel  custom-bg">
     <ul class="tools is-primary">
-      <li @click="OpenPatientRegForm" class="is-clickable">Register Patient</li>
-      <li @click="OpenViewOrdersView" class="is-clickable">View Order</li>
+      <li @click="OpenPatientRegForm" class="is-clickable"><button class="button is-rounded is-primary">Register Patient</button></li>
+      <li @click="OpenViewOrdersView" class="is-clickable"><button class="button is-rounded is-primary">View Order</button></li>
     </ul>
+
+    <button @click="Logout" id="logout-btn" class="button is-rounded is-danger">Logout</button>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import toggleViews from "@/composables/toggleViews";
+import { MutationTypes, useStore } from "@/store";
 
 export default defineComponent({
   name: "ToolPanel",
   setup() {
+
+    const store = useStore()
+
     const { OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView } = toggleViews();
 
-    return { OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView };
+    const Logout = () => {
+
+      store.commit(MutationTypes.LOGOUT, true);
+      console.log("Logout..")
+
+    }
+
+    return { Logout, OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView };
   },
 });
 </script>
@@ -29,8 +42,8 @@ export default defineComponent({
 .tools {
   list-style: none;
   text-align: left;
-  padding: 0px;
-  margin: 0px;
+  padding: 0px !important;
+  margin: 15px 20px !important;
 }
 
 .tool-card {
@@ -40,13 +53,15 @@ export default defineComponent({
 
 .tools li {
   display: inline-block;
-  padding: 2px 14px;
-  border: 3px solid #3796ce;
-  border-radius: 40px;
-  background-color: #3796ce;
-  color: rgba(31, 27, 27, 0.685);
   margin-right: 10px;
-  color: white;
+}
+
+
+#logout-btn{
+  position: relative;
+  bottom: -20px;
+  float: left;
+  left: 20px;
 }
 
 </style>

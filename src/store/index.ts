@@ -104,6 +104,7 @@ const state: State = {
 export enum MutationTypes {
   INC_COUNTER = "SET_COUNTER",
   LOGIN = "LOGIN_USER",
+  LOGOUT = "LOGOUT_USER",
   SEARCH_PATIENT = "SEARCHING_PATIENT",
   VIEW_PATIENT = "VIEWING_PATIENT",
   REGISTER_PATIENT = "REGISTERING_PATIENT",
@@ -118,6 +119,7 @@ export enum MutationTypes {
 export enum ActionTypes {
   INC_COUNTER = "SET_COUNTER",
   LOGIN = "LOGIN_USER",
+  LOGOUT = "LOGOUT_USER",
   SEARCH_PATIENT = "SEARCHING_PATIENT",
   VIEW_PATIENT = "VIEWING_PATIENT",
   REGISTER_PATIENT = "REGISTERING_PATIENT",
@@ -132,6 +134,7 @@ export enum ActionTypes {
 export type Mutations<S = State> = {
   [MutationTypes.INC_COUNTER](state: S, payload: number): void;
   [MutationTypes.LOGIN](state: S, payload: User): void;
+  [MutationTypes.LOGOUT](state: S, payload: boolean): void;
   [MutationTypes.SEARCH_PATIENT](state: S, payload: boolean): void;
   [MutationTypes.VIEW_PATIENT](state: S, payload: boolean): void;
   [MutationTypes.REGISTER_PATIENT](state: S, payload: boolean): void;
@@ -150,6 +153,10 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.LOGIN](state: State, payload: User) {
     state.user = payload;
     state.loggedIn = true;
+  },
+  [MutationTypes.LOGOUT](state: State, payload: boolean) {
+    state.user = user;
+    state.loggedIn = !payload;
   },
   [MutationTypes.SEARCH_PATIENT](state: State, payload: boolean) {
     state.searchingPatient = payload;
@@ -196,6 +203,8 @@ export interface Actions {
 
   [ActionTypes.LOGIN]({ commit }: AugmentedActionContext, payload: User): void;
 
+  [ActionTypes.LOGOUT]({ commit }: AugmentedActionContext, payload: boolean): void;
+
   [ActionTypes.SET_SELECTED_PATIENT]({ commit }: AugmentedActionContext, payload: Patient): void;
 
   [ActionTypes.SET_SELECTED_TEST]({ commit }: AugmentedActionContext, payload: TestResult): void;
@@ -207,6 +216,9 @@ export const actions: ActionTree<State, State> & Actions = {
   },
   [ActionTypes.LOGIN]({ commit }, payload: User) {
     commit(MutationTypes.LOGIN, payload);
+  },
+  [ActionTypes.LOGOUT]({ commit }, payload: boolean) {
+    commit(MutationTypes.LOGOUT, payload);
   },
   [ActionTypes.SET_SELECTED_PATIENT]({ commit }, payload: Patient) {
     commit(MutationTypes.SET_SELECTED_PATIENT, payload);
