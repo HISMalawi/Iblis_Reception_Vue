@@ -11,6 +11,7 @@ import {
 import { User } from "@/interfaces/User";
 import { Axios } from "axios";
 import { Patient } from "@/interfaces/Patient";
+import { TestResult } from "@/interfaces/TestResult";
 
 const axios = require("axios").create({
   baseURL: process.env.VUE_APP_SERVICE_BASE_URL,
@@ -26,7 +27,28 @@ const user: User = {
   token: "",
 };
 
-// const date: Date = new Date();
+const test: TestResult = {
+    id: 0,
+    visit_id: 0,
+    test_type_id: 0,
+    specimen_id: 0,
+    interpretation:"",
+    test_status_id: 0,
+    created_by: 0,
+    tested_by: 0,
+    verified_by: 0,
+    requested_by: "",
+    time_created: "",
+    time_started: "",
+    time_completed: "",
+    time_verified: "",
+    panel_id: 0,
+    time_sent: "",
+    external_id: 0,
+    not_done_reasons: "",
+    person_talked_to_for_not_done: "",
+}
+
 
 const patient: Patient = {
   address: "",
@@ -54,11 +76,13 @@ export type State = {
   searchingPatient: boolean;
   viewingPatient: boolean;
   viewingPatientDetails: boolean;
+  viewingTestResults: boolean;
   createPatientOrder: boolean;
   user: User;
   loggedIn: boolean;
   axios: Axios;
   selectedPatient: Patient;
+  selectedTest: TestResult;
 };
 
 const state: State = {
@@ -68,11 +92,13 @@ const state: State = {
   searchingPatient: false,
   viewingPatient: false,
   viewingPatientDetails: true,
+  viewingTestResults: false,
   createPatientOrder: false,
   user: user,
   loggedIn: false,
   axios: axios,
   selectedPatient: patient,
+  selectedTest: test,
 };
 
 export enum MutationTypes {
@@ -82,9 +108,11 @@ export enum MutationTypes {
   VIEW_PATIENT = "VIEWING_PATIENT",
   REGISTER_PATIENT = "REGISTERING_PATIENT",
   VIEW_ORDERS = "VIEWING_ORDERS",
+  VIEW_TEST_RESULTS = "VIEWING_TEST_RESULTS",
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
+  SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
 }
 
 export enum ActionTypes {
@@ -94,9 +122,11 @@ export enum ActionTypes {
   VIEW_PATIENT = "VIEWING_PATIENT",
   REGISTER_PATIENT = "REGISTERING_PATIENT",
   VIEW_ORDERS = "VIEWING_ORDERS",
+  VIEW_TEST_RESULTS = "VIEWING_TEST_RESULTS",
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
+  SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
 }
 
 export type Mutations<S = State> = {
@@ -106,9 +136,11 @@ export type Mutations<S = State> = {
   [MutationTypes.VIEW_PATIENT](state: S, payload: boolean): void;
   [MutationTypes.REGISTER_PATIENT](state: S, payload: boolean): void;
   [MutationTypes.VIEW_ORDERS](state: S, payload: boolean): void;
+  [MutationTypes.VIEW_TEST_RESULTS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_DETAILS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: S, payload: boolean): void;
   [MutationTypes.SET_SELECTED_PATIENT](state: S, payload: Patient): void;
+  [MutationTypes.SET_SELECTED_TEST](state: S, payload: TestResult): void;
 };
 
 const mutations: MutationTree<State> & Mutations = {
@@ -125,6 +157,10 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.VIEW_PATIENT](state: State, payload: boolean) {
     state.viewingPatient = payload;
   },
+
+  [MutationTypes.VIEW_TEST_RESULTS](state: State, payload: boolean) {
+    state.viewingTestResults = payload;
+  },
   [MutationTypes.REGISTER_PATIENT](state: State, payload: boolean) {
     state.registeringPatient = payload;
   },
@@ -139,6 +175,9 @@ const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.SET_SELECTED_PATIENT](state: State, payload: Patient) {
     state.selectedPatient = payload;
+  },
+  [MutationTypes.SET_SELECTED_TEST](state: State, payload: TestResult) {
+    state.selectedTest = payload;
   },
 };
 
@@ -158,6 +197,8 @@ export interface Actions {
   [ActionTypes.LOGIN]({ commit }: AugmentedActionContext, payload: User): void;
 
   [ActionTypes.SET_SELECTED_PATIENT]({ commit }: AugmentedActionContext, payload: Patient): void;
+
+  [ActionTypes.SET_SELECTED_TEST]({ commit }: AugmentedActionContext, payload: TestResult): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -170,6 +211,9 @@ export const actions: ActionTree<State, State> & Actions = {
   [ActionTypes.SET_SELECTED_PATIENT]({ commit }, payload: Patient) {
     commit(MutationTypes.SET_SELECTED_PATIENT, payload);
   },
+  [ActionTypes.SET_SELECTED_TEST]({ commit }, payload: TestResult) {
+    commit(MutationTypes.SET_SELECTED_TEST, payload);
+  },
 };
 
 export type Getters = {
@@ -178,6 +222,7 @@ export type Getters = {
   axios(state: State): Axios;
   isLoggedIn(state: State): boolean;
   selectedPatient(state: State): Patient;
+  selectedTest(state: State): TestResult;
 };
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -195,6 +240,10 @@ export const getters: GetterTree<State, State> & Getters = {
   },
   selectedPatient: (state) => {
     return state.selectedPatient;
+  },
+
+  selectedTest: (state) => {
+    return state.selectedTest;
   },
 };
 

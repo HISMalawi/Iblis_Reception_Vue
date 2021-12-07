@@ -22,18 +22,7 @@
         <div class="order-results field">
           <nav v-for="order in orders" :key="order.id">
             <p class="panel-heading">{{ order.tracking_number }}</p>
-            <p class="panel-tabs">
-              <a
-                @click="showOverview"
-                :class="viewingOverview ? 'is-active' : ''"
-                >Overview</a
-              >
-              <a @click="showResults" :class="viewingResults ? 'is-active' : ''"
-                >Results</a
-              >
-            </p>
 
-            <div v-if="viewingOverview">
               <a class="panel-block"
                 ><h5 class="title is-6">Patient :</h5>
                 {{ order.patient[0].name }}</a
@@ -59,22 +48,13 @@
                 <button
                   v-for="test in order.tests"
                   :key="test.id"
+                  @click="ShowResults(test)"
                   class="button is-rounded is-small is-warning"
                 >
                   {{ test.test_name }}
                 </button></a
               >
-            </div>
-
-            <div v-if="viewingResults">
-              <a v-for="test in order.tests" :key="test.id" class="panel-block"
-                ><h5 class="title is-6">{{ test.test_name }} :</h5>
-                </a
-              >
-            </div>
-
-
-
+      
           </nav>
         </div>
       </div>
@@ -83,51 +63,56 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, onBeforeMount, ref, watch } from "vue";
 import SearchOrder from "@/composables/searchOrder";
+import toggleViews from "@/composables/toggleViews";
+import { TestResult } from "@/interfaces/TestResult";
+import { MutationTypes, useStore } from "@/store";
 
 export default defineComponent({
   name: "ViewOrders",
   components: {},
   setup() {
-    const viewingOverview = ref<boolean>(true);
 
-    const viewingResults = ref<boolean>(false);
+    const store = useStore();
+
+    const { OpenViewTestResults, CloseViewTestResults } = toggleViews()
 
     const searchString = ref<string>("");
 
     const { search, orders, message } = SearchOrder();
 
-    const showOverview = () => {
-      viewingResults.value = false;
 
-      viewingOverview.value = true;
-    };
-
-    const showResults = () => {
-      viewingOverview.value = false;
-
-      viewingResults.value = true;
-    };
-
+    onBeforeMount(() => {
+      orders.value.length = 0;
+    });
 
     const Search = () => {
       orders.value.length = 0;
 
       if (searchString.value == "") {
       } else {
+
+       
+        CloseViewTestResults()
+    
+       
         search(searchString.value);
       }
     };
+
+    const ShowResults = (test: TestResult) => {
+
+        store.commit(MutationTypes.SET_SELECTED_TEST, test);
+
+        OpenViewTestResults()
+    }
 
     return {
       orders,
       Search,
       searchString,
-      viewingOverview,
-      viewingResults,
-      showOverview,
-      showResults,
+      ShowResults
     };
   },
 });

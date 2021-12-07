@@ -17,6 +17,7 @@
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
         <view-patient v-if="$store.state.viewingPatient" />
+        <view-results v-if="$store.state.viewingTestResults" />
       </div>
     </div>
   </div>
@@ -32,6 +33,7 @@ import ViewPatient from "@/views/ViewPatient.vue";
 import SearchPanel from "@/components/SearchPanel.vue"
 import ToolPanel from "@/components/ToolPane.vue"
 import { useRouter } from "vue-router";
+import ViewResults from "@/views/ViewResults.vue";
 
 export default defineComponent({
   name: "Home",
@@ -42,6 +44,7 @@ export default defineComponent({
     SearchPanel,
     ToolPanel,
     ViewOrders,
+    ViewResults,
   },
   setup() {
 

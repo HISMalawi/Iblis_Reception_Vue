@@ -16,6 +16,7 @@ const toggleViews = () => {
 
 
   const OpenPatientSearchResultsView = () => {
+    store.commit(MutationTypes.VIEW_TEST_RESULTS, false);
     store.commit(MutationTypes.VIEW_ORDERS, false);
     store.commit(MutationTypes.REGISTER_PATIENT, false);
     store.commit(MutationTypes.SEARCH_PATIENT, true);
@@ -27,6 +28,7 @@ const toggleViews = () => {
   };
 
   const OpenPatientRegForm = () => {
+    store.commit(MutationTypes.VIEW_TEST_RESULTS, false);
     store.commit(MutationTypes.VIEW_ORDERS, false);
     store.commit(MutationTypes.SEARCH_PATIENT, false);
     store.commit(MutationTypes.VIEW_PATIENT, false);
@@ -41,6 +43,14 @@ const toggleViews = () => {
     store.commit(MutationTypes.VIEW_ORDERS, true);
   };
 
+  const OpenViewTestResults = () => {
+    store.commit(MutationTypes.VIEW_TEST_RESULTS, true);
+  };
+
+  const CloseViewTestResults = () => {
+    store.commit(MutationTypes.VIEW_TEST_RESULTS, false);
+  };
+
   const ClosePatientRegForm = () => {
     store.commit(MutationTypes.REGISTER_PATIENT, false);
   };
@@ -53,6 +63,8 @@ const toggleViews = () => {
     OpenPatientRegForm,
     ClosePatientRegForm,
     OpenViewOrdersView,
+    OpenViewTestResults,
+    CloseViewTestResults
   };
 };
 

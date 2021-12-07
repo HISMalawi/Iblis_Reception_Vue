@@ -1,16 +1,17 @@
 import { PatientReg } from "@/interfaces/PatientReg";
-import { Test } from "@/interfaces/Test";
+import { TestResult } from "@/interfaces/TestResult";
 
 export interface OrderResult {
     id:number,
     specimen_type: string,
+    test_name: string,
     location: string,
     visit_type: string,
     patient: PatientReg,
     accession_number: number,
     tracking_number: number,
     priority: string,
-    tests: Test,
+    tests: TestResult,
     requesting_physician: string,
     drawn_by_id: number,
     drawn_by_name:string,
