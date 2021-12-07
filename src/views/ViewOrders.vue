@@ -26,13 +26,14 @@
               <a class="is-active">Overview</a>
               <a>Results</a>
             </p>
-            <a class="panel-block is-active"> Visit Type : </a>
-            <a class="panel-block"> Requesting Ward / Location :</a>
-            <a class="panel-block"> Requesting Physician :</a>
-            <a class="panel-block"> Specimen Type :</a>
-            <a class="panel-block"> Tests :</a>
+            <a class="panel-block"><h5 class="title is-6">Patient : </h5>{{order.patient[0].name}}</a>
+            <a class="panel-block"><h5 class="title is-6">Visit Type : </h5> {{order.visit_type}}</a>
+            <a class="panel-block"><h5 class="title is-6">Requesting Ward / Location :  </h5> {{order.location}}</a>
+            <a class="panel-block"><h5 class="title is-6"> Requesting Physician : </h5> {{order.requesting_physician}}</a>
+            <a class="panel-block"><h5 class="title is-6">Specimen Type : </h5>  {{order.specimen_type}}</a>
+            <a class="panel-block"><h5 class="title is-6">Tests : </h5> <button v-for="test in order.tests" :key="test.id" class="button is-rounded is-small is-warning">{{test.test_name}}</button></a>
           </nav>
-
+         
         </div>
       </div>
     </article>
@@ -56,8 +57,10 @@ export default defineComponent({
 
       if (searchString.value == "") {
       } else {
+        
         search(searchString.value);
       }
+      console.log(orders)
     };
 
     return { orders, Search, searchString };
@@ -80,5 +83,16 @@ export default defineComponent({
 
 .order-results-card .content {
   height: 100px !important;
+}
+
+.order-results .title {
+  position: relative;
+  top: 6px;
+  margin-right: 10px;
+}
+.order-results .button {
+  position: relative;
+  top: -5px;
+  margin-right: 10px;
 }
 </style>

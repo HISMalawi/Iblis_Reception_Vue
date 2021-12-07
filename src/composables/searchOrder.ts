@@ -32,7 +32,6 @@ const SearchOrder = () => {
 
             orders.value = responseData[0]
 
-
             message.value = response.data.message;
           } else {
             message.value = response.data.message;
