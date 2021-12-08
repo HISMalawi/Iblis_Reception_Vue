@@ -1,7 +1,11 @@
 <template>
   <div class="home">
+    <div class="progress-content content">
+    <progress v-if="$store.state.searchingInProgress" class="progress is-small is-primary" max="100">15%</progress>
+    </div>
     <div class="content">
       <div class="tile is-ancestor">
+        
         <div class="controlls-tile tile is-vertical is-3 media-right">
           <div class="tile">
             <div class="tile is-parent is-vertical">
@@ -76,5 +80,16 @@ export default defineComponent({
   width: 90%;
   padding: 10px;
 }
+
+.progress-content {
+  position: absolute;
+  padding: 0px !important;
+  margin: 0px !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0.3;
+}
+
 
 </style>

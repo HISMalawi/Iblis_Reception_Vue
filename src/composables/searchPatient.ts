@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import { useStore } from "@/store";
+import { ref, watch } from "vue";
+import { MutationTypes, useStore } from "@/store";
 import { Patient } from "@/interfaces/Patient";
 import TokenCheck from "@/composables/tokenCheck";
 
@@ -9,14 +9,27 @@ const store = useStore();
 
 const patients = ref<Patient[]>([]);
 
+const message = ref<string>("");
+
+const code = ref<string>("");
+
+watch(
+  () => [patients.value],
+  () => {
+    
+    setTimeout(()=> {
+
+      store.commit(MutationTypes.SEARCH_PATIENT_IN_PROGRESS, false);
+
+    }, 1500)
+  }
+);
+
 const SearchPatient = () => {
 
   const axios = ref(store.getters.axios)
 
   const token = ref(store.getters.user.token)
-
-  const message = ref<string>("");
-  const code = ref<string>("");
 
   const search = (value: string) => {
     axios.value
@@ -48,9 +61,11 @@ const SearchPatient = () => {
       .catch(function (error: any) {
         message.value = error.message;
       });
+
+      
   };
   
-  return { search, message, patients };
+  return { search, message, patients, code };
 };
 
 export default SearchPatient;

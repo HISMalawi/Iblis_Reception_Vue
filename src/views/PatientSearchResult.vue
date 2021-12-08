@@ -1,5 +1,6 @@
 <template>
   <div class="patient-search-result">
+    
     <div
       v-for="patient in patients"
       :key="patient.id"
@@ -34,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject} from "vue";
+import { defineComponent, inject, ref} from "vue";
 import toggleViews from "@/composables/toggleViews"
 import SearchPatient from "@/composables/searchPatient"
 import { Patient } from "@/interfaces/Patient";

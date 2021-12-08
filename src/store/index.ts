@@ -83,6 +83,7 @@ export type State = {
   axios: Axios;
   selectedPatient: Patient;
   selectedTest: TestResult;
+  searchingInProgress: boolean;
 };
 
 const state: State = {
@@ -99,6 +100,7 @@ const state: State = {
   axios: axios,
   selectedPatient: patient,
   selectedTest: test,
+  searchingInProgress: false,
 };
 
 export enum MutationTypes {
@@ -114,6 +116,7 @@ export enum MutationTypes {
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
+  SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
 }
 
 export enum ActionTypes {
@@ -129,6 +132,7 @@ export enum ActionTypes {
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
+  SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
 }
 
 export type Mutations<S = State> = {
@@ -144,6 +148,7 @@ export type Mutations<S = State> = {
   [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: S, payload: boolean): void;
   [MutationTypes.SET_SELECTED_PATIENT](state: S, payload: Patient): void;
   [MutationTypes.SET_SELECTED_TEST](state: S, payload: TestResult): void;
+  [MutationTypes.SEARCH_PATIENT_IN_PROGRESS](state: S, payload: boolean): void;
 };
 
 const mutations: MutationTree<State> & Mutations = {
@@ -185,6 +190,9 @@ const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.SET_SELECTED_TEST](state: State, payload: TestResult) {
     state.selectedTest = payload;
+  },
+  [MutationTypes.SEARCH_PATIENT_IN_PROGRESS](state: State, payload: boolean) {
+    state.searchingInProgress = payload;
   },
 };
 
@@ -235,6 +243,7 @@ export type Getters = {
   isLoggedIn(state: State): boolean;
   selectedPatient(state: State): Patient;
   selectedTest(state: State): TestResult;
+  isSearchingInProgress(state: State): boolean;
 };
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -256,6 +265,9 @@ export const getters: GetterTree<State, State> & Getters = {
 
   selectedTest: (state) => {
     return state.selectedTest;
+  },
+  isSearchingInProgress: (state) => {
+    return state.searchingInProgress;
   },
 };
 

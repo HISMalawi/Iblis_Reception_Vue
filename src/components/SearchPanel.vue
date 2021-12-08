@@ -73,6 +73,9 @@ export default defineComponent({
 
       if (searchString.value == "") {
       } else {
+
+        store.commit(MutationTypes.SEARCH_PATIENT_IN_PROGRESS, true);
+
         search(searchString.value);
         OpenPatientDetails(false);
         OpenPatientSearchResultsView();

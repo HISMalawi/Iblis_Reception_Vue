@@ -1,6 +1,6 @@
 <template>
   <div class="login ">
-    <div class="card custom-bg">
+    <div class="card">
       <div class="card-content">
         <div class="content">
           <div class="field has-text-centered">
