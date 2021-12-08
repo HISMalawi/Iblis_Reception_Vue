@@ -1,5 +1,5 @@
 <template>
-  <div class="view-orders tile is-4 is-parent">
+  <div class="view-orders tile is-5 is-parent">
     <article class="custom-height panel custom-bg tile is-child">
       <p class="pageTitle subtitle">View Orders</p>
 

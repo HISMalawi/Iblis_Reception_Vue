@@ -95,11 +95,26 @@
       </div>
       <div class="field mb-6">
         <label class="label">Select Test(s)</label>
+
         <table class="table custom-bg">
           <thead>
             <tr>
               <th>Tests</th>
               <th>Actions</th>
+
+              <div id="test-search-in-table" class="field has-addons">
+                <div class="control">
+                  <input
+                    class="input is-small"
+                    type="text"
+                    placeholder="Find a test ..."
+                  />
+                </div>
+                <div class="control">
+                  <a class="button is-primary is-small"> Search </a>
+                </div>
+              </div>
+
             </tr>
           </thead>
           <tfoot>
@@ -173,7 +188,13 @@
           </button>
         </div>
         <div class="control">
-          <button @click="ClearForm"  type="reset" class="button is-link is-light is-medium">Cancel</button>
+          <button
+            @click="ClearForm"
+            type="reset"
+            class="button is-link is-light is-medium"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </form>
@@ -324,7 +345,6 @@ export default defineComponent({
     };
 
     const addOrder = () => {
-
       errors.value.length = 0;
 
       if (selectedVisitType.value.id == 0) {
@@ -360,33 +380,29 @@ export default defineComponent({
 
         save(order);
 
-        ClearForm()
-
-        
+        ClearForm();
       }
     };
 
     const ClearForm = () => {
-
       selectedVisitType.value = {
-          id: 0,
-          name: "--- Select Visit Type ---",
-          created_at: "",
-          updated_at: "",
-        };
+        id: 0,
+        name: "--- Select Visit Type ---",
+        created_at: "",
+        updated_at: "",
+      };
 
-        selectedWard.value = {
-          id: 0,
-          name: "--- Select Ward / Location ---",
-        };
+      selectedWard.value = {
+        id: 0,
+        name: "--- Select Ward / Location ---",
+      };
 
-        requestingPhysician.value = "";
+      requestingPhysician.value = "";
 
-        selectedSpecimenType.value = 0;
+      selectedSpecimenType.value = 0;
 
-        checkedTests.value.length == 0;
-
-    }
+      checkedTests.value.length == 0;
+    };
 
     return {
       visitTypes,
@@ -427,5 +443,11 @@ export default defineComponent({
 
 .pagination-previous {
   text-decoration: none !important;
+}
+
+#test-search-in-table {
+  position: absolute;
+  right: 35px;
+  margin-top: 5px;
 }
 </style>

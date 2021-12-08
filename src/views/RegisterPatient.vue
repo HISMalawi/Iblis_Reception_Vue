@@ -1,5 +1,5 @@
 <template>
-  <div class="register-patient tile is-4 is-parent">
+  <div class="register-patient tile is-5 is-parent">
     <article
       class="custom-height custom-bg card tile is-child"
     >

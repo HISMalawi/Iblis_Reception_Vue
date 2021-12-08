@@ -1,5 +1,5 @@
 <template>
-  <div class="patients-serch-results tile is-4 is-parent">
+  <div class="patients-serch-results tile is-5 is-parent">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Search Results</p>
     

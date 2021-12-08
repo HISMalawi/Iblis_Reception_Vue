@@ -2,10 +2,10 @@
   <div class="home">
     <div class="theme-switch">
       <input type="checkbox" class="checkbox" checked id="checkbox" />
-      <label @click="ChangeTheme" for="checkbox" class="label">
+      <label @click="ChangeTheme" for="checkbox" class="label panel">
         <i class="fas fa-moon"></i>
         <i class="fas fa-sun"></i>
-        <div class="ball"></div>
+        <div class="ball panel"></div>
       </label>
     </div>
 
@@ -20,7 +20,7 @@
     </div>
     <div class="content">
       <div class="tile is-ancestor">
-        <div class="controlls-tile tile is-vertical is-3 media-right">
+        <div class="controlls-tile tile is-vertical is-2 media-right">
           <div class="tile">
             <div class="tile is-parent is-vertical">
               <search-panel />
