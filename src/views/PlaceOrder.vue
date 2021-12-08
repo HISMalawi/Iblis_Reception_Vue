@@ -104,14 +104,11 @@
               <th>
                 <div id="test-search-in-table" class="field has-addons">
                 <div class="control">
-                  <input
+                  <input v-model="testSearch"
                     class="input"
                     type="text"
-                    placeholder="Find a test ..."
+                    placeholder="Search"
                   />
-                </div>
-                <div class="control">
-                  <a class="button is-primary"> Search </a>
                 </div>
               </div>
               </th>
@@ -240,6 +237,8 @@ export default defineComponent({
 
     const errors = ref<string[]>([]);
 
+    const testSearch = ref('')
+
     const { fetchTests, Tests } = GetTests();
 
     const { visitTypes, fetchVisitTypes } = GetVisitTypes();
@@ -334,8 +333,13 @@ export default defineComponent({
       let xperPage = perPage.value;
       let from = xpage * xperPage - xperPage;
       let to = xpage * xperPage;
-      return Tests.value.slice(from, to);
+      return filterTests.value.slice(from, to);
     });
+
+    const filterTests = computed(() => {
+      return Tests.value.filter((test) => test.name.includes(testSearch.value))
+    })
+
 
     onBeforeMount(() => {
       paginatedTests.value.length = 0;
@@ -427,6 +431,7 @@ export default defineComponent({
       message,
       code,
       ClearForm,
+      testSearch
     };
   },
 });
