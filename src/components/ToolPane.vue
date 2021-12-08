@@ -24,7 +24,6 @@ export default defineComponent({
     const Logout = () => {
 
       store.commit(MutationTypes.LOGOUT, true);
-      console.log("Logout..")
 
     }
 

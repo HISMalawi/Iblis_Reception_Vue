@@ -1,6 +1,9 @@
 import { ref } from "vue";
 import { useStore } from "@/store";
 import { VisitType } from "@/interfaces/VisitType";
+import TokenCheck from "@/composables/tokenCheck";
+
+const { logout } = TokenCheck()
 
 const store = useStore();
 
@@ -23,11 +26,11 @@ const getVisitTypes = () => {
       .then(function (response: any) {
         if (response.statusText === "OK") {
 
+          if (response.data == "Invalid Token") logout()
+
           code.value = response.data.code;
 
           const responseData = response.data.data;
-
-          // console.log(responseData[0][0])
 
           if (code.value == "200") {
 

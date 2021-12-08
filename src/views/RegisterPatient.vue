@@ -306,9 +306,9 @@ export default defineComponent({
     const SavePatient = () => {
       errors.value.length = 0;
 
-      if (patientDetails.externalPatientNumber == "") {
-        errors.value.push("external_number");
-      }
+      // if (patientDetails.externalPatientNumber == "") {
+      //   errors.value.push("external_number");
+      // }
 
       if (patientDetails.firstname == "") {
         errors.value.push("firstname");
@@ -348,7 +348,7 @@ export default defineComponent({
         }
 
         save(patientDetails);
-
+        
         patientDetails.externalPatientNumber = "";
         patientDetails.firstname = "";
         patientDetails.lastname = "";
@@ -358,6 +358,7 @@ export default defineComponent({
         patientDetails.physicalAddress = "";
         patientDetails.phoneNumber = "";
         patientDetails.email = "";
+        
       }
     };
 

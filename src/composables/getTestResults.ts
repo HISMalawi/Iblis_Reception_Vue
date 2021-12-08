@@ -1,6 +1,9 @@
 import { ref } from "vue";
 import { useStore } from "@/store";
 import { TestResults } from "@/interfaces/TestResults";
+import TokenCheck from "@/composables/tokenCheck";
+
+const { logout } = TokenCheck()
 
 const store = useStore();
 
@@ -24,6 +27,8 @@ const getTestResults = () => {
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
+
+          if (response.data == "Invalid Token") logout()
 
           code.value = response.data.code;
 

@@ -2,6 +2,9 @@ import { ref } from "vue";
 import { useStore } from "@/store";
 import { Ward } from "@/interfaces/Ward";
 import { VisitType } from "@/interfaces/VisitType";
+import TokenCheck from "@/composables/tokenCheck";
+
+const { logout } = TokenCheck()
 
 const store = useStore();
 
@@ -24,6 +27,8 @@ const getWards = () => {
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
+
+          if (response.data == "Invalid Token") logout()
 
           code.value = response.data.code;
 
