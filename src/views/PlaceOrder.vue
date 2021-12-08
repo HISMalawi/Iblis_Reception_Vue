@@ -101,19 +101,22 @@
             <tr>
               <th>Tests</th>
               <th>Actions</th>
-
-              <div id="test-search-in-table" class="field has-addons">
+              <th>
+                <div id="test-search-in-table" class="field has-addons">
                 <div class="control">
                   <input
-                    class="input is-small"
+                    class="input"
                     type="text"
                     placeholder="Find a test ..."
                   />
                 </div>
                 <div class="control">
-                  <a class="button is-primary is-small"> Search </a>
+                  <a class="button is-primary"> Search </a>
                 </div>
               </div>
+              </th>
+
+              
 
             </tr>
           </thead>
@@ -174,6 +177,7 @@
                   v-model="checkedTests"
                 />
               </td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -446,8 +450,9 @@ export default defineComponent({
 }
 
 #test-search-in-table {
-  position: absolute;
-  right: 35px;
-  margin-top: 5px;
+  float: right;
+  
 }
+
+
 </style>
