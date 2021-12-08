@@ -1,23 +1,35 @@
 <template>
   <div class="home">
+    <div class="theme-switch">
+      <input type="checkbox" class="checkbox" checked id="checkbox" />
+      <label @click="ChangeTheme" for="checkbox" class="label">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+        <div class="ball"></div>
+      </label>
+    </div>
+
     <div class="progress-content content">
-    <progress v-if="$store.state.searchingInProgress" class="progress is-small is-primary" max="100">15%</progress>
+      <progress
+        v-if="$store.state.searchingInProgress"
+        class="progress is-small is-primary"
+        max="100"
+      >
+        15%
+      </progress>
     </div>
     <div class="content">
       <div class="tile is-ancestor">
-        
         <div class="controlls-tile tile is-vertical is-3 media-right">
           <div class="tile">
             <div class="tile is-parent is-vertical">
-              
               <search-panel />
 
-              <tool-panel/>
-
+              <tool-panel />
             </div>
           </div>
         </div>
-        <view-orders v-if="$store.state.viewingOrders"/>
+        <view-orders v-if="$store.state.viewingOrders" />
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
         <view-patient v-if="$store.state.viewingPatient" />
@@ -28,14 +40,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, ref, watchEffect } from "vue";
+import {
+  defineComponent,
+  onBeforeMount,
+  onMounted,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
 import { useStore } from "@/store";
 import RegisterPatient from "@/views/RegisterPatient.vue";
 import PatientSearchResults from "@/views/PatientSearchResults.vue";
 import ViewOrders from "@/views/ViewOrders.vue";
 import ViewPatient from "@/views/ViewPatient.vue";
-import SearchPanel from "@/components/SearchPanel.vue"
-import ToolPanel from "@/components/ToolPane.vue"
+import SearchPanel from "@/components/SearchPanel.vue";
+import ToolPanel from "@/components/ToolPane.vue";
 import { useRouter } from "vue-router";
 import ViewResults from "@/views/ViewResults.vue";
 
@@ -51,9 +70,20 @@ export default defineComponent({
     ViewResults,
   },
   setup() {
-
     const store = useStore();
     const router = useRouter();
+
+    const theme = ref<string>('dark')
+
+    const appDomElement = ref<HTMLElement | null>(
+      document.createElement("div")
+    );
+
+    onMounted(() => {
+      const DomElem = ref<HTMLElement | null>(document.getElementById("app"));
+
+      appDomElement.value = DomElem.value;
+    });
 
     watchEffect(() => {
       if (!store.getters.isLoggedIn) {
@@ -61,15 +91,30 @@ export default defineComponent({
       }
     });
 
-    onBeforeMount(()=>{
-      
+    onBeforeMount(() => {
       if (!store.getters.isLoggedIn) {
         router.push("/login");
       }
+    });
 
-    })
+    const ChangeTheme = () => {
+
+      if (theme.value == 'dark') {
+        
+        appDomElement.value?.classList.remove('app-dark-mode')
+        appDomElement.value?.classList.add('app-light-mode')
+        theme.value = 'light'    
+      }
+      else {
+        appDomElement.value?.classList.remove('app-light-mode')
+        appDomElement.value?.classList.add('app-dark-mode')
+        theme.value = 'dark'    
+      }
 
 
+    }
+
+    return { ChangeTheme }
   },
 });
 </script>
@@ -90,6 +135,53 @@ export default defineComponent({
   width: 100%;
   opacity: 0.3;
 }
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
 
+.theme-switch .label {
+  width: 50px;
+  height: 26px;
+  background-color: rgb(197, 188, 188);
+  display: flex;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  transform: scale(1.5);
+}
 
+.theme-switch .ball {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+/*  target the elemenent after the label*/
+.theme-switch .checkbox:checked + .label .ball {
+  transform: translateX(24px);
+}
+
+.theme-switch .fa-moon {
+  color: pink;
+}
+
+.theme-switch .fa-sun {
+  color: yellow;
+}
+
+.theme-switch {
+
+  position: absolute;
+  right: 200px;
+  top: 10px;
+
+}
 </style>
