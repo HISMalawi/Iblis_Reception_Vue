@@ -107,7 +107,7 @@
                   <input v-model="testSearch"
                     class="input"
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search ..."
                   />
                 </div>
               </div>
