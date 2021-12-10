@@ -269,6 +269,8 @@ export default defineComponent({
         removeError("visit_type");
         selectedWard.value.id = 0;
 
+        code.value = ""
+
         fetchWards(selectedVisitType.value);
       }
     );
@@ -276,6 +278,7 @@ export default defineComponent({
     watch(
       () => [selectedWard.value],
       () => {
+        code.value = ""
         removeError("requesting_location");
       }
     );
@@ -289,6 +292,8 @@ export default defineComponent({
         }
 
         removeError("specimen_type");
+
+        code.value = ""
 
         checkedTests.value.length = 0;
         page.value = 1;
@@ -307,6 +312,7 @@ export default defineComponent({
     watch(
       () => [requestingPhysician.value],
       () => {
+        code.value = ""
         removeError("requesting_physician");
       }
     );
@@ -314,6 +320,8 @@ export default defineComponent({
     watch(
       () => [checkedTests.value],
       () => {
+
+        code.value = ""
         removeError("tests");
       }
     );
@@ -337,6 +345,8 @@ export default defineComponent({
     });
 
     const filterTests = computed(() => {
+
+      page.value = 1
       return Tests.value.filter((test) => test.name.toLowerCase().includes(testSearch.value.toLowerCase()))
     })
 
