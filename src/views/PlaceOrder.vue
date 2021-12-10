@@ -337,7 +337,7 @@ export default defineComponent({
     });
 
     const filterTests = computed(() => {
-      return Tests.value.filter((test) => test.name.includes(testSearch.value))
+      return Tests.value.filter((test) => test.name.toLowerCase().includes(testSearch.value.toLowerCase()))
     })
 
 
