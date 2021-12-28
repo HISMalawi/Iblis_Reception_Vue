@@ -2,6 +2,7 @@ import { AuthRequest } from "@/interfaces/AuthRequest";
 import { User } from "@/interfaces/User";
 import { ref } from "vue";
 import { MutationTypes, useStore } from "@/store";
+import { Ward } from "@/interfaces/Ward";
 
 const store = useStore();
 
@@ -20,7 +21,7 @@ const authenticate = () => {
   const message = ref<string>("");
   const code = ref<string>("");
 
-  const login = (creditials: AuthRequest) => {
+  const login = (creditials: AuthRequest, selectedWard: Ward) => {
     axios.value
       .post("/users/authenticate", {
         username: creditials.username,
@@ -38,6 +39,8 @@ const authenticate = () => {
             message.value = response.data.message;
 
             store.commit(MutationTypes.LOGIN, user);
+            store.commit(MutationTypes.SET_SELECTED_WARD, selectedWard);
+            
           } else {
             message.value = response.data.message;
           }

@@ -103,7 +103,7 @@ export default defineComponent({
       if (selectedWard.value.id == 0) {
         message.value = "Requesting Ward / Location is required"
       } else {
-        login(authCred);
+        login(authCred, selectedWard.value);
       }
     };
 

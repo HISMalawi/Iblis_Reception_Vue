@@ -12,6 +12,7 @@ import { User } from "@/interfaces/User";
 import { Axios } from "axios";
 import { Patient } from "@/interfaces/Patient";
 import { TestResult } from "@/interfaces/TestResult";
+import { Ward } from "@/interfaces/Ward";
 
 const axios = require("axios").create({
   baseURL: process.env.VUE_APP_SERVICE_BASE_URL,
@@ -49,6 +50,11 @@ const test: TestResult = {
     person_talked_to_for_not_done: "",
 }
 
+const selectedWard = {
+  id: 0,
+  name: "--- Select Ward / Location ---",
+};
+
 
 const patient: Patient = {
   address: "",
@@ -84,6 +90,7 @@ export type State = {
   selectedPatient: Patient;
   selectedTest: TestResult;
   searchingInProgress: boolean;
+  selectedWard: Ward;
 };
 
 const state: State = {
@@ -101,6 +108,7 @@ const state: State = {
   selectedPatient: patient,
   selectedTest: test,
   searchingInProgress: false,
+  selectedWard: selectedWard,
 };
 
 export enum MutationTypes {
@@ -117,6 +125,7 @@ export enum MutationTypes {
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
   SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
+  SET_SELECTED_WARD = "SETTING_SELECTED_WARD",
 }
 
 export enum ActionTypes {
@@ -133,6 +142,7 @@ export enum ActionTypes {
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
   SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
+  SET_SELECTED_WARD = "SETTING_SELECTED_WARD",
 }
 
 export type Mutations<S = State> = {
@@ -149,6 +159,7 @@ export type Mutations<S = State> = {
   [MutationTypes.SET_SELECTED_PATIENT](state: S, payload: Patient): void;
   [MutationTypes.SET_SELECTED_TEST](state: S, payload: TestResult): void;
   [MutationTypes.SEARCH_PATIENT_IN_PROGRESS](state: S, payload: boolean): void;
+  [MutationTypes.SET_SELECTED_WARD](state: S, payload: Ward): void;
 };
 
 const mutations: MutationTree<State> & Mutations = {
@@ -194,6 +205,9 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.SEARCH_PATIENT_IN_PROGRESS](state: State, payload: boolean) {
     state.searchingInProgress = payload;
   },
+  [MutationTypes.SET_SELECTED_WARD](state: State, payload: Ward) {
+    state.selectedWard = payload;
+  },
 };
 
 type AugmentedActionContext = {
@@ -216,6 +230,8 @@ export interface Actions {
   [ActionTypes.SET_SELECTED_PATIENT]({ commit }: AugmentedActionContext, payload: Patient): void;
 
   [ActionTypes.SET_SELECTED_TEST]({ commit }: AugmentedActionContext, payload: TestResult): void;
+
+  [ActionTypes.SET_SELECTED_WARD]({ commit }: AugmentedActionContext, payload: Ward): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -233,6 +249,9 @@ export const actions: ActionTree<State, State> & Actions = {
   },
   [ActionTypes.SET_SELECTED_TEST]({ commit }, payload: TestResult) {
     commit(MutationTypes.SET_SELECTED_TEST, payload);
+  },
+  [ActionTypes.SET_SELECTED_WARD]({ commit }, payload: Ward) {
+    commit(MutationTypes.SET_SELECTED_WARD, payload);
   },
 };
 
