@@ -263,6 +263,7 @@ export type Getters = {
   selectedPatient(state: State): Patient;
   selectedTest(state: State): TestResult;
   isSearchingInProgress(state: State): boolean;
+  selectedWard(state: State): Ward;
 };
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -287,6 +288,9 @@ export const getters: GetterTree<State, State> & Getters = {
   },
   isSearchingInProgress: (state) => {
     return state.searchingInProgress;
+  },
+  selectedWard: (state) => {
+    return state.selectedWard;
   },
 };
 

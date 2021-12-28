@@ -37,11 +37,8 @@
             class="select is-medium is-fullwidth"
             :class="errors.includes('requesting_location') ? 'is-danger' : ''"
           >
-            <select v-model="selectedWard">
+            <select disabled v-model="selectedWard">
               <option :value="selectedWard">{{ selectedWard.name }}</option>
-              <option :value="ward" v-for="ward in Wards" :key="ward.id">
-                {{ ward.name }}
-              </option>
             </select>
           </div>
         </div>
@@ -206,7 +203,6 @@
 import { computed, defineComponent, onBeforeMount, ref, watch } from "vue";
 import GetVisitTypes from "@/composables/getVisitTypes";
 import GetSpecimenTypes from "@/composables/getSpecimenTypes";
-import GetWards from "@/composables/getWards";
 import GetTests from "@/composables/getTests";
 import { Order } from "@/interfaces/Order";
 import { Test } from "@/interfaces/Test";
@@ -252,37 +248,21 @@ export default defineComponent({
       updated_at: "",
     });
 
-    const selectedWard = ref<Ward>({
-      id: 0,
-      name: "--- Select Ward / Location ---",
-    });
+    const selectedWard = store.getters.selectedWard
 
     const selectedSpecimenType = ref(0);
 
     const requestingPhysician = ref("");
 
-    const { Wards, fetchWards } = GetWards();
-
     watch(
       () => [selectedVisitType.value],
       () => {
         removeError("visit_type");
-        selectedWard.value.id = 0;
-
-        code.value = ""
-
-        fetchWards(selectedVisitType.value);
+    
       }
     );
 
-    watch(
-      () => [selectedWard.value],
-      () => {
-        code.value = ""
-        removeError("requesting_location");
-      }
-    );
-
+  
     watch(
       () => [selectedSpecimenType.value],
       () => {
@@ -369,7 +349,7 @@ export default defineComponent({
         errors.value.push("visit_type");
       }
 
-      if (selectedWard.value.id == 0) {
+      if (selectedWard.id == 0) {
         errors.value.push("requesting_location");
       }
 
@@ -388,7 +368,7 @@ export default defineComponent({
       if (errors.value.length == 0) {
         let order: Order = {
           visit_type: selectedVisitType.value,
-          requesting_location: selectedWard.value,
+          requesting_location: selectedWard,
           requesting_physician: requestingPhysician.value,
           specimen_type_id: selectedSpecimenType.value,
           tests: checkedTests.value,
@@ -410,11 +390,6 @@ export default defineComponent({
         updated_at: "",
       };
 
-      selectedWard.value = {
-        id: 0,
-        name: "--- Select Ward / Location ---",
-      };
-
       requestingPhysician.value = "";
 
       selectedSpecimenType.value = 0;
@@ -428,7 +403,6 @@ export default defineComponent({
       selectedWard,
       selectedVisitType,
       selectedSpecimenType,
-      Wards,
       addOrder,
       numberOfPages,
       perPage,
