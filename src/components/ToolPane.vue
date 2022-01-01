@@ -1,11 +1,13 @@
 <template>
   <div class="tool-card is-child panel  custom-bg">
     <ul class="tools is-primary">
+      <li @click="OpenDashboard" class="is-clickable"><button class="button is-rounded is-primary">View Dashboard</button></li>
       <li @click="OpenPatientRegForm" class="is-clickable"><button class="button is-rounded is-primary">Register Patient</button></li>
       <li @click="OpenViewOrdersView" class="is-clickable"><button class="button is-rounded is-primary">View Order</button></li>
     </ul>
 
     <button @click="Logout" id="logout-btn" class="button is-rounded is-danger">Logout</button>
+
   </div>
 </template>
 <script lang="ts">
@@ -19,7 +21,7 @@ export default defineComponent({
 
     const store = useStore()
 
-    const { OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView } = toggleViews();
+    const { OpenDashboard, OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView } = toggleViews();
 
     const Logout = () => {
 
@@ -27,7 +29,7 @@ export default defineComponent({
 
     }
 
-    return { Logout, OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView };
+    return { Logout, OpenPatientRegForm, ClosePatientRegForm, OpenViewOrdersView, OpenDashboard };
   },
 });
 </script>
@@ -35,7 +37,7 @@ export default defineComponent({
 <style>
 
 .tool-card {
-  height: 150px;
+  /* height: 150px; */
 }
 
 .tools {
@@ -57,10 +59,12 @@ export default defineComponent({
 
 
 #logout-btn{
-  position: relative;
-  bottom: -20px;
+
   float: left;
   left: 20px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+
 }
 
 </style>

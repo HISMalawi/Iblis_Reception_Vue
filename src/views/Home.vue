@@ -29,6 +29,7 @@
             </div>
           </div>
         </div>
+        <dashboard-panel v-if="$store.state.viewingDashboard" />
         <view-orders v-if="$store.state.viewingOrders" />
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
@@ -45,12 +46,12 @@ import {
   onBeforeMount,
   onMounted,
   ref,
-  watch,
   watchEffect,
 } from "vue";
 import { useStore } from "@/store";
 import RegisterPatient from "@/views/RegisterPatient.vue";
 import PatientSearchResults from "@/views/PatientSearchResults.vue";
+import DashboardPanel from "@/views/DashboardPanel.vue"
 import ViewOrders from "@/views/ViewOrders.vue";
 import ViewPatient from "@/views/ViewPatient.vue";
 import SearchPanel from "@/components/SearchPanel.vue";
@@ -68,6 +69,7 @@ export default defineComponent({
     ToolPanel,
     ViewOrders,
     ViewResults,
+    DashboardPanel,
   },
   setup() {
     const store = useStore();

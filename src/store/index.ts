@@ -84,6 +84,7 @@ export type State = {
   viewingPatientDetails: boolean;
   viewingTestResults: boolean;
   createPatientOrder: boolean;
+  viewingDashboard: boolean;
   user: User;
   loggedIn: boolean;
   axios: Axios;
@@ -102,6 +103,7 @@ const state: State = {
   viewingPatientDetails: true,
   viewingTestResults: false,
   createPatientOrder: false,
+  viewingDashboard: true,
   user: user,
   loggedIn: false,
   axios: axios,
@@ -119,6 +121,7 @@ export enum MutationTypes {
   VIEW_PATIENT = "VIEWING_PATIENT",
   REGISTER_PATIENT = "REGISTERING_PATIENT",
   VIEW_ORDERS = "VIEWING_ORDERS",
+  VIEW_DASHBOARD = "VIEWING_DASHBOARD",
   VIEW_TEST_RESULTS = "VIEWING_TEST_RESULTS",
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
@@ -136,6 +139,7 @@ export enum ActionTypes {
   VIEW_PATIENT = "VIEWING_PATIENT",
   REGISTER_PATIENT = "REGISTERING_PATIENT",
   VIEW_ORDERS = "VIEWING_ORDERS",
+  VIEW_DASHBOARD = "VIEWING_DASHBOARD",
   VIEW_TEST_RESULTS = "VIEWING_TEST_RESULTS",
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
@@ -153,6 +157,7 @@ export type Mutations<S = State> = {
   [MutationTypes.VIEW_PATIENT](state: S, payload: boolean): void;
   [MutationTypes.REGISTER_PATIENT](state: S, payload: boolean): void;
   [MutationTypes.VIEW_ORDERS](state: S, payload: boolean): void;
+  [MutationTypes.VIEW_DASHBOARD](state: S, payload: boolean): void;
   [MutationTypes.VIEW_TEST_RESULTS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_DETAILS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: S, payload: boolean): void;
@@ -180,7 +185,9 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.VIEW_PATIENT](state: State, payload: boolean) {
     state.viewingPatient = payload;
   },
-
+  [MutationTypes.VIEW_DASHBOARD](state: State, payload: boolean) {
+    state.viewingDashboard = payload;
+  },
   [MutationTypes.VIEW_TEST_RESULTS](state: State, payload: boolean) {
     state.viewingTestResults = payload;
   },
