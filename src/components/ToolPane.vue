@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-card is-child panel  custom-bg">
+  <div class="tool-card is-child panel custom-bg">
     <ul class="tools is-primary">
       <li @click="OpenDashboard" class="is-clickable"><button class="button is-rounded is-primary">View Dashboard</button></li>
       <li @click="OpenPatientRegForm" class="is-clickable"><button class="button is-rounded is-primary">Register Patient</button></li>
@@ -35,10 +35,6 @@ export default defineComponent({
 </script>
 
 <style>
-
-.tool-card {
-  /* height: 150px; */
-}
 
 .tools {
   list-style: none;

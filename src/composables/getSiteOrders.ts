@@ -1,28 +1,31 @@
 import { ref } from "vue";
-import { MutationTypes, useStore } from "@/store";
-import { Order } from "@/interfaces/Order";
+import { useStore } from "@/store";
+import { Specimen } from "@/interfaces/Specimen";
 import TokenCheck from "@/composables/tokenCheck";
 
 const { logout } = TokenCheck()
 
 const store = useStore();
 
-const createOrder = () => {
+const Specimens = ref<Specimen[]>([]);
+
+const getSiteOrders = () => {
 
   const axios = ref(store.getters.axios)
 
   const token = ref(store.getters.user.token)
 
+  const ward = ref(store.getters.selectedWard.name)
+
   const message = ref<string>("");
   const code = ref<string>("");
 
-  const accessionNumber = ref<string>("");
+  const fetchOrders = () => {
 
-  const save = (order: Order) => {
     axios.value
-      .put("/orders/create", {
+      .post("/ward/orders", {
         token: token.value,
-        order:order,
+        ward:ward.value,
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
@@ -33,18 +36,17 @@ const createOrder = () => {
 
           const responseData = response.data.data;
 
-          accessionNumber.value = responseData.accessionNumber;
-
-          store.commit(MutationTypes.ADD_ORDER, accessionNumber.value)
 
           if (code.value == "200") {
+
+            Specimens.value = responseData
 
             message.value = response.data.message;
 
           } else {
 
+            Specimens.value.length = 0
             message.value = response.data.message;
-            
           }
 
         }
@@ -53,9 +55,8 @@ const createOrder = () => {
         message.value = error.message;
       });
   };
-
-  return { save, message, code, accessionNumber};
+ 
+  return { fetchOrders, message, Specimens, code };
 };
 
-
-export default createOrder;
+export default getSiteOrders;

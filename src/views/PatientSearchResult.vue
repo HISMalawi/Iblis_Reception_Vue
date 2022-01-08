@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref} from "vue";
+import { defineComponent } from "vue";
 import toggleViews from "@/composables/toggleViews"
 import SearchPatient from "@/composables/searchPatient"
 import { Patient } from "@/interfaces/Patient";

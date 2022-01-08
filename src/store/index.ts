@@ -55,6 +55,7 @@ const selectedWard = {
   name: "--- Select Ward / Location ---",
 };
 
+const createdOrdersTrackingNum: string[] = [];
 
 const patient: Patient = {
   address: "",
@@ -92,6 +93,7 @@ export type State = {
   selectedTest: TestResult;
   searchingInProgress: boolean;
   selectedWard: Ward;
+  createdOrdersTrackingNum: string[];
 };
 
 const state: State = {
@@ -111,6 +113,7 @@ const state: State = {
   selectedTest: test,
   searchingInProgress: false,
   selectedWard: selectedWard,
+  createdOrdersTrackingNum: createdOrdersTrackingNum,
 };
 
 export enum MutationTypes {
@@ -129,6 +132,7 @@ export enum MutationTypes {
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
   SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
   SET_SELECTED_WARD = "SETTING_SELECTED_WARD",
+  ADD_ORDER = "ADDING_ORDER",
 }
 
 export enum ActionTypes {
@@ -147,6 +151,7 @@ export enum ActionTypes {
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
   SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
   SET_SELECTED_WARD = "SETTING_SELECTED_WARD",
+  ADD_ORDER = "ADDING_ORDER",
 }
 
 export type Mutations<S = State> = {
@@ -165,6 +170,7 @@ export type Mutations<S = State> = {
   [MutationTypes.SET_SELECTED_TEST](state: S, payload: TestResult): void;
   [MutationTypes.SEARCH_PATIENT_IN_PROGRESS](state: S, payload: boolean): void;
   [MutationTypes.SET_SELECTED_WARD](state: S, payload: Ward): void;
+  [MutationTypes.ADD_ORDER](state: S, payload: string): void;
 };
 
 const mutations: MutationTree<State> & Mutations = {
@@ -215,6 +221,9 @@ const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.SET_SELECTED_WARD](state: State, payload: Ward) {
     state.selectedWard = payload;
   },
+  [MutationTypes.ADD_ORDER](state: State, payload: string) {
+    state.createdOrdersTrackingNum.push(payload);
+  },
 };
 
 type AugmentedActionContext = {
@@ -239,6 +248,8 @@ export interface Actions {
   [ActionTypes.SET_SELECTED_TEST]({ commit }: AugmentedActionContext, payload: TestResult): void;
 
   [ActionTypes.SET_SELECTED_WARD]({ commit }: AugmentedActionContext, payload: Ward): void;
+
+  [ActionTypes.ADD_ORDER]({ commit }: AugmentedActionContext, payload: string): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -260,6 +271,9 @@ export const actions: ActionTree<State, State> & Actions = {
   [ActionTypes.SET_SELECTED_WARD]({ commit }, payload: Ward) {
     commit(MutationTypes.SET_SELECTED_WARD, payload);
   },
+  [ActionTypes.ADD_ORDER]({ commit }, payload: string) {
+    commit(MutationTypes.ADD_ORDER, payload);
+  },
 };
 
 export type Getters = {
@@ -271,6 +285,7 @@ export type Getters = {
   selectedTest(state: State): TestResult;
   isSearchingInProgress(state: State): boolean;
   selectedWard(state: State): Ward;
+  createdOrders(state: State): string[];
 };
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -299,6 +314,9 @@ export const getters: GetterTree<State, State> & Getters = {
   selectedWard: (state) => {
     return state.selectedWard;
   },
+  createdOrders: (state) => {
+    return state.createdOrdersTrackingNum;
+  }
 };
 
 export type Store = Omit<
