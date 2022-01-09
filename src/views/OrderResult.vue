@@ -5,7 +5,7 @@
         <h4 class="title is-4">{{order}}</h4>
       </div> -->
 
-      <div class="card result-card" v-for="Specimen in Specimens" :key="Specimen.id">
+      <div class="card result-card" :class="$store.state.createdOrdersTrackingNum.includes(Specimen.accession_number) ? 'is-new' : 'from-db'" v-for="Specimen in Specimens" :key="Specimen.id">
         <h4 class="title is-4">{{Specimen.accession_number}}</h4>
       </div>
     
@@ -45,12 +45,23 @@ export default defineComponent({
     width: 422px;
     height: 150px;
     border-radius: 8px !important;
-    background-color: #3796ce !important;
     text-align: center;
     padding: 15px 5px;
     cursor: pointer;
     margin:  10px 15px;
     display: inline-block;
+  }
+
+  .is-new {
+    background-color: #3796ce !important;
+  }
+
+  .from-db {
+    background-color: #999d9e !important;
+  }
+
+  .results-ready {
+    background-color: #3d8612 !important;
   }
 
   .result-card:hover {
