@@ -42,7 +42,7 @@ export default defineComponent({
   }
 
   .result-card {
-    width: 400px;
+    width: 422px;
     height: 150px;
     border-radius: 8px !important;
     background-color: #3796ce !important;
