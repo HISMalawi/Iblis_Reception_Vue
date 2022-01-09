@@ -51,6 +51,7 @@ export default defineComponent({
 .tools li {
   display: inline-block;
   margin-right: 10px;
+  margin-bottom: 8px;
 }
 
 

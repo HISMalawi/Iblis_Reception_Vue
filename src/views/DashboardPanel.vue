@@ -15,19 +15,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import OrderResult from "@/views/OrderResult.vue"
-import GetSiteOrders from "@/composables/getSiteOrders"
 
 export default defineComponent({
   name: "PatientSearchResults",
   components: {
     OrderResult,
-  },
-  setup() {
-
-    const { fetchOrders, message, Specimens, code } = GetSiteOrders()
-
-    fetchOrders()
-    
   },
 });
 </script>

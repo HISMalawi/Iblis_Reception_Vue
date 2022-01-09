@@ -1,8 +1,12 @@
 <template>
   <div class="order-result">
     
-      <div class="card result-card" v-for="order in $store.state.createdOrdersTrackingNum" :key="order">
+      <!-- <div class="card result-card" v-for="order in $store.state.createdOrdersTrackingNum" :key="order">
         <h4 class="title is-4">{{order}}</h4>
+      </div> -->
+
+      <div class="card result-card" v-for="Specimen in Specimens" :key="Specimen.id">
+        <h4 class="title is-4">{{Specimen.accession_number}}</h4>
       </div>
     
   </div>
@@ -10,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import GetSiteOrders from "@/composables/getSiteOrders"
 import toggleViews from "@/composables/toggleViews"
 import SearchPatient from "@/composables/searchPatient"
 import { Patient } from "@/interfaces/Patient";
@@ -21,9 +26,11 @@ export default defineComponent({
 
     const store = useStore();
 
-    //const createdOrders = store.commit(MutationTypes.LOGOUT, true)
+    const { fetchOrders, message, Specimens, code } = GetSiteOrders()
 
-    return { };
+    fetchOrders()
+
+    return { Specimens };
   },
 });
 </script>
