@@ -49,9 +49,14 @@
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Results</p>
       <div class="btn-close"><a class="button is-primary" @click="closeDetails"> Close </a></div>
+
+      <div v-if="!Results.length && message != '' > 0" class="notification is-primary">
+          <button class="delete"></button>
+          Results not available!
+      </div>
       
 
-      <div v-if="Results.length > 0" class="content has-text-left">
+      <div v-if="Results.length" class="content has-text-left">
         <!-- Content -->
         <div v-for="test in tests" :key="test.id" class="order-results field">
           <nav>
@@ -122,7 +127,7 @@ export default defineComponent({
 
     
  
-    return { closeDetails, orders, Results, tests }
+    return { closeDetails, orders, Results, tests, message }
   }
 });
 </script>
