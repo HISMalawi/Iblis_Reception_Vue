@@ -18,7 +18,7 @@
         15%
       </progress>
     </div>
-    <div class="content">
+    <div class="content ex">
       <div class="tile is-ancestor">
         <div class="controlls-tile tile is-vertical is-2 media-right">
           <div class="tile">
@@ -185,5 +185,8 @@ export default defineComponent({
   right: 200px;
   top: 10px;
 
+}
+.ex {
+  overflow: hidden;
 }
 </style>

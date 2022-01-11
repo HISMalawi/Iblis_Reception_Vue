@@ -1,9 +1,6 @@
 <template>
   <div class="order-result">
-    <!-- <div class="card result-card" v-for="order in $store.state.createdOrdersTrackingNum" :key="order">
-        <h4 class="title is-4">{{order}}</h4>
-      </div> -->
-
+   
     <!-- :class="$store.state.createdOrdersTrackingNum.includes(Specimen.accession_number) ? 'is-new' : 'from-db'" -->
 
     <div
@@ -11,6 +8,7 @@
       :class="Specimen.class"
       v-for="Specimen in Specimens"
       :key="Specimen.id"
+      @click="showDetails(Specimen)"
     >
       <h4 class="title is-4">{{ Specimen.accession_number }}</h4>
     </div>
@@ -24,10 +22,11 @@ import toggleViews from "@/composables/toggleViews";
 import SearchPatient from "@/composables/searchPatient";
 import { Patient } from "@/interfaces/Patient";
 import { MutationTypes, useStore } from "@/store";
+import { Specimen } from "@/interfaces/Specimen";
 
 export default defineComponent({
   name: "OrderResult",
-  setup() {
+  setup(props,context) {
     const store = useStore();
 
     const { fetchOrders, Specimens } = GetSiteOrders();
@@ -35,9 +34,14 @@ export default defineComponent({
 
     fetchOrders();
 
+    const showDetails = (Specimen: Specimen) => {
+    
+      context.emit('ShowResultsPanel', Specimen)
+      
+    }
 
 
-    return { Specimens};
+    return { Specimens, showDetails};
   },
 });
 </script>
@@ -56,6 +60,10 @@ export default defineComponent({
   cursor: pointer;
   margin: 10px 15px;
   display: inline-block;
+}
+
+.result-card h4 {
+  user-select: none;
 }
 
 .is-new {
