@@ -166,6 +166,28 @@ const getSiteOrders = () => {
 
       }
   );
+
+  watch(
+
+    () => [store.getters.fromDate],
+    () => {
+
+      BGfetchOrders();
+
+
+    }
+);
+
+watch(
+
+  () => [store.getters.toDate],
+  () => {
+
+    BGfetchOrders();
+
+
+  }
+);
  
   return { fetchOrders, Specimens };
 };
