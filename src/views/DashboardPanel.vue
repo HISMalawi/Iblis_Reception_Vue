@@ -1,5 +1,5 @@
 <template>
-  <dashboard-results-panel v-if="panelVisibility"/>
+  <dashboard-results-panel v-if="panelVisibility" @CloseResultsPanel="ClosePanel"/>
   <div class="dashboard tile is-10 is-parent">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Dashboard</p>
@@ -33,10 +33,16 @@ export default defineComponent({
     const OpenPanel = (Specimen: Specimen) => {
 
       panelVisibility.value = true
-      console.log(Specimen)
+
     }
 
-    return { OpenPanel, panelVisibility }
+    const ClosePanel = () => {
+
+      panelVisibility.value = false
+      
+    }
+
+    return { OpenPanel, ClosePanel, panelVisibility }
   }
 });
 </script>
