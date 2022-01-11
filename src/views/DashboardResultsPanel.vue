@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import OrderResult from "@/views/OrderResult.vue";
 import { Specimen } from "@/interfaces/Specimen";
 import SearchOrder from "@/composables/searchOrder";
@@ -119,11 +119,13 @@ export default defineComponent({
       tests.value.length = 0
     }
 
-    setTimeout(()=> {
-
-      fetchTestResults(tests.value)
-
-    }, 500)
+    watch(
+      () => [tests.value],
+      () => {
+        fetchTestResults(tests.value)
+    
+      }
+    );
 
     
  

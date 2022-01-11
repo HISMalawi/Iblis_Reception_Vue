@@ -61,10 +61,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { watch, defineComponent, ref } from "vue";
 import OrderResult from "@/views/OrderResult.vue";
 import DashboardResultsPanel from "@/views/DashboardResultsPanel.vue";
 import { Specimen } from "@/interfaces/Specimen";
+import { ActionTypes, useStore } from "@/store";
 
 export default defineComponent({
   name: "DashboardPanel",
@@ -73,6 +74,8 @@ export default defineComponent({
     DashboardResultsPanel,
   },
   setup() { 
+
+    const store = useStore();
 
     const now = new Date()
       .toISOString()
@@ -91,6 +94,10 @@ export default defineComponent({
 
     toDate.value = now
 
+    store.dispatch(ActionTypes.SET_FROM_DATE,fromDate.value)
+
+    store.dispatch(ActionTypes.SET_TO_DATE,toDate.value)
+
     const OpenPanel = (Specimen: Specimen) => {
       SelectedSpecimen.value = Specimen;
       panelVisibility.value = true;
@@ -99,6 +106,25 @@ export default defineComponent({
     const ClosePanel = () => {
       panelVisibility.value = false;
     };
+
+    watch(
+      () => [fromDate.value],
+      () => {
+        
+        store.dispatch(ActionTypes.SET_FROM_DATE,fromDate.value? fromDate.value : now )
+    
+      }
+    );
+
+     watch(
+      () => [toDate.value],
+      () => {
+
+        store.dispatch(ActionTypes.SET_TO_DATE,toDate.value? toDate.value : now )
+    
+      }
+    );
+
 
     return { OpenPanel, ClosePanel, panelVisibility, SelectedSpecimen, fromDate, toDate };
   },
@@ -112,7 +138,7 @@ export default defineComponent({
 
 .dashboard-panel-tool-bar {
   position: relative;
-  top: -55px;
+  top: -50px;
   display: block !important;
   text-align: left;
   margin-left: 35px;

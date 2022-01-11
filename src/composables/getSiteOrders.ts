@@ -27,14 +27,14 @@ const getSiteOrders = () => {
   const message = ref<string>("");
   const code = ref<string>("");
 
-
-
   const fetchOrders = () => {
 
     axios.value
       .post("/ward/orders", {
         token: token.value,
         ward:ward.value,
+        from:store.getters.fromDate,
+        to:store.getters.toDate
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
@@ -94,6 +94,8 @@ const getSiteOrders = () => {
       .post("/ward/orders", {
         token: token.value,
         ward:ward.value,
+        from:store.getters.fromDate,
+        to:store.getters.toDate
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {

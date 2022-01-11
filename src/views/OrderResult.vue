@@ -18,14 +18,12 @@
 <script lang="ts">
 import { defineComponent, watch } from "vue";
 import GetSiteOrders from "@/composables/getSiteOrders";
-import toggleViews from "@/composables/toggleViews";
-import SearchPatient from "@/composables/searchPatient";
-import { Patient } from "@/interfaces/Patient";
-import { MutationTypes, useStore } from "@/store";
+import { useStore } from "@/store";
 import { Specimen } from "@/interfaces/Specimen";
 
 export default defineComponent({
   name: "OrderResult",
+  emits: ['ShowResultsPanel'],
   setup(props,context) {
     const store = useStore();
 

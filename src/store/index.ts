@@ -77,6 +77,8 @@ const patient: Patient = {
 };
 
 export type State = {
+  fromDate: string;
+  toDate: string;
   counter: number;
   registeringPatient: boolean;
   viewingOrders: boolean;
@@ -97,6 +99,8 @@ export type State = {
 };
 
 const state: State = {
+  fromDate: "",
+  toDate: "",
   counter: 0,
   registeringPatient: false,
   viewingOrders: false,
@@ -117,6 +121,8 @@ const state: State = {
 };
 
 export enum MutationTypes {
+  SET_FROM_DATE = "SETTING_FROM_DATE",
+  SET_TO_DATE = "SETTING_TO_DATE",
   INC_COUNTER = "SET_COUNTER",
   LOGIN = "LOGIN_USER",
   LOGOUT = "LOGOUT_USER",
@@ -136,6 +142,8 @@ export enum MutationTypes {
 }
 
 export enum ActionTypes {
+  SET_FROM_DATE = "SETTING_FROM_DATE",
+  SET_TO_DATE = "SETTING_TO_DATE",
   INC_COUNTER = "SET_COUNTER",
   LOGIN = "LOGIN_USER",
   LOGOUT = "LOGOUT_USER",
@@ -155,6 +163,8 @@ export enum ActionTypes {
 }
 
 export type Mutations<S = State> = {
+  [MutationTypes.SET_FROM_DATE](state: S, payload: string): void;
+  [MutationTypes.SET_TO_DATE](state: S, payload: string): void;
   [MutationTypes.INC_COUNTER](state: S, payload: number): void;
   [MutationTypes.LOGIN](state: S, payload: User): void;
   [MutationTypes.LOGOUT](state: S, payload: boolean): void;
@@ -174,6 +184,12 @@ export type Mutations<S = State> = {
 };
 
 const mutations: MutationTree<State> & Mutations = {
+  [MutationTypes.SET_FROM_DATE](state: State, payload: string) {
+    state.fromDate = payload;
+  },
+  [MutationTypes.SET_TO_DATE](state: State, payload: string) {
+    state.toDate = payload;
+  },
   [MutationTypes.INC_COUNTER](state: State, payload: number) {
     state.counter += payload;
   },
@@ -234,10 +250,11 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, "commit">;
 
 export interface Actions {
-  [ActionTypes.INC_COUNTER](
-    { commit }: AugmentedActionContext,
-    payload: number
-  ): void;
+  [ActionTypes.SET_FROM_DATE]({ commit }: AugmentedActionContext, payload: string): void;
+
+  [ActionTypes.SET_TO_DATE]({ commit }: AugmentedActionContext, payload: string): void;
+
+  [ActionTypes.INC_COUNTER]({ commit }: AugmentedActionContext, payload: number): void;
 
   [ActionTypes.LOGIN]({ commit }: AugmentedActionContext, payload: User): void;
 
@@ -253,6 +270,12 @@ export interface Actions {
 }
 
 export const actions: ActionTree<State, State> & Actions = {
+  [ActionTypes.SET_FROM_DATE]({ commit }, payload: string) {
+    commit(MutationTypes.SET_FROM_DATE, payload);
+  },
+  [ActionTypes.SET_TO_DATE]({ commit }, payload: string) {
+    commit(MutationTypes.SET_TO_DATE, payload);
+  },
   [ActionTypes.INC_COUNTER]({ commit }, payload: number) {
     commit(MutationTypes.INC_COUNTER, payload);
   },
@@ -277,6 +300,8 @@ export const actions: ActionTree<State, State> & Actions = {
 };
 
 export type Getters = {
+  fromDate(state: State): string;
+  toDate(state: State): string;
   doubleCounter(state: State): number;
   user(state: State): User;
   axios(state: State): Axios;
@@ -289,6 +314,12 @@ export type Getters = {
 };
 
 export const getters: GetterTree<State, State> & Getters = {
+  fromDate: (state) => {
+    return state.fromDate;
+  },
+  toDate: (state) => {
+    return state.toDate;
+  },
   doubleCounter: (state) => {
     return state.counter * 2;
   },
