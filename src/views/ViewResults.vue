@@ -36,10 +36,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch, watchEffect } from "vue";
-import toggleViews from "@/composables/toggleViews";
+import { defineComponent, ref, watchEffect } from "vue";
 import { useStore } from "@/store";
-import { TestResult } from "@/interfaces/TestResult";
 import getTestResults from "@/composables/getTestResults";
 
 export default defineComponent({

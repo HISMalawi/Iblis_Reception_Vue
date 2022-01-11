@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { useStore } from "@/store";
-import { OrderResult } from "@/interfaces/OrderResult";
+import { TestResults } from "@/interfaces/TestResults";
 import TokenCheck from "@/composables/tokenCheck";
 import { TestResult } from "@/interfaces/TestResult";
 
@@ -8,11 +8,9 @@ const { logout } = TokenCheck()
 
 const store = useStore();
 
-const orders = ref<OrderResult[]>([]);
+const Results = ref<TestResults[]>([]);
 
-const tests = ref<TestResult[]>([]);
-
-const SearchOrder = () => {
+const getTestsResults = () => {
 
   const axios = ref(store.getters.axios)
 
@@ -21,11 +19,12 @@ const SearchOrder = () => {
   const message = ref<string>("");
   const code = ref<string>("");
 
-  const search = (value: string) => {
+  const fetchTestResults = (tests: TestResult[]) => {
+    
     axios.value
-      .post("/orders/search", {
+      .post("/tests/results", {
         token: token.value,
-        tracking_number: value
+        tests:tests,
       })
       .then(function (response: any) {
         if (response.statusText === "OK") {
@@ -36,14 +35,16 @@ const SearchOrder = () => {
 
           const responseData = response.data.data;
 
+
           if (code.value == "200") {
 
-            orders.value = responseData.orders
-
-            tests.value = responseData.tests
+            Results.value = responseData
 
             message.value = response.data.message;
+
           } else {
+
+            Results.value.length = 0
             message.value = response.data.message;
           }
 
@@ -52,10 +53,9 @@ const SearchOrder = () => {
       .catch(function (error: any) {
         message.value = error.message;
       });
-
   };
-  
-  return { search, message, orders, tests};
+ 
+  return { fetchTestResults, message, Results, code };
 };
 
-export default SearchOrder;
+export default getTestsResults;
