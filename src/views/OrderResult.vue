@@ -10,6 +10,11 @@
       :key="Specimen.id"
       @click="showDetails(Specimen)"
     >
+      <div v-for="Patient in Patients" :key="Patient.id">
+
+        <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">{{ Patient.name }}</h4>
+
+      </div>
       <h4 class="title is-4">{{ Specimen.accession_number }}</h4>
     </div>
   </div>
@@ -27,7 +32,7 @@ export default defineComponent({
   setup(props,context) {
     const store = useStore();
 
-    const { fetchOrders, Specimens } = GetSiteOrders();
+    const { fetchOrders, Specimens, Patients } = GetSiteOrders();
 
 
     fetchOrders();
@@ -39,7 +44,7 @@ export default defineComponent({
     }
 
 
-    return { Specimens, showDetails};
+    return { Specimens, showDetails, Patients};
   },
 });
 </script>

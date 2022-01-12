@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import { Specimen } from "@/interfaces/Specimen";
 import { TestResult } from "@/interfaces/TestResult";
 import TokenCheck from "@/composables/tokenCheck";
+import { PatientDash } from "@/interfaces/PatientDash";
 
 const { logout } = TokenCheck()
 
@@ -11,10 +12,12 @@ const store = useStore();
 const Specimens = ref<Specimen[]>([]);
 const TestWithResults = ref<TestResult[]>([]);
 const SpecimensWithResults = ref<number[]>([]);
+const Patients = ref<PatientDash[]>([]);
 
 const BGSpecimens = ref<Specimen[]>([]);
 const BGTestWithResults = ref<TestResult[]>([]);
 const BGSpecimensWithResults = ref<number[]>([]);
+const BGPatients = ref<PatientDash[]>([]);
 
 const getSiteOrders = () => {
 
@@ -57,6 +60,8 @@ const getSiteOrders = () => {
             });
 
             Specimens.value = responseData.specimens
+
+            Patients.value = responseData.patients
 
             for (let index = 0; index < Specimens.value.length; index++) {
 
@@ -119,6 +124,8 @@ const getSiteOrders = () => {
 
             BGSpecimens.value = responseData.specimens
 
+            BGPatients.value = responseData.patients
+
             for (let index = 0; index < BGSpecimens.value.length; index++) {
 
               if (BGSpecimensWithResults.value.includes(BGSpecimens.value[index].id)) {
@@ -160,7 +167,7 @@ const getSiteOrders = () => {
       () => [BGSpecimens.value],
       () => {
 
-        
+          Patients.value = BGPatients.value
           Specimens.value = BGSpecimens.value
 
 
@@ -189,7 +196,7 @@ watch(
   }
 );
  
-  return { fetchOrders, Specimens };
+  return { fetchOrders, Specimens, Patients };
 };
 
 export default getSiteOrders;
