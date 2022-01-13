@@ -334,13 +334,13 @@ export default defineComponent({
         errors.value.push("address");
       }
 
-      if (patientDetails.phoneNumber == "") {
-        errors.value.push("phone");
-      }
+      // if (patientDetails.phoneNumber == "") {
+      //   errors.value.push("phone");
+      // }
 
-      if (patientDetails.email == "") {
-        errors.value.push("email");
-      }
+      // if (patientDetails.email == "") {
+      //   errors.value.push("email");
+      // }
 
       if (errors.value.length == 0) {
         if (patientDetails.dob == "" && age.value !== null) {
