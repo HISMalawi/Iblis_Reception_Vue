@@ -17,9 +17,10 @@
       <div v-for="Patient in Patients" :key="Patient.id">
 
         <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">{{ Patient.name }}</h4>
-
+        <h4 class="title is-5" v-if="Patient.gender == 1">(Female)</h4>
+        <h4 class="title is-5" v-if="Patient.gender == 0">(Male)</h4>
       </div>
-      <h4 class="title is-4">{{ Specimen.accession_number }}</h4>
+      <h4 class="title is-5">{{ Specimen.accession_number }}</h4>
     </div>
     
   </div>
