@@ -5,6 +5,10 @@
 
       <div class="content has-text-left">
         <!-- Content -->
+        <div v-if="!orders.length" class="loader-container">
+          <img src="../assets/loading.gif" />
+        </div>
+
         <div class="order-results field">
           <nav v-for="order in orders" :key="order.id">
             <p class="panel-heading">{{ order.tracking_number }}</p>
@@ -48,6 +52,7 @@
   <div class="dashboard dashboard-results-panel tile is-parent is-6">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Results</p>
+
       <div class="btn-close"><a class="button is-primary" @click="closeDetails"> Close </a></div>
 
       <div v-if="!Results.length && message != '' > 0" class="notification is-primary">

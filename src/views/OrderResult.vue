@@ -3,6 +3,10 @@
    
     <!-- :class="$store.state.createdOrdersTrackingNum.includes(Specimen.accession_number) ? 'is-new' : 'from-db'" -->
 
+    <div v-if="!Specimens.length" class="loader-container">
+      <img src="../assets/loading.gif" />
+    </div>
+
     <div
       class="card result-card"
       :class="Specimen.class"
@@ -17,6 +21,7 @@
       </div>
       <h4 class="title is-4">{{ Specimen.accession_number }}</h4>
     </div>
+    
   </div>
 </template>
 
@@ -89,5 +94,14 @@ export default defineComponent({
 .result-card .title {
   color: white;
   margin-top: 10px;
+}
+.loader-container {
+  display: block;
+  text-align: center;
+  padding-right: 45px;
+}
+
+.loader-container img {
+  width: 100px;
 }
 </style>
