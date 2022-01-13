@@ -7,6 +7,10 @@
       <img src="../assets/loading.gif" />
     </div>
 
+    <div v-if="dataChange" class="loader-container">
+      <img src="../assets/loading.gif" />
+    </div>
+
     <div
       class="card result-card"
       :class="Specimen.class"
@@ -17,8 +21,8 @@
       <div v-for="Patient in Patients" :key="Patient.id">
 
         <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">{{ Patient.name }}</h4>
-        <h4 class="title is-5" v-if="Patient.gender == 1">(Female)</h4>
-        <h4 class="title is-5" v-if="Patient.gender == 0">(Male)</h4>
+        <h4 class="title is-5" v-if="Patient.specimen_id == Specimen.id && Patient.gender == 1">(Female)</h4>
+        <h4 class="title is-5" v-if="Patient.specimen_id == Specimen.id && Patient.gender == 0">(Male)</h4>
       </div>
       <h4 class="title is-5">{{ Specimen.accession_number }}</h4>
     </div>
@@ -27,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import GetSiteOrders from "@/composables/getSiteOrders";
 import { useStore } from "@/store";
 import { Specimen } from "@/interfaces/Specimen";
@@ -36,7 +40,10 @@ export default defineComponent({
   name: "OrderResult",
   emits: ['ShowResultsPanel'],
   setup(props,context) {
+
     const store = useStore();
+
+    const dataChange = ref<Boolean>(false)
 
     const { fetchOrders, Specimens, Patients } = GetSiteOrders();
 
@@ -49,8 +56,19 @@ export default defineComponent({
       
     }
 
+    watch(
 
-    return { Specimens, showDetails, Patients};
+        () => [Specimens],
+        () => {
+
+          dataChange.value = true
+
+
+        }
+    );
+
+
+    return { Specimens, showDetails, Patients, dataChange};
   },
 });
 </script>
