@@ -87,6 +87,7 @@ export type State = {
   viewingPatientDetails: boolean;
   viewingTestResults: boolean;
   createPatientOrder: boolean;
+  viewingPatientPreviousOrders: boolean;
   viewingDashboard: boolean;
   user: User;
   loggedIn: boolean;
@@ -109,6 +110,7 @@ const state: State = {
   viewingPatientDetails: true,
   viewingTestResults: false,
   createPatientOrder: false,
+  viewingPatientPreviousOrders: false,
   viewingDashboard: true,
   user: user,
   loggedIn: false,
@@ -134,6 +136,7 @@ export enum MutationTypes {
   VIEW_TEST_RESULTS = "VIEWING_TEST_RESULTS",
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
+  VIEW_PATIENT_PREVIOUS_ORDERS = "VIEWING_PATIENT_PREVIOUS_ORDERS",
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
   SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
@@ -155,6 +158,7 @@ export enum ActionTypes {
   VIEW_TEST_RESULTS = "VIEWING_TEST_RESULTS",
   OPEN_PATIENT_DETAILS = "OPENING_PATIENT_DETAILS",
   OPEN_PATIENT_PLACE_ORDER = "OPENING_PATIENT_PLACE_ORDER",
+  VIEW_PATIENT_PREVIOUS_ORDERS = "VIEWING_PATIENT_PREVIOUS_ORDERS",
   SET_SELECTED_PATIENT = "SETTING_SELECTED_PATIENT",
   SET_SELECTED_TEST = "SETTING_SELECTED_TEST",
   SEARCH_PATIENT_IN_PROGRESS = "SEARCHING_PATIENT_IN_PROGRESS",
@@ -176,6 +180,7 @@ export type Mutations<S = State> = {
   [MutationTypes.VIEW_TEST_RESULTS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_DETAILS](state: S, payload: boolean): void;
   [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: S, payload: boolean): void;
+  [MutationTypes.VIEW_PATIENT_PREVIOUS_ORDERS](state: S, payload: boolean): void;
   [MutationTypes.SET_SELECTED_PATIENT](state: S, payload: Patient): void;
   [MutationTypes.SET_SELECTED_TEST](state: S, payload: TestResult): void;
   [MutationTypes.SEARCH_PATIENT_IN_PROGRESS](state: S, payload: boolean): void;
@@ -224,6 +229,9 @@ const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.OPEN_PATIENT_PLACE_ORDER](state: State, payload: boolean) {
     state.createPatientOrder = payload;
+  },
+  [MutationTypes.VIEW_PATIENT_PREVIOUS_ORDERS](state: State, payload: boolean) {
+    state.viewingPatientPreviousOrders = payload;
   },
   [MutationTypes.SET_SELECTED_PATIENT](state: State, payload: Patient) {
     state.selectedPatient = payload;

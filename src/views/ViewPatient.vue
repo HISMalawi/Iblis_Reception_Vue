@@ -19,11 +19,18 @@
           >
             <a>Order</a>
           </li>
+          <li
+            :class="$store.state.viewingPatientPreviousOrders ? 'is-active' : ''"
+            @click="OpenPatientPreviousOrdersIn"
+          >
+            <a>Previous Orders</a>
+          </li>
         </ul>
       </div>
 
       <place-order v-if="$store.state.createPatientOrder" />
       <view-patient-details v-if="$store.state.viewingPatientDetails" />
+      <view-patient-previous-orders v-if="$store.state.viewingPatientPreviousOrders" />
     </article>
   </div>
 </template>
@@ -32,6 +39,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import PlaceOrder from "@/views/PlaceOrder.vue";
 import ViewPatientDetails from "@/views/ViewPatientDetails.vue";
+import ViewPatientPreviousOrders from "@/views/ViewPatientPreviousOrders.vue";
 import toggleViews from "@/composables/toggleViews";
 
 export default defineComponent({
@@ -39,11 +47,13 @@ export default defineComponent({
   components: {
     PlaceOrder,
     ViewPatientDetails,
+    ViewPatientPreviousOrders,
   },
   setup() {
     const {
       OpenPatientDetails,
       OpenCreatePatientOrder,
+      OpenPatientPreviousOrders,
     } = toggleViews();
 
     const OpenPatientDetailsIn = () => {
@@ -54,7 +64,13 @@ export default defineComponent({
       OpenCreatePatientOrder(true);
     };
 
-    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn };
+    const OpenPatientPreviousOrdersIn = () => {
+
+      OpenPatientPreviousOrders(true);
+
+    }
+
+    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenPatientPreviousOrdersIn };
   },
 });
 </script>

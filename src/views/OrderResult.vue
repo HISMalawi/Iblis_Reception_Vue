@@ -7,9 +7,9 @@
       <img src="../assets/loading.gif" />
     </div>
 
-    <div v-if="dataChange" class="loader-container">
+    <!-- <div v-if="dataChange" class="loader-container">
       <img src="../assets/loading.gif" />
-    </div>
+    </div> -->
 
     <div
       class="card result-card"
@@ -56,19 +56,8 @@ export default defineComponent({
       
     }
 
-    watch(
 
-        () => [Specimens],
-        () => {
-
-          dataChange.value = true
-
-
-        }
-    );
-
-
-    return { Specimens, showDetails, Patients, dataChange};
+    return { Specimens, showDetails, Patients };
   },
 });
 </script>

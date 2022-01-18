@@ -5,6 +5,7 @@ const toggleViews = () => {
 
   const OpenPatientDetails = (value: boolean) => {
 
+    store.commit(MutationTypes.VIEW_PATIENT_PREVIOUS_ORDERS, !value);
     store.commit(MutationTypes.OPEN_PATIENT_PLACE_ORDER, !value);
     store.commit(MutationTypes.VIEW_PATIENT, value);
     store.commit(MutationTypes.OPEN_PATIENT_DETAILS, value);
@@ -13,7 +14,15 @@ const toggleViews = () => {
   const OpenCreatePatientOrder = (value: boolean) => {
 
     store.commit(MutationTypes.OPEN_PATIENT_DETAILS, !value);
+    store.commit(MutationTypes.VIEW_PATIENT_PREVIOUS_ORDERS, !value);
     store.commit(MutationTypes.OPEN_PATIENT_PLACE_ORDER, value);
+  };
+
+  const OpenPatientPreviousOrders = (value: boolean) => {
+
+    store.commit(MutationTypes.OPEN_PATIENT_DETAILS, !value);
+    store.commit(MutationTypes.OPEN_PATIENT_PLACE_ORDER, !value);
+    store.commit(MutationTypes.VIEW_PATIENT_PREVIOUS_ORDERS, value);
   };
 
 
@@ -83,7 +92,8 @@ const toggleViews = () => {
     OpenViewOrdersView,
     OpenViewTestResults,
     CloseViewTestResults,
-    OpenDashboard
+    OpenDashboard,
+    OpenPatientPreviousOrders
   };
 };
 
