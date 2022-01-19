@@ -3,7 +3,7 @@
    
     <!-- :class="$store.state.createdOrdersTrackingNum.includes(Specimen.accession_number) ? 'is-new' : 'from-db'" -->
 
-    <div v-if="!Specimens.length" class="loader-container">
+    <div v-if="!Specimens.length && Specimens.length != 0" class="loader-container">
       <img src="../assets/loading.gif" />
     </div>
 

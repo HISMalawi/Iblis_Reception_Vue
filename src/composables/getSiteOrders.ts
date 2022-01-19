@@ -122,6 +122,7 @@ const getSiteOrders = () => {
               
             });
 
+
             BGSpecimens.value = responseData.specimens
 
             BGPatients.value = responseData.patients
@@ -179,8 +180,9 @@ const getSiteOrders = () => {
     () => [store.getters.fromDate],
     () => {
 
-      BGfetchOrders();
+      Specimens.value.length = 0
 
+      BGfetchOrders();
 
     }
 );
@@ -190,8 +192,9 @@ watch(
   () => [store.getters.toDate],
   () => {
 
-    BGfetchOrders();
+    Specimens.value.length = 0
 
+    BGfetchOrders();
 
   }
 );

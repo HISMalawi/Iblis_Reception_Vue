@@ -5,16 +5,23 @@
           <thead>
             <tr>
               <th>Accession Number</th>
+              <th>Results</th>
             </tr>
+
           </thead>
 
 
           <tbody>
-            <tr v-for="Specimen in Specimens" :key="Specimen.id">
+            <tr class="is-clickable" v-for="Specimen in Specimens" :key="Specimen.id" @click="showDetails(Specimen)">
               <td>
-                <label class="order_tests">{{
+                <label class="is-clickable">{{
                   Specimen.accession_number
                 }}</label>
+              </td>
+
+              <td>
+                <button v-if="Specimen.class == 'results-ready'" :class="Specimen.class" class="button is-small custom-btn">Available</button>
+                <button v-if="Specimen.class == 'from-db'" :class="Specimen.class" class="button is-small custom-btn">Not Available</button>
               </td>
              
             </tr>
@@ -44,3 +51,10 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+  .custom-btn {
+
+    width: 100px !important;
+    color: white;
+  }
+</style>
