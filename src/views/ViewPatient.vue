@@ -57,11 +57,15 @@ export default defineComponent({
     } = toggleViews();
 
     const OpenPatientDetailsIn = () => {
+
       OpenPatientDetails(true);
+      
     };
 
     const OpenCreatePatientOrderIn = () => {
+
       OpenCreatePatientOrder(true);
+
     };
 
     const OpenPatientPreviousOrdersIn = () => {
