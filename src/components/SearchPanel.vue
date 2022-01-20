@@ -1,6 +1,6 @@
 <template>
   <div class="search-card custom-bg card tile is-child">
-    <div class="card-content control has-icons-left has-icons-right">
+    <div class="card-content control">
       <div>
         <div class="field has-addons">
           <div class="control">
@@ -15,14 +15,7 @@
             <a @click="Search" class="button is-primary is-medium"> Search </a>
           </div>
         </div>
-      </div>
-
-      <span class="icon is-left">
-        <i class="fas fa-envelope"></i>
-      </span>
-      <span class="icon is-right">
-        <i class="fas fa-check"></i>
-      </span>
+      </div> 
     </div>
   </div>
 </template>

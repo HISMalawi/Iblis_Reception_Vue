@@ -210,7 +210,6 @@ import CreateOrder from "@/composables/createOrder";
 import { useStore } from "@/store";
 import { Patient } from "@/interfaces/Patient";
 import { User } from "@/interfaces/User";
-import { Ward } from "@/interfaces/Ward";
 import { VisitType } from "@/interfaces/VisitType";
 
 export default defineComponent({

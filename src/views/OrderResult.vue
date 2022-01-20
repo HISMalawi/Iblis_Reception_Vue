@@ -68,7 +68,7 @@ export default defineComponent({
 }
 
 .result-card {
-  width: 422px;
+  width: 400px;
   height: 150px;
   border-radius: 8px !important;
   text-align: center;
