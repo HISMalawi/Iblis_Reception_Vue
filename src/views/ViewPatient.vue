@@ -30,7 +30,7 @@
 
       <place-order v-if="$store.state.createPatientOrder" />
       <view-patient-details v-if="$store.state.viewingPatientDetails" />
-      <view-patient-previous-orders v-if="$store.state.viewingPatientPreviousOrders" />
+      <view-patient-previous-orders @OpenResultsPanel="OpenResultsPanel" v-if="$store.state.viewingPatientPreviousOrders" />
     </article>
   </div>
 </template>
@@ -41,6 +41,7 @@ import PlaceOrder from "@/views/PlaceOrder.vue";
 import ViewPatientDetails from "@/views/ViewPatientDetails.vue";
 import ViewPatientPreviousOrders from "@/views/ViewPatientPreviousOrders.vue";
 import toggleViews from "@/composables/toggleViews";
+import { Specimen } from "@/interfaces/Specimen";
 
 export default defineComponent({
   name: "ViewPatient",
@@ -49,7 +50,8 @@ export default defineComponent({
     ViewPatientDetails,
     ViewPatientPreviousOrders,
   },
-  setup() {
+  emits: ['OpenResultsPanel'],
+  setup(props, context) {
     const {
       OpenPatientDetails,
       OpenCreatePatientOrder,
@@ -74,7 +76,12 @@ export default defineComponent({
 
     }
 
-    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenPatientPreviousOrdersIn };
+    const OpenResultsPanel = (Specimen: Specimen) => {
+
+      context.emit('OpenResultsPanel', Specimen)
+    }
+
+    return { OpenPatientDetailsIn, OpenCreatePatientOrderIn, OpenPatientPreviousOrdersIn, OpenResultsPanel };
   },
 });
 </script>

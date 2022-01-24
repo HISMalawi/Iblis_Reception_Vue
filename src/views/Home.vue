@@ -29,11 +29,17 @@
             </div>
           </div>
         </div>
+
+        <dashboard-results-panel
+          v-if="viewResultPanelVisibility"
+          :specimen="SelectedSpecimen"
+          @CloseResultsPanel="ClosePanel"
+        />
         <dashboard-panel v-if="$store.state.viewingDashboard" />
         <view-orders v-if="$store.state.viewingOrders" />
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
-        <view-patient v-if="$store.state.viewingPatient" />
+        <view-patient @OpenResultsPanel="OpenResultsPanel" v-if="$store.state.viewingPatient" />
         <view-results v-if="$store.state.viewingTestResults" />
       </div>
     </div>
@@ -51,13 +57,15 @@ import {
 import { useStore } from "@/store";
 import RegisterPatient from "@/views/RegisterPatient.vue";
 import PatientSearchResults from "@/views/PatientSearchResults.vue";
-import DashboardPanel from "@/views/DashboardPanel.vue"
+import DashboardPanel from "@/views/DashboardPanel.vue";
 import ViewOrders from "@/views/ViewOrders.vue";
 import ViewPatient from "@/views/ViewPatient.vue";
 import SearchPanel from "@/components/SearchPanel.vue";
 import ToolPanel from "@/components/ToolPane.vue";
 import { useRouter } from "vue-router";
 import ViewResults from "@/views/ViewResults.vue";
+import DashboardResultsPanel from "@/views/DashboardResultsPanel.vue";
+import { Specimen } from "@/interfaces/Specimen";
 
 export default defineComponent({
   name: "Home",
@@ -70,12 +78,26 @@ export default defineComponent({
     ViewOrders,
     ViewResults,
     DashboardPanel,
+    DashboardResultsPanel,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    const theme = ref<string>('dark')
+    const viewResultPanelVisibility = ref<Boolean>(false);
+
+    const SelectedSpecimen = ref<Specimen | null>();
+
+    const OpenPanel = (Specimen: Specimen) => {
+      SelectedSpecimen.value = Specimen;
+      viewResultPanelVisibility.value = true;
+    };
+
+    const ClosePanel = () => {
+      viewResultPanelVisibility.value = false;
+    };
+
+    const theme = ref<string>("dark");
 
     const appDomElement = ref<HTMLElement | null>(
       document.createElement("div")
@@ -100,23 +122,25 @@ export default defineComponent({
     });
 
     const ChangeTheme = () => {
-
-      if (theme.value == 'dark') {
-        
-        appDomElement.value?.classList.remove('app-dark-mode')
-        appDomElement.value?.classList.add('app-light-mode')
-        theme.value = 'light'    
+      if (theme.value == "dark") {
+        appDomElement.value?.classList.remove("app-dark-mode");
+        appDomElement.value?.classList.add("app-light-mode");
+        theme.value = "light";
+      } else {
+        appDomElement.value?.classList.remove("app-light-mode");
+        appDomElement.value?.classList.add("app-dark-mode");
+        theme.value = "dark";
       }
-      else {
-        appDomElement.value?.classList.remove('app-light-mode')
-        appDomElement.value?.classList.add('app-dark-mode')
-        theme.value = 'dark'    
-      }
+    };
 
+    const OpenResultsPanel = (Specimen: Specimen) => {
+
+      SelectedSpecimen.value = Specimen
+      viewResultPanelVisibility.value = true
 
     }
 
-    return { ChangeTheme }
+    return { ChangeTheme, OpenResultsPanel, viewResultPanelVisibility, SelectedSpecimen, ClosePanel };
   },
 });
 </script>
@@ -180,11 +204,9 @@ export default defineComponent({
 }
 
 .theme-switch {
-
   position: absolute;
   right: 200px;
   top: 10px;
-
 }
 .ex {
   overflow: hidden;

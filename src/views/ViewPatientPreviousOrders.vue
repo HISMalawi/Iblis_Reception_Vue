@@ -86,10 +86,12 @@
 import { computed, defineComponent, onUnmounted, ref, watch} from "vue";
 import { useStore } from "@/store";
 import GetPatientOrders from "@/composables/getPatientOrders";
+import { Specimen } from "@/interfaces/Specimen";
 
 export default defineComponent({
   name: "ViewPatientPreviousOrders",
-  setup() {
+  emits: ['OpenResultsPanel'],
+  setup(props, context) {
 
     const store = useStore();
 
@@ -143,13 +145,19 @@ export default defineComponent({
 
     })
 
-    return { patient, Specimens, paginatedSpecimes, pages, numberOfPages, perPage, page };
+    const showDetails = (Specimen: Specimen) => {
+
+      context.emit('OpenResultsPanel', Specimen)
+
+    }
+
+    return { patient, Specimens, paginatedSpecimes, pages, numberOfPages, perPage, page, showDetails };
   },
 });
 </script>
 <style>
 .custom-btn {
   width: 100px !important;
-  color: white;
+  color: white !important;
 }
 </style>
