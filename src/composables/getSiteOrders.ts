@@ -65,17 +65,16 @@ const getSiteOrders = () => {
 
             for (let index = 0; index < Specimens.value.length; index++) {
 
-              if (SpecimensWithResults.value.includes(Specimens.value[index].id)) {
+                if (SpecimensWithResults.value.includes(Specimens.value[index].id)) {
 
-                  Specimens.value[index] = Object.assign(Specimens.value[index], { class:"results-ready"})
-              
-              } else {
-
-                Specimens.value[index] = Object.assign(Specimens.value[index], { class:"from-db"})
+                    Specimens.value[index] = Object.assign(Specimens.value[index], { class:"results-ready"})
                 
-              }
-              
-              
+                } else {
+
+                  Specimens.value[index] = Object.assign(Specimens.value[index], { class:"from-db"})
+                  
+                }
+                
             }
 
             message.value = response.data.message;
@@ -127,6 +126,7 @@ const getSiteOrders = () => {
 
             BGPatients.value = responseData.patients
 
+
             for (let index = 0; index < BGSpecimens.value.length; index++) {
 
               if (BGSpecimensWithResults.value.includes(BGSpecimens.value[index].id)) {
@@ -136,6 +136,16 @@ const getSiteOrders = () => {
               } else {
 
                 BGSpecimens.value[index] = Object.assign(BGSpecimens.value[index], { class:"from-db"})
+                
+              }
+
+              if (index + 1 == BGSpecimens.value.length) {
+
+                if (store.getters.resultsFilter == "With Results") {
+                  BGSpecimens.value = filterWithResults()
+                } else if (store.getters.resultsFilter == "Without Results") {
+                  BGSpecimens.value = filterWithoutResults()
+                } 
                 
               }
               
@@ -198,8 +208,31 @@ watch(
 
   }
 );
- 
-  return { fetchOrders, Specimens, Patients };
+
+const filterWithResults = () => {
+  BGfetchOrders();
+  return BGSpecimens.value.filter((specimen) => BGSpecimensWithResults.value.includes(specimen.id))
+}
+
+const filterWithoutResults = () => {
+  BGfetchOrders();
+  return BGSpecimens.value.filter((specimen) => !BGSpecimensWithResults.value.includes(specimen.id))
+}
+
+watch(
+  () => [store.getters.resultsFilter],
+  () => {
+    if (store.getters.resultsFilter == "With Results") {
+      BGSpecimens.value = filterWithResults()
+    } else if (store.getters.resultsFilter == "Without Results") {
+      BGSpecimens.value = filterWithoutResults()
+    } else if (store.getters.resultsFilter == "All") {
+      BGfetchOrders();
+    }
+  }
+);
+
+  return { fetchOrders, Specimens, Patients, BGSpecimensWithResults };
 };
 
 export default getSiteOrders;

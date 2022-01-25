@@ -1,9 +1,11 @@
 <template>
   <div class="order-result">
-   
     <!-- :class="$store.state.createdOrdersTrackingNum.includes(Specimen.accession_number) ? 'is-new' : 'from-db'" -->
 
-    <div v-if="!Specimens.length && Specimens.length != 0" class="loader-container">
+    <div
+      v-if="!Specimens.length && Specimens.length != 0"
+      class="loader-container"
+    >
       <img src="../assets/loading.gif" />
     </div>
 
@@ -19,43 +21,48 @@
       @click="showDetails(Specimen)"
     >
       <div v-for="Patient in Patients" :key="Patient.id">
-
-        <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">{{ Patient.name }}</h4>
-        <h4 class="title is-5" v-if="Patient.specimen_id == Specimen.id && Patient.gender == 1">(Female)</h4>
-        <h4 class="title is-5" v-if="Patient.specimen_id == Specimen.id && Patient.gender == 0">(Male)</h4>
+        <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">
+          {{ Patient.name }}
+        </h4>
+        <h4
+          class="title is-5"
+          v-if="Patient.specimen_id == Specimen.id && Patient.gender == 1"
+        >
+          (Female)
+        </h4>
+        <h4
+          class="title is-5"
+          v-if="Patient.specimen_id == Specimen.id && Patient.gender == 0"
+        >
+          (Male)
+        </h4>
       </div>
       <h4 class="title is-5">{{ Specimen.accession_number }}</h4>
     </div>
-    
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import GetSiteOrders from "@/composables/getSiteOrders";
 import { useStore } from "@/store";
 import { Specimen } from "@/interfaces/Specimen";
 
 export default defineComponent({
   name: "OrderResult",
-  emits: ['ShowResultsPanel'],
-  setup(props,context) {
-
+  emits: ["ShowResultsPanel"],
+  setup(props, context) {
     const store = useStore();
 
-    const dataChange = ref<Boolean>(false)
+    const dataChange = ref<Boolean>(false);
 
     const { fetchOrders, Specimens, Patients } = GetSiteOrders();
-
 
     fetchOrders();
 
     const showDetails = (Specimen: Specimen) => {
-    
-      context.emit('ShowResultsPanel', Specimen)
-      
-    }
-
+      context.emit("ShowResultsPanel", Specimen);
+    };
 
     return { Specimens, showDetails, Patients };
   },

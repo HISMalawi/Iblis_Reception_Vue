@@ -49,12 +49,20 @@
           </div>
         </div>
 
+        <div class="select is-normal">
+          <select v-model="ResultsFilter">
+            <option>All</option>
+            <option>With Results</option>
+            <option>Without Results</option>
+          </select>
+        </div>
+
       </div>
 
       <div class="content has-text-left">
         <!-- Content -->
 
-        <order-result @ShowResultsPanel="OpenPanel" />
+        <order-result @ShowResultsPanel="OpenPanel"/>
       </div>
     </article>
   </div>
@@ -77,6 +85,8 @@ export default defineComponent({
 
     const store = useStore();
 
+    const ResultsFilter = ref<string>('All')
+
     const now = new Date()
       .toISOString()
       .replace(/T/, " ") // replace T with a space
@@ -98,6 +108,8 @@ export default defineComponent({
 
     store.dispatch(ActionTypes.SET_TO_DATE,toDate.value)
 
+    store.dispatch(ActionTypes.SET_RESULTS_FILTER,ResultsFilter.value)
+
     const OpenPanel = (Specimen: Specimen) => {
       SelectedSpecimen.value = Specimen;
       panelVisibility.value = true;
@@ -116,7 +128,7 @@ export default defineComponent({
       }
     );
 
-     watch(
+    watch(
       () => [toDate.value],
       () => {
 
@@ -125,8 +137,16 @@ export default defineComponent({
       }
     );
 
+    watch(
+      () => [ResultsFilter.value],
+      () => {
 
-    return { OpenPanel, ClosePanel, panelVisibility, SelectedSpecimen, fromDate, toDate };
+        store.dispatch(ActionTypes.SET_RESULTS_FILTER, ResultsFilter.value)
+    
+      }
+    );
+
+    return { ResultsFilter, OpenPanel, ClosePanel, panelVisibility, SelectedSpecimen, fromDate, toDate };
   },
 });
 </script>

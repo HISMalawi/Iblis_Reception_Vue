@@ -77,6 +77,7 @@ const patient: Patient = {
 };
 
 export type State = {
+  resultsFilter: string,
   fromDate: string;
   toDate: string;
   counter: number;
@@ -100,6 +101,7 @@ export type State = {
 };
 
 const state: State = {
+  resultsFilter: "",
   fromDate: "",
   toDate: "",
   counter: 0,
@@ -123,6 +125,7 @@ const state: State = {
 };
 
 export enum MutationTypes {
+  SET_RESULTS_FILTER = "SETTING_RESULTS_FILTER",
   SET_FROM_DATE = "SETTING_FROM_DATE",
   SET_TO_DATE = "SETTING_TO_DATE",
   INC_COUNTER = "SET_COUNTER",
@@ -145,6 +148,7 @@ export enum MutationTypes {
 }
 
 export enum ActionTypes {
+  SET_RESULTS_FILTER = "SETTING_RESULTS_FILTER",
   SET_FROM_DATE = "SETTING_FROM_DATE",
   SET_TO_DATE = "SETTING_TO_DATE",
   INC_COUNTER = "SET_COUNTER",
@@ -167,6 +171,7 @@ export enum ActionTypes {
 }
 
 export type Mutations<S = State> = {
+  [MutationTypes.SET_RESULTS_FILTER](state: S, payload: string): void;
   [MutationTypes.SET_FROM_DATE](state: S, payload: string): void;
   [MutationTypes.SET_TO_DATE](state: S, payload: string): void;
   [MutationTypes.INC_COUNTER](state: S, payload: number): void;
@@ -189,6 +194,9 @@ export type Mutations<S = State> = {
 };
 
 const mutations: MutationTree<State> & Mutations = {
+  [MutationTypes.SET_RESULTS_FILTER](state: State, payload: string) {
+    state.resultsFilter = payload;
+  },
   [MutationTypes.SET_FROM_DATE](state: State, payload: string) {
     state.fromDate = payload;
   },
@@ -258,6 +266,9 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, "commit">;
 
 export interface Actions {
+
+  [ActionTypes.SET_RESULTS_FILTER]({ commit }: AugmentedActionContext, payload: string): void;
+
   [ActionTypes.SET_FROM_DATE]({ commit }: AugmentedActionContext, payload: string): void;
 
   [ActionTypes.SET_TO_DATE]({ commit }: AugmentedActionContext, payload: string): void;
@@ -278,6 +289,9 @@ export interface Actions {
 }
 
 export const actions: ActionTree<State, State> & Actions = {
+  [ActionTypes.SET_RESULTS_FILTER]({ commit }, payload: string) {
+    commit(MutationTypes.SET_RESULTS_FILTER, payload);
+  },
   [ActionTypes.SET_FROM_DATE]({ commit }, payload: string) {
     commit(MutationTypes.SET_FROM_DATE, payload);
   },
@@ -308,6 +322,7 @@ export const actions: ActionTree<State, State> & Actions = {
 };
 
 export type Getters = {
+  resultsFilter(state: State): string;
   fromDate(state: State): string;
   toDate(state: State): string;
   doubleCounter(state: State): number;
@@ -322,6 +337,9 @@ export type Getters = {
 };
 
 export const getters: GetterTree<State, State> & Getters = {
+  resultsFilter: (state) => {
+    return state.resultsFilter;
+  },
   fromDate: (state) => {
     return state.fromDate;
   },
