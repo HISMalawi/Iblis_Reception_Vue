@@ -7,8 +7,8 @@
   <div class="dashboard tile is-10 is-parent">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Dashboard</p>
-      <div class="dashboard-panel-tool-bar">
 
+      <div class="field dashboard-panel-tool-bar">
         <div class="field is-horizontal tool-bar-date-field">
           <div class="field-label"></div>
           <div class="field-body">
@@ -18,11 +18,7 @@
                   <a class="button is-static"> From : </a>
                 </p>
                 <p class="control is-expanded">
-                  <input
-                    class="input"
-                    type="date"
-                    v-model="fromDate"
-                  />
+                  <input class="input" type="date" v-model="fromDate" />
                 </p>
               </div>
             </div>
@@ -38,18 +34,14 @@
                   <a class="button is-static"> To : </a>
                 </p>
                 <p class="control is-expanded">
-                  <input
-                    class="input"
-                    type="date"
-                    v-model="toDate"
-                  />
+                  <input class="input" type="date" v-model="toDate" />
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="select is-normal">
+        <div class="select is-normal filter">
           <select v-model="ResultsFilter">
             <option>All</option>
             <option>With Results</option>
@@ -57,12 +49,24 @@
           </select>
         </div>
 
+        <span class="p-search">
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" type="text" placeholder="Patient name" />
+          </div>
+          <div class="control">
+            <a class="button"> Search </a>
+          </div>
+        </div>
+        </span>
+
+
       </div>
 
       <div class="content has-text-left">
         <!-- Content -->
 
-        <order-result @ShowResultsPanel="OpenPanel"/>
+        <order-result @ShowResultsPanel="OpenPanel" />
       </div>
     </article>
   </div>
@@ -81,34 +85,34 @@ export default defineComponent({
     OrderResult,
     DashboardResultsPanel,
   },
-  setup() { 
-
+  setup() {
     const store = useStore();
 
-    const ResultsFilter = ref<string>('All')
+    const ResultsFilter = ref<string>("All");
 
     const now = new Date()
       .toISOString()
       .replace(/T/, " ") // replace T with a space
-      .replace(/\..+/, "").substring(0,10);
+      .replace(/\..+/, "")
+      .substring(0, 10);
 
     const SelectedSpecimen = ref<Specimen | null>();
 
     const panelVisibility = ref<Boolean>(false);
 
-    const fromDate = ref<string>()
+    const fromDate = ref<string>();
 
-    const toDate = ref<string>()
+    const toDate = ref<string>();
 
-    fromDate.value = now
+    fromDate.value = now;
 
-    toDate.value = now
+    toDate.value = now;
 
-    store.dispatch(ActionTypes.SET_FROM_DATE,fromDate.value)
+    store.dispatch(ActionTypes.SET_FROM_DATE, fromDate.value);
 
-    store.dispatch(ActionTypes.SET_TO_DATE,toDate.value)
+    store.dispatch(ActionTypes.SET_TO_DATE, toDate.value);
 
-    store.dispatch(ActionTypes.SET_RESULTS_FILTER,ResultsFilter.value)
+    store.dispatch(ActionTypes.SET_RESULTS_FILTER, ResultsFilter.value);
 
     const OpenPanel = (Specimen: Specimen) => {
       SelectedSpecimen.value = Specimen;
@@ -122,31 +126,39 @@ export default defineComponent({
     watch(
       () => [fromDate.value],
       () => {
-        
-        store.dispatch(ActionTypes.SET_FROM_DATE,fromDate.value? fromDate.value : now )
-    
+        store.dispatch(
+          ActionTypes.SET_FROM_DATE,
+          fromDate.value ? fromDate.value : now
+        );
       }
     );
 
     watch(
       () => [toDate.value],
       () => {
-
-        store.dispatch(ActionTypes.SET_TO_DATE,toDate.value? toDate.value : now )
-    
+        store.dispatch(
+          ActionTypes.SET_TO_DATE,
+          toDate.value ? toDate.value : now
+        );
       }
     );
 
     watch(
       () => [ResultsFilter.value],
       () => {
-
-        store.dispatch(ActionTypes.SET_RESULTS_FILTER, ResultsFilter.value)
-    
+        store.dispatch(ActionTypes.SET_RESULTS_FILTER, ResultsFilter.value);
       }
     );
 
-    return { ResultsFilter, OpenPanel, ClosePanel, panelVisibility, SelectedSpecimen, fromDate, toDate };
+    return {
+      ResultsFilter,
+      OpenPanel,
+      ClosePanel,
+      panelVisibility,
+      SelectedSpecimen,
+      fromDate,
+      toDate,
+    };
   },
 });
 </script>
@@ -157,20 +169,22 @@ export default defineComponent({
 }
 
 .dashboard-panel-tool-bar {
-  position: relative;
-  top: -50px;
-  display: block !important;
   text-align: left;
-  margin-left: 35px;
+  padding-left: 35px;
 }
 
 .tool-bar-date-field {
   display: inline-block !important;
-  width: 300px;
-  padding: 0px !important;
+  margin-right: 20px;
   margin-bottom: 0px !important;
-  padding-bottom: 0px !important;
-  margin-left: 0px !important;
-  margin-right: 10px;
+}
+.filter {
+  margin-right: 20px;
+  margin-bottom: 0px !important;
+ 
+}
+.p-search {
+  display: inline-block !important;
+  margin-bottom: 0px !important;
 }
 </style>
