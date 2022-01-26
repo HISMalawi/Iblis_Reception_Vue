@@ -161,7 +161,7 @@ const getSiteOrders = () => {
       BGfetchOrders();
 
 
-  }, 20000);
+  }, 10000);
 
   watch(
 
