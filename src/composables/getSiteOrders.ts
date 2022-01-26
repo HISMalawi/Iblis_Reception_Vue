@@ -138,29 +138,8 @@ const getSiteOrders = () => {
                 BGSpecimens.value[index] = Object.assign(BGSpecimens.value[index], { class:"from-db"})
                 
               }
-
-              // if (index + 1 == BGSpecimens.value.length) {
-
-              //   if (store.getters.resultsFilter == "With Results") {
-              //     BGSpecimens.value = filterWithResults()
-              //   } else if (store.getters.resultsFilter == "Without Results") {
-              //     BGSpecimens.value = filterWithoutResults()
-              //   } 
-                
-              // }
-              
               
             }
-
-            
-
-            // if (store.getters.resultsFilter == "With Results") {
-            //   BGSpecimens.value = filterWithResults()
-            // } else if (store.getters.resultsFilter == "Without Results") {
-            //   BGSpecimens.value = filterWithoutResults()
-            // } 
-            
-            
 
             message.value = response.data.message;
 
@@ -198,7 +177,8 @@ const getSiteOrders = () => {
           } else if (store.getters.resultsFilter == "Without Results") {
             Specimens.value = filterWithoutResults()
           } else if (store.getters.resultsFilter == "All") {
-            Specimens.value = BGSpecimens.value
+            Specimens.value = filterAllResults()
+            
           }
 
 
@@ -229,6 +209,12 @@ watch(
   }
 );
 
+const filterAllResults = () => {
+  
+  return BGSpecimens.value
+}
+
+
 const filterWithResults = () => {
   
   return BGSpecimens.value.filter((specimen) => BGSpecimensWithResults.value.includes(specimen.id))
@@ -247,7 +233,7 @@ watch(
     } else if (store.getters.resultsFilter == "Without Results") {
       Specimens.value = filterWithoutResults()
     } else if (store.getters.resultsFilter == "All") {
-      // BGfetchOrders();
+      Specimens.value = filterAllResults()
     }
   }
 );
