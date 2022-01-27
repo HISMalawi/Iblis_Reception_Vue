@@ -251,7 +251,7 @@ const filterPatient = () => {
     
   });
 
-  return Specimens.value.filter((specimen) => specimen_ids.includes(specimen.id))
+  return BGSpecimens.value.filter((specimen) => specimen_ids.includes(specimen.id))
 }
 
 watch(
@@ -279,12 +279,20 @@ watch(
   () => [store.getters.patientFilter],
   () => {
 
-    Specimens.value = filterPatient()
+    if (store.getters.patientFilter.length > 0){
+
+      Specimens.value = filterPatient()
+
+    } else {
+
+      BGfetchOrders();
+
+    }    
     
   }
 );
 
-  return { fetchOrders, Specimens, Patients, BGSpecimensWithResults };
+  return { fetchOrders, BGfetchOrders, Specimens, Patients, BGSpecimensWithResults };
 };
 
 export default getSiteOrders;

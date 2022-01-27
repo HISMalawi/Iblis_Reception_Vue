@@ -56,9 +56,11 @@ export default defineComponent({
 
     const dataChange = ref<Boolean>(false);
 
-    const { fetchOrders, Specimens, Patients } = GetSiteOrders();
+    const { fetchOrders,BGfetchOrders, Specimens, Patients } = GetSiteOrders();
 
     fetchOrders();
+
+    BGfetchOrders();
 
     const showDetails = (Specimen: Specimen) => {
       context.emit("ShowResultsPanel", Specimen);
