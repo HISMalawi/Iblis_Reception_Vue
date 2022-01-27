@@ -52,7 +52,7 @@
         <span class="p-search">
         <div class="field has-addons">
           <div class="control">
-            <input class="input" type="text" placeholder="Patient name" />
+            <input class="input" v-model="PatientFilter" type="text" placeholder="Patient name" />
           </div>
           <div class="control">
             <a class="button"> Search </a>
@@ -86,9 +86,12 @@ export default defineComponent({
     DashboardResultsPanel,
   },
   setup() {
+
     const store = useStore();
 
     const ResultsFilter = ref<string>("All");
+
+    const PatientFilter = ref<string>('');
 
     const now = new Date()
       .toISOString()
@@ -150,8 +153,16 @@ export default defineComponent({
       }
     );
 
+    watch(
+      () => [PatientFilter.value],
+      () => {
+        store.dispatch(ActionTypes.SET_PATIENT_FILTER, PatientFilter.value);
+      }
+    );
+
     return {
       ResultsFilter,
+      PatientFilter,
       OpenPanel,
       ClosePanel,
       panelVisibility,

@@ -77,6 +77,7 @@ const patient: Patient = {
 };
 
 export type State = {
+  patientFilter: string,
   resultsFilter: string,
   fromDate: string;
   toDate: string;
@@ -101,6 +102,7 @@ export type State = {
 };
 
 const state: State = {
+  patientFilter: "",
   resultsFilter: "",
   fromDate: "",
   toDate: "",
@@ -125,6 +127,7 @@ const state: State = {
 };
 
 export enum MutationTypes {
+  SET_PATIENT_FILTER = "SETTING_PATIENT_FILTER",
   SET_RESULTS_FILTER = "SETTING_RESULTS_FILTER",
   SET_FROM_DATE = "SETTING_FROM_DATE",
   SET_TO_DATE = "SETTING_TO_DATE",
@@ -148,6 +151,7 @@ export enum MutationTypes {
 }
 
 export enum ActionTypes {
+  SET_PATIENT_FILTER = "SETTING_PATIENT_FILTER",
   SET_RESULTS_FILTER = "SETTING_RESULTS_FILTER",
   SET_FROM_DATE = "SETTING_FROM_DATE",
   SET_TO_DATE = "SETTING_TO_DATE",
@@ -171,6 +175,7 @@ export enum ActionTypes {
 }
 
 export type Mutations<S = State> = {
+  [MutationTypes.SET_PATIENT_FILTER](state: S, payload: string): void;
   [MutationTypes.SET_RESULTS_FILTER](state: S, payload: string): void;
   [MutationTypes.SET_FROM_DATE](state: S, payload: string): void;
   [MutationTypes.SET_TO_DATE](state: S, payload: string): void;
@@ -194,6 +199,9 @@ export type Mutations<S = State> = {
 };
 
 const mutations: MutationTree<State> & Mutations = {
+  [MutationTypes.SET_PATIENT_FILTER](state: State, payload: string) {
+    state.patientFilter = payload;
+  },
   [MutationTypes.SET_RESULTS_FILTER](state: State, payload: string) {
     state.resultsFilter = payload;
   },
@@ -267,6 +275,8 @@ type AugmentedActionContext = {
 
 export interface Actions {
 
+  [ActionTypes.SET_PATIENT_FILTER]({ commit }: AugmentedActionContext, payload: string): void;
+
   [ActionTypes.SET_RESULTS_FILTER]({ commit }: AugmentedActionContext, payload: string): void;
 
   [ActionTypes.SET_FROM_DATE]({ commit }: AugmentedActionContext, payload: string): void;
@@ -289,6 +299,9 @@ export interface Actions {
 }
 
 export const actions: ActionTree<State, State> & Actions = {
+  [ActionTypes.SET_PATIENT_FILTER]({ commit }, payload: string) {
+    commit(MutationTypes.SET_PATIENT_FILTER, payload);
+  },
   [ActionTypes.SET_RESULTS_FILTER]({ commit }, payload: string) {
     commit(MutationTypes.SET_RESULTS_FILTER, payload);
   },
@@ -322,6 +335,7 @@ export const actions: ActionTree<State, State> & Actions = {
 };
 
 export type Getters = {
+  patientFilter(state: State): string;
   resultsFilter(state: State): string;
   fromDate(state: State): string;
   toDate(state: State): string;
@@ -337,6 +351,9 @@ export type Getters = {
 };
 
 export const getters: GetterTree<State, State> & Getters = {
+  patientFilter: (state) => {
+    return state.patientFilter;
+  },
   resultsFilter: (state) => {
     return state.resultsFilter;
   },

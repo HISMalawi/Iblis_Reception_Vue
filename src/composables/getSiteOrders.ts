@@ -174,10 +174,18 @@ const getSiteOrders = () => {
 
           if (store.getters.resultsFilter == "With Results") {
             Specimens.value = filterWithResults()
+
+            if (store.getters.patientFilter.length > 0) Specimens.value = filterPatient()
+
           } else if (store.getters.resultsFilter == "Without Results") {
             Specimens.value = filterWithoutResults()
+
+            if (store.getters.patientFilter.length > 0) Specimens.value = filterPatient()
+
           } else if (store.getters.resultsFilter == "All") {
             Specimens.value = filterAllResults()
+
+            if (store.getters.patientFilter.length > 0) Specimens.value = filterPatient()
             
           }
 
@@ -225,16 +233,54 @@ const filterWithoutResults = () => {
   return BGSpecimens.value.filter((specimen) => !BGSpecimensWithResults.value.includes(specimen.id))
 }
 
+const filterPatient = () => {
+
+  let patients :PatientDash[] = []
+
+  patients = Patients.value.filter((pat) => pat.name.toLowerCase() == store.getters.patientFilter.toLowerCase())
+
+  let specimen_ids: number[] = []
+
+  patients.forEach(patient => {
+
+    if (!specimen_ids.includes(patient.specimen_id)) {
+
+      specimen_ids.push(patient.specimen_id)
+
+    }
+    
+  });
+
+  return Specimens.value.filter((specimen) => specimen_ids.includes(specimen.id))
+}
+
 watch(
   () => [store.getters.resultsFilter],
   () => {
     if (store.getters.resultsFilter == "With Results") {
       Specimens.value = filterWithResults()
+
+      if (store.getters.patientFilter.length > 0) Specimens.value = filterPatient()
+
     } else if (store.getters.resultsFilter == "Without Results") {
       Specimens.value = filterWithoutResults()
+
+      if (store.getters.patientFilter.length > 0) Specimens.value = filterPatient()
+
     } else if (store.getters.resultsFilter == "All") {
       Specimens.value = filterAllResults()
+
+      if (store.getters.patientFilter.length > 0) Specimens.value = filterPatient()
     }
+  }
+);
+
+watch(
+  () => [store.getters.patientFilter],
+  () => {
+
+    Specimens.value = filterPatient()
+    
   }
 );
 
