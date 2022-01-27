@@ -20,24 +20,25 @@
       :key="Specimen.id"
       @click="showDetails(Specimen)"
     >
-      <div v-for="Patient in Patients" :key="Patient.id">
+      <div class="dash-p-details" v-for="Patient in Patients" :key="Patient.id">
         <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">
           {{ Patient.name }}
-        </h4>
-        <h4
-          class="title is-5"
-          v-if="Patient.specimen_id == Specimen.id && Patient.gender == 1"
-        >
-          (Female)
-        </h4>
-        <h4
-          class="title is-5"
-          v-if="Patient.specimen_id == Specimen.id && Patient.gender == 0"
-        >
-          (Male)
+          <span
+            class="title is-5"
+            v-if="Patient.specimen_id == Specimen.id && Patient.gender == 1"
+          >
+            (F)
+          </span>
+
+          <span
+            class="title is-5"
+            v-if="Patient.specimen_id == Specimen.id && Patient.gender == 0"
+          >
+            (M)
+          </span>
         </h4>
       </div>
-      <h4 class="title is-5">{{ Specimen.accession_number }}</h4>
+      <h4 class="title is-5 dash-acc-num">{{ Specimen.accession_number }}</h4>
     </div>
   </div>
 </template>
@@ -56,7 +57,7 @@ export default defineComponent({
 
     const dataChange = ref<Boolean>(false);
 
-    const { fetchOrders,BGfetchOrders, Specimens, Patients } = GetSiteOrders();
+    const { fetchOrders, BGfetchOrders, Specimens, Patients } = GetSiteOrders();
 
     fetchOrders();
 
@@ -120,5 +121,11 @@ export default defineComponent({
 
 .loader-container img {
   width: 100px;
+}
+
+.dash-acc-num{
+  /* background-color: black; */
+  position: relative;
+  top: -12px;
 }
 </style>
