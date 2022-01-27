@@ -13,11 +13,13 @@ const Specimens = ref<Specimen[]>([]);
 const TestWithResults = ref<TestResult[]>([]);
 const SpecimensWithResults = ref<number[]>([]);
 const Patients = ref<PatientDash[]>([]);
+const Tests = ref<TestResult[]>([]);
 
 const BGSpecimens = ref<Specimen[]>([]);
 const BGTestWithResults = ref<TestResult[]>([]);
 const BGSpecimensWithResults = ref<number[]>([]);
 const BGPatients = ref<PatientDash[]>([]);
+const BGTests = ref<TestResult[]>([]);
 
 const getSiteOrders = () => {
 
@@ -52,6 +54,8 @@ const getSiteOrders = () => {
           if (code.value == "200") {
 
             TestWithResults.value = responseData.tests_with_results
+
+            Tests.value = responseData.tests_with_details
 
             TestWithResults.value.forEach(test => {
 
@@ -115,6 +119,8 @@ const getSiteOrders = () => {
 
             BGTestWithResults.value = responseData.tests_with_results
 
+            BGTests.value = responseData.tests_with_details
+
             BGTestWithResults.value.forEach(test => {
 
               BGSpecimensWithResults.value.push(test.specimen_id)
@@ -169,6 +175,7 @@ const getSiteOrders = () => {
       () => {
 
           Patients.value = BGPatients.value
+          Tests.value = BGTests.value
           // Specimens.value = BGSpecimens.value
           // BGfetchOrders();
 
@@ -292,7 +299,7 @@ watch(
   }
 );
 
-  return { fetchOrders, BGfetchOrders, Specimens, Patients, BGSpecimensWithResults };
+  return { fetchOrders, BGfetchOrders, Specimens, Patients, Tests, BGSpecimensWithResults };
 };
 
 export default getSiteOrders;

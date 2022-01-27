@@ -3,6 +3,8 @@ export interface TestResult {
     visit_id: number;
     test_type_id: number;
     specimen_id: number;
+    short_name: string;
+    test_name: string;
     interpretation: string;
     test_status_id: number;
     created_by: number;

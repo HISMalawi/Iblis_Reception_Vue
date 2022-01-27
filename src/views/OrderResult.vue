@@ -38,13 +38,22 @@
           </span>
         </h4>
       </div>
+      
       <h4 class="title is-5 dash-acc-num">{{ Specimen.accession_number }}</h4>
+      <hr class="dash-details-sep"/>
+      <div class="dash-tests-container">
+
+        <span  v-for="Test in Tests" :key="Test.id">
+        <div class="dash-test" v-if="Test.specimen_id == Specimen.id"><span v-if="Test.short_name == null || Test.short_name == ''">{{Test.test_name}}</span><span v-if="Test.short_name != ''">{{Test.short_name}}</span></div>
+        </span>
+
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import GetSiteOrders from "@/composables/getSiteOrders";
 import { useStore } from "@/store";
 import { Specimen } from "@/interfaces/Specimen";
@@ -57,7 +66,7 @@ export default defineComponent({
 
     const dataChange = ref<Boolean>(false);
 
-    const { fetchOrders, BGfetchOrders, Specimens, Patients } = GetSiteOrders();
+    const { fetchOrders, BGfetchOrders, Specimens, Patients, Tests } = GetSiteOrders();
 
     fetchOrders();
 
@@ -67,7 +76,7 @@ export default defineComponent({
       context.emit("ShowResultsPanel", Specimen);
     };
 
-    return { Specimens, showDetails, Patients };
+    return { Specimens, showDetails, Patients, Tests };
   },
 });
 </script>
@@ -79,7 +88,7 @@ export default defineComponent({
 
 .result-card {
   width: 400px;
-  height: 150px;
+  height: 155px;
   border-radius: 8px !important;
   text-align: center;
   padding: 15px 5px;
@@ -127,5 +136,29 @@ export default defineComponent({
   /* background-color: black; */
   position: relative;
   top: -12px;
+}
+.dash-details-sep {
+  height: 1px;
+  margin: 0px 35px;
+  border-width: 0 !important;
+  background-color: #b6b9bb81;
+  padding: 0;
+  position: relative;
+  top: -25px;
+}
+.dash-tests-container{
+  position: relative;
+  top: -22px;
+  padding: 0 10px;
+}
+
+.dash-test {
+  height: 26px;
+  background-color: #d1e3e785;
+  padding: 1px 5px;
+  display: inline-block;
+  border-radius: 6px;
+  margin-left: 10px;
+  margin-bottom: 2px;
 }
 </style>
