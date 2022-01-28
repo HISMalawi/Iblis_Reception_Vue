@@ -33,6 +33,8 @@ const test: TestResult = {
     visit_id: 0,
     test_type_id: 0,
     specimen_id: 0,
+    short_name: "",
+    test_name:"",
     interpretation:"",
     test_status_id: 0,
     created_by: 0,
