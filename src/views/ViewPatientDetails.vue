@@ -76,7 +76,7 @@
       </div>
      
     </div>
-    <div class="field">
+    <!-- <div class="field">
       <label class="label">Email</label>
       <div class="control has-icons-right">
         <input disabled class="input is-success is-medium" v-model="$store.state.selectedPatient.email"  type="email" />
@@ -87,7 +87,7 @@
           <i class="fas fa-exclamation-triangle"></i>
         </span>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">

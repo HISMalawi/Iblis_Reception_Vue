@@ -8,7 +8,7 @@
           ><h5 class="title is-6">{{ $store.state.selectedTest.test_name }}</h5>
         </a>
 
-        <div v-if="code !== ''" class="notification is-primary">
+        <div v-if="code !== '' && !Results.length" class="notification is-primary">
           <button class="delete"></button>
           {{ message }}
         </div>

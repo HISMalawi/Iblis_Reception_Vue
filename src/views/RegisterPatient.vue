@@ -132,7 +132,7 @@
                 Physical address is required
               </p>
             </div>
-            <div class="field">
+            <div class="field mb-6">
               <label class="label">Phone Number</label>
               <div class="control has-icons-right">
                 <input
@@ -146,7 +146,10 @@
                 Phone Number is required
               </p>
             </div>
-            <div class="field mb-6">
+
+            <!-- Disable Email Field -->
+            
+            <!-- <div class="field mb-6">
               <label class="label">Email</label>
               <div class="control has-icons-right">
                 <input
@@ -159,8 +162,9 @@
               <p v-if="errors.includes('email')" class="help is-danger">
                 Email is required
               </p>
-            </div>
+            </div> -->
 
+            
             <div class="field is-grouped">
               <div class="control">
                 <button type="submit" class="button is-primary is-medium">
