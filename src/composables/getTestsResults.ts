@@ -3,12 +3,15 @@ import { useStore } from "@/store";
 import { TestResults } from "@/interfaces/TestResults";
 import TokenCheck from "@/composables/tokenCheck";
 import { TestResult } from "@/interfaces/TestResult";
+import { TestStatus } from "@/interfaces/TestStatus";
 
 const { logout } = TokenCheck()
 
 const store = useStore();
 
 const Results = ref<TestResults[]>([]);
+
+const Statuses = ref<TestStatus[]>([]);
 
 const getTestsResults = () => {
 
@@ -38,7 +41,9 @@ const getTestsResults = () => {
 
           if (code.value == "200") {
 
-            Results.value = responseData
+            Results.value = responseData.tests_results
+
+            Statuses.value = responseData.statuses
 
             message.value = response.data.message;
 
@@ -55,7 +60,7 @@ const getTestsResults = () => {
       });
   };
  
-  return { fetchTestResults, message, Results, code };
+  return { fetchTestResults, message, Results, Statuses, code };
 };
 
 export default getTestsResults;

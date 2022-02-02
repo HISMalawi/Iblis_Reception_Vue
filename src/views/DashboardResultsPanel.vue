@@ -35,14 +35,19 @@
               >
               <a class="panel-block"
                 ><h5 class="title is-6">Tests :</h5>
-                <button
-                  v-for="test in order.tests"
-                  :key="test.id"
-                  class="button is-rounded is-small is-warning"
-                >
-                  {{ test.test_name }}
-                </button></a
+                </a
               >
+
+              <a class="panel-block" v-for="test in order.tests" :key="test.id">
+                  <div class="in-list">
+                    {{ test.test_name }}
+
+                    <div class="test-status" v-for="Status in Statuses" :key="Status.id">
+                      <span v-if="test.id == Status.id">{{Status.status}}</span>
+                    </div>
+
+                  </div>
+              </a>
       
           </nav>
         </div>
@@ -110,7 +115,7 @@ export default defineComponent({
   setup(props, context){
 
     const { search, orders, tests} = SearchOrder();
-    const { fetchTestResults, message, Results, code } = getTestsResults();
+    const { fetchTestResults, message, Results, Statuses, code } = getTestsResults();
 
     let specimen = ref<Specimen>(props.specimen)
 
@@ -134,7 +139,7 @@ export default defineComponent({
 
     
  
-    return { closeDetails, orders, Results, tests, message }
+    return { closeDetails, orders, Results, Statuses, tests, message }
   }
 });
 </script>
@@ -150,5 +155,16 @@ export default defineComponent({
   display: block !important;
   text-align: right;
   margin-right: 6px;
+}
+.test-status {
+  margin-left: 10px;
+  background-color: white;
+  padding: 0px 8px;
+  border-radius: 6px;
+  float: right;
+}
+
+.in-list {
+  width: 100%;
 }
 </style>
