@@ -88,13 +88,14 @@ export default defineComponent({
 
 .result-card {
   width: 400px;
-  height: 155px;
+  height: 190px;
   border-radius: 8px !important;
   text-align: center;
   padding: 15px 5px;
   cursor: pointer;
   margin: 10px 15px;
   display: inline-block;
+  overflow: hidden;
 }
 
 .result-card h4 {
@@ -159,6 +160,6 @@ export default defineComponent({
   display: inline-block;
   border-radius: 6px;
   margin-left: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 </style>
