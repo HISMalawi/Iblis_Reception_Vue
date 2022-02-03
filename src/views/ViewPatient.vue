@@ -11,13 +11,13 @@
             :class="$store.state.viewingPatientDetails ? 'is-active' : ''"
             @click="OpenPatientDetailsIn"
           >
-            <a>Details</a>
+            <a>Client Details</a>
           </li>
           <li
             :class="$store.state.createPatientOrder ? 'is-active' : ''"
             @click="OpenCreatePatientOrderIn"
           >
-            <a>Order</a>
+            <a>New Order</a>
           </li>
           <li
             :class="$store.state.viewingPatientPreviousOrders ? 'is-active' : ''"
