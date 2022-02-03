@@ -9,11 +9,12 @@
       </label>
     </div>
 
-    <div class="settings-switch" @click="Popup">
+    <div class="settings-switch">
       <img
         aria-haspopup="true"
         aria-controls="dropdown-menu"
         src="../assets/settings_icon.png"
+        @click="Popup"
       />
 
       <div id="settings-panel">
@@ -250,13 +251,15 @@ export default defineComponent({
   width: 40px;
   height: 40px;
   background-color: rgb(221, 217, 217);
-  background-image: url("../assets/loading.gif");
   position: absolute;
   right: 280px;
   top: 28px;
   border-radius: 50%;
   transition: transform 0.2s linear;
   padding: 5px;
+}
+
+.settings-switch img {
   cursor: pointer;
 }
 
