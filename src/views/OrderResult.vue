@@ -165,6 +165,5 @@ export default defineComponent({
 
 .has {
   background-color: rgba(46, 197, 46, 0.795) !important;
-  color: white !important;
 }
 </style>
