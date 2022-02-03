@@ -9,39 +9,17 @@
       </label>
     </div>
 
-    <div class="settings-switch">
+    <div class="settings-switch" @click="Popup">
       <img
         aria-haspopup="true"
         aria-controls="dropdown-menu"
         src="../assets/settings_icon.png"
       />
 
-      <div id="settings-panel" class="dropdown is-active">
-        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-          <div class="dropdown-content">
+      <div id="settings-panel">
 
-            <div>Settings</div>
+        <settings-popup :isClicked="showPopup"/>
 
-            <hr class="dropdown-divider">
-
-            <div class="field is-horizontal settings-popup-field">
-              
-              <div class="field-body">
-                <div class="field">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-static"> Timeout : </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input class="input" type="number" placeholder="sec"/>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
       </div>
     </div>
 
@@ -105,6 +83,7 @@ import { useRouter } from "vue-router";
 import ViewResults from "@/views/ViewResults.vue";
 import DashboardResultsPanel from "@/views/DashboardResultsPanel.vue";
 import { Specimen } from "@/interfaces/Specimen";
+import SettingsPopup from "@/components/SettingsPopup.vue"
 
 export default defineComponent({
   name: "Home",
@@ -118,10 +97,13 @@ export default defineComponent({
     ViewResults,
     DashboardPanel,
     DashboardResultsPanel,
+    SettingsPopup,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
+
+    const showPopup = ref<boolean>(false)
 
     const viewResultPanelVisibility = ref<Boolean>(false);
 
@@ -177,12 +159,20 @@ export default defineComponent({
       viewResultPanelVisibility.value = true;
     };
 
+    const Popup = () => {
+
+      showPopup.value = !showPopup.value
+
+    }
+
     return {
       ChangeTheme,
       OpenResultsPanel,
       viewResultPanelVisibility,
       SelectedSpecimen,
       ClosePanel,
+      Popup,
+      showPopup,
     };
   },
 });
@@ -272,12 +262,8 @@ export default defineComponent({
 
 #settings-panel {
   position: relative;
-  right: 229px;
-  top: 20px;
+  right: 215px;
+  top: -15px;
 }
 
-.settings-popup-field {
-  width: 100%;
-  padding: 0px 3px !important;
-}
 </style>
