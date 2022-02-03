@@ -44,7 +44,7 @@
       <div class="dash-tests-container">
 
         <span  v-for="Test in Tests" :key="Test.id">
-        <div class="dash-test" v-if="Test.specimen_id == Specimen.id"><span v-if="Test.short_name == null || Test.short_name == ''">{{Test.test_name}}</span><span v-if="Test.short_name != ''">{{Test.short_name}}</span></div>
+        <div class="dash-test" :class="Test.class" v-if="Test.specimen_id == Specimen.id"><span v-if="Test.short_name == null || Test.short_name == ''">{{Test.test_name}}</span><span v-if="Test.short_name != ''">{{Test.short_name}}</span></div>
         </span>
 
       </div>
@@ -161,5 +161,10 @@ export default defineComponent({
   border-radius: 6px;
   margin-left: 10px;
   margin-bottom: 4px;
+}
+
+.has {
+  background-color: rgba(46, 197, 46, 0.795) !important;
+  color: white !important;
 }
 </style>

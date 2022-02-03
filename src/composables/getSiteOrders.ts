@@ -57,6 +57,20 @@ const getSiteOrders = () => {
 
             Tests.value = responseData.tests_with_details
 
+            Tests.value.forEach(test => {
+
+              TestWithResults.value.forEach(result_test => {
+
+                if (test.id == result_test.id) {
+
+                    test = Object.assign(test, { class:"has"})
+                  
+                } 
+
+              });
+
+            });
+
             TestWithResults.value.forEach(test => {
 
               SpecimensWithResults.value.push(test.specimen_id)
@@ -120,6 +134,20 @@ const getSiteOrders = () => {
             BGTestWithResults.value = responseData.tests_with_results
 
             BGTests.value = responseData.tests_with_details
+
+            BGTests.value.forEach(test => {
+
+              BGTestWithResults.value.forEach(result_test => {
+
+                if (test.id == result_test.id) {
+
+                    test = Object.assign(test, { class:"has"})
+                  
+                } 
+
+              });
+
+            });
 
             BGTestWithResults.value.forEach(test => {
 
