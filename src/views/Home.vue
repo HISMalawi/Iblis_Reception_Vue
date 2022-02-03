@@ -9,6 +9,42 @@
       </label>
     </div>
 
+    <div class="settings-switch">
+      <img
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+        src="../assets/settings_icon.png"
+      />
+
+      <div id="settings-panel" class="dropdown is-active">
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+
+            <div>Settings</div>
+
+            <hr class="dropdown-divider">
+
+            <div class="field is-horizontal settings-popup-field">
+              
+              <div class="field-body">
+                <div class="field">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static"> Timeout : </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input class="input" type="number" placeholder="sec"/>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="progress-content content">
       <progress
         v-if="$store.state.searchingInProgress"
@@ -39,7 +75,10 @@
         <view-orders v-if="$store.state.viewingOrders" />
         <register-patient v-if="$store.state.registeringPatient" />
         <patient-search-results v-if="$store.state.searchingPatient" />
-        <view-patient @OpenResultsPanel="OpenResultsPanel" v-if="$store.state.viewingPatient" />
+        <view-patient
+          @OpenResultsPanel="OpenResultsPanel"
+          v-if="$store.state.viewingPatient"
+        />
         <view-results v-if="$store.state.viewingTestResults" />
       </div>
     </div>
@@ -134,13 +173,17 @@ export default defineComponent({
     };
 
     const OpenResultsPanel = (Specimen: Specimen) => {
+      SelectedSpecimen.value = Specimen;
+      viewResultPanelVisibility.value = true;
+    };
 
-      SelectedSpecimen.value = Specimen
-      viewResultPanelVisibility.value = true
-
-    }
-
-    return { ChangeTheme, OpenResultsPanel, viewResultPanelVisibility, SelectedSpecimen, ClosePanel };
+    return {
+      ChangeTheme,
+      OpenResultsPanel,
+      viewResultPanelVisibility,
+      SelectedSpecimen,
+      ClosePanel,
+    };
   },
 });
 </script>
@@ -169,7 +212,7 @@ export default defineComponent({
 .theme-switch .label {
   width: 50px;
   height: 26px;
-  background-color: rgb(197, 188, 188);
+  background-color: rgb(221, 217, 217);
   display: flex;
   border-radius: 50px;
   align-items: center;
@@ -177,12 +220,13 @@ export default defineComponent({
   padding: 5px;
   position: relative;
   transform: scale(1.5);
+  cursor: pointer;
 }
 
 .theme-switch .ball {
   width: 20px;
   height: 20px;
-  background-color: white;
+  background-color: rgba(95, 93, 93, 0.849);
   position: absolute;
   top: 2px;
   left: 2px;
@@ -210,5 +254,30 @@ export default defineComponent({
 }
 .ex {
   overflow: hidden;
+}
+
+.settings-switch {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(221, 217, 217);
+  background-image: url("../assets/loading.gif");
+  position: absolute;
+  right: 280px;
+  top: 28px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+  padding: 5px;
+  cursor: pointer;
+}
+
+#settings-panel {
+  position: relative;
+  right: 229px;
+  top: 20px;
+}
+
+.settings-popup-field {
+  width: 100%;
+  padding: 0px 3px !important;
 }
 </style>
