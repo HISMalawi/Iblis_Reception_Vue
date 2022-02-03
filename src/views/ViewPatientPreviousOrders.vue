@@ -4,6 +4,8 @@
       <thead>
         <tr>
           <th>Accession Number</th>
+           <th>Date Collected</th>
+          <th>Date Accepted</th>
           <th>Results</th>
         </tr>
       </thead>
@@ -18,6 +20,14 @@
         >
           <td>
             <label class="is-clickable">{{ Specimen.accession_number }}</label>
+          </td>
+
+          <td>
+            <label class="is-clickable">{{ getDateCollected(Specimen) }}</label>
+          </td>
+
+          <td>
+            <label class="is-clickable">{{ getDateAccepted(Specimen) }}</label>
           </td>
 
           <td>
@@ -78,7 +88,7 @@
                 </li>
               </ul>
             </nav>
-          </tfoot>
+      </tfoot>
     </table>
   </div>
 </template>
@@ -151,7 +161,23 @@ export default defineComponent({
 
     }
 
-    return { patient, Specimens, paginatedSpecimes, pages, numberOfPages, perPage, page, showDetails };
+    const getDateAccepted = (Specimen: Specimen) => {
+
+      let date_time : string = Specimen.time_accepted
+
+      return date_time.substring(0,10)
+
+    }
+
+    const getDateCollected = (Specimen: Specimen) => {
+
+      let date_time : string = Specimen.date_of_collection
+
+      return date_time.substring(0,10)
+
+    }
+
+    return { patient, Specimens, paginatedSpecimes, pages, numberOfPages, perPage, page, showDetails, getDateAccepted, getDateCollected };
   },
 });
 </script>
