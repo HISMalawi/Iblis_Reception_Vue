@@ -17,7 +17,7 @@
         @click="Popup"
       />
 
-      <div id="settings-panel">
+      <div id="settings-panel" @mouseleave="DelayPopup">
 
         <settings-popup :isClicked="showPopup"/>
 
@@ -166,6 +166,18 @@ export default defineComponent({
 
     }
 
+    const DelayPopup = () => {
+
+      setTimeout(() => {
+
+        showPopup.value = !showPopup.value
+        
+      }, 300);
+
+      
+
+    }
+
     return {
       ChangeTheme,
       OpenResultsPanel,
@@ -173,6 +185,7 @@ export default defineComponent({
       SelectedSpecimen,
       ClosePanel,
       Popup,
+      DelayPopup,
       showPopup,
     };
   },
