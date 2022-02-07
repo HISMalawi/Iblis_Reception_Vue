@@ -1,8 +1,8 @@
 <template>
-  <router-view/>
+  <router-view @mousemove="RefreshIdel" @keypress="RefreshIdel"/>
 </template>
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { MutationTypes, useStore } from "@/store";
 
 export default defineComponent({
@@ -10,9 +10,13 @@ export default defineComponent({
 
     const store = useStore();
 
+    const isIdel = ref<boolean>(false)
+
     let lockTimeOut =  setInterval(() => {
 
-      store.commit(MutationTypes.LOGOUT, true);
+      if (isIdel.value) store.commit(MutationTypes.LOGOUT, true);
+
+      isIdel.value = true
       
     }, store.getters.lockTimeOut * 1000);
 
@@ -25,13 +29,22 @@ export default defineComponent({
 
         lockTimeOut =  setInterval(() => {
 
-          store.commit(MutationTypes.LOGOUT, true);
+          if (isIdel.value) store.commit(MutationTypes.LOGOUT, true);
+
+          isIdel.value = true
           
         }, store.getters.lockTimeOut * 1000);
 
       }
     );
     
+    const RefreshIdel = () => {
+
+      isIdel.value = false
+
+    }
+
+    return { RefreshIdel }
   },
 })
 </script>
