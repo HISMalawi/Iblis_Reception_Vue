@@ -195,6 +195,7 @@
           </button>
         </div>
       </div>
+      <button v-if="zpl" type="button" id="download-lbl" @click="download" class="button is-link is-medium">Reprint Label</button>
     </form>
   </div>
 </template>
@@ -211,6 +212,7 @@ import { useStore } from "@/store";
 import { Patient } from "@/interfaces/Patient";
 import { User } from "@/interfaces/User";
 import { VisitType } from "@/interfaces/VisitType";
+import { saveAs } from 'file-saver';
 
 export default defineComponent({
   name: "PlaceOrder",
@@ -222,7 +224,7 @@ export default defineComponent({
 
     const user: User = store.getters.user;
 
-    const { save, message, code } = CreateOrder();
+    const { save, message, code, accessionNumber, zpl } = CreateOrder();
 
     const checkedTests = ref<Test[]>([]);
     const page = ref<number>(1);
@@ -396,6 +398,15 @@ export default defineComponent({
       checkedTests.value.length == 0;
     };
 
+    const download = () =>{
+      let filename = `${accessionNumber.value}.lbl`
+        var blob = new Blob([zpl.value], {type: "text/lbl;charset=utf-8"});
+        saveAs(blob, filename);
+      }
+      watch(zpl, ()=>{
+        download();
+      })
+
     return {
       visitTypes,
       specimenTypes,
@@ -413,11 +424,14 @@ export default defineComponent({
       requestingPhysician,
       message,
       code,
+      zpl,
       ClearForm,
-      testSearch
+      testSearch,
+      download
     };
   },
 });
+
 </script>
 <style>
 .order_tests:hover {
@@ -441,6 +455,10 @@ export default defineComponent({
   float: right;
   
 }
-
+#download-lbl {
+  display: inline; /* the default for span */
+  float: right;
+  background-color: green;
+}
 
 </style>
