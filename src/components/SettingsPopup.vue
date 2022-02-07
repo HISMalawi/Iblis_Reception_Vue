@@ -11,10 +11,10 @@
             <div class="field">
               <div class="field has-addons">
                 <p class="control">
-                  <a class="button is-static"> Timeout : </a>
+                  <a class="button is-static"> Timeout (sec):</a>
                 </p>
                 <p class="control is-expanded">
-                  <input class="input" type="number" placeholder="sec" />
+                  <input v-model="Timeout" class="input" type="number" placeholder="sec" />
                 </p>
               </div>
             </div>
@@ -26,7 +26,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { MutationTypes, useStore } from "@/store";
+import { ActionTypes, useStore } from "@/store";
 
 export default defineComponent({
   name: "SettingsPopup",
@@ -35,21 +35,31 @@ export default defineComponent({
 
     const store = useStore();
 
+    const Timeout = ref<number>(store.getters.lockTimeOut)
+
     const showPopUp = ref<boolean>(props.isClicked)
 
     watch(
 
-    () => [props.isClicked],
-    () => {
+      () => [Timeout.value],
+      () => {
 
-      showPopUp.value = props.isClicked
+        store.dispatch(ActionTypes.SET_LOCK_TIMEOUT, Timeout.value);
 
-    }
-);
+      }
+    );
 
-   
+    watch(
 
-    return { showPopUp };
+      () => [props.isClicked],
+      () => {
+
+        showPopUp.value = props.isClicked
+
+      }
+    );
+
+    return { showPopUp, Timeout};
   },
 });
 </script>

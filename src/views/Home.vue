@@ -278,7 +278,7 @@ export default defineComponent({
 
 #settings-panel {
   position: relative;
-  right: 215px;
+  right: 230px;
   top: -15px;
 }
 

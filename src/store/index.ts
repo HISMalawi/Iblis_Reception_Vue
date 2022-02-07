@@ -79,6 +79,7 @@ const patient: Patient = {
 };
 
 export type State = {
+  lockTimeOut:number,
   patientFilter: string,
   resultsFilter: string,
   fromDate: string;
@@ -104,6 +105,7 @@ export type State = {
 };
 
 const state: State = {
+  lockTimeOut:process.env.VUE_APP_TIMEOUT_IN_SECONDS * 1000,
   patientFilter: "",
   resultsFilter: "",
   fromDate: "",
@@ -129,6 +131,7 @@ const state: State = {
 };
 
 export enum MutationTypes {
+  SET_LOCK_TIMEOUT = "SETTING_LOCK_TIMEOUT",
   SET_PATIENT_FILTER = "SETTING_PATIENT_FILTER",
   SET_RESULTS_FILTER = "SETTING_RESULTS_FILTER",
   SET_FROM_DATE = "SETTING_FROM_DATE",
@@ -153,6 +156,7 @@ export enum MutationTypes {
 }
 
 export enum ActionTypes {
+  SET_LOCK_TIMEOUT = "SETTING_LOCK_TIMEOUT",
   SET_PATIENT_FILTER = "SETTING_PATIENT_FILTER",
   SET_RESULTS_FILTER = "SETTING_RESULTS_FILTER",
   SET_FROM_DATE = "SETTING_FROM_DATE",
@@ -177,6 +181,7 @@ export enum ActionTypes {
 }
 
 export type Mutations<S = State> = {
+  [MutationTypes.SET_LOCK_TIMEOUT](state: S, payload: number): void;
   [MutationTypes.SET_PATIENT_FILTER](state: S, payload: string): void;
   [MutationTypes.SET_RESULTS_FILTER](state: S, payload: string): void;
   [MutationTypes.SET_FROM_DATE](state: S, payload: string): void;
@@ -201,6 +206,9 @@ export type Mutations<S = State> = {
 };
 
 const mutations: MutationTree<State> & Mutations = {
+  [MutationTypes.SET_LOCK_TIMEOUT](state: State, payload: number) {
+    state.lockTimeOut = payload * 1000;
+  },
   [MutationTypes.SET_PATIENT_FILTER](state: State, payload: string) {
     state.patientFilter = payload;
   },
@@ -276,6 +284,7 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, "commit">;
 
 export interface Actions {
+  [ActionTypes.SET_LOCK_TIMEOUT]({ commit }: AugmentedActionContext, payload: number): void;
 
   [ActionTypes.SET_PATIENT_FILTER]({ commit }: AugmentedActionContext, payload: string): void;
 
@@ -301,6 +310,9 @@ export interface Actions {
 }
 
 export const actions: ActionTree<State, State> & Actions = {
+  [ActionTypes.SET_LOCK_TIMEOUT]({ commit }, payload: number) {
+    commit(MutationTypes.SET_LOCK_TIMEOUT, payload);
+  },
   [ActionTypes.SET_PATIENT_FILTER]({ commit }, payload: string) {
     commit(MutationTypes.SET_PATIENT_FILTER, payload);
   },
@@ -337,6 +349,7 @@ export const actions: ActionTree<State, State> & Actions = {
 };
 
 export type Getters = {
+  lockTimeOut(state: State): number;
   patientFilter(state: State): string;
   resultsFilter(state: State): string;
   fromDate(state: State): string;
@@ -353,6 +366,9 @@ export type Getters = {
 };
 
 export const getters: GetterTree<State, State> & Getters = {
+  lockTimeOut: (state) => {
+    return state.lockTimeOut / 1000;
+  },
   patientFilter: (state) => {
     return state.patientFilter;
   },
