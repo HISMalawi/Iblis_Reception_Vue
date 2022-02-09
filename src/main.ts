@@ -12,7 +12,7 @@ require("@/theme/global.sass");
 require("@/theme/global.css");
 
 
-library.add(faUserSecret)
+// library.add(faUserSecret)
 
 // App.component('font-awesome-icon', FontAwesomeIcon)
 
