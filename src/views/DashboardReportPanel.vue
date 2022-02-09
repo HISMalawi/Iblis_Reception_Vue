@@ -18,9 +18,7 @@ import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "DashboardReportPanel",
-  props: [ ],
-  emits: ['CloseResultsPanel'],
-  setup(props, context){
+  setup(){
 
     
  
