@@ -1,4 +1,5 @@
 <template>
+  <dashboard-report-panel/>
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Details</p>
@@ -104,6 +105,7 @@ import OrderResult from "@/views/OrderResult.vue";
 import { Specimen } from "@/interfaces/Specimen";
 import SearchOrder from "@/composables/searchOrder";
 import getTestsResults from "@/composables/getTestsResults";
+import DashboardReportPanel from "@/views/DashboardReportPanel.vue";
 
 export default defineComponent({
   name: "DashboardResultsPanel",
@@ -111,6 +113,7 @@ export default defineComponent({
   emits: ['CloseResultsPanel'],
   components: {
     OrderResult,
+    DashboardReportPanel,
   },
   setup(props, context){
 
