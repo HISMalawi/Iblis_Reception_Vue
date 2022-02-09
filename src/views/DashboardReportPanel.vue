@@ -9,7 +9,7 @@
 
       <div class="content has-text-left">
         <!-- Content -->
-        <patient-result-report/>
+        <patient-result-report :orders="orders" :results="results" :statuses="statuses" :tests="tests"/>
       </div>
     </article>
   </div>
@@ -28,11 +28,14 @@ export default defineComponent({
   },
   props: ['orders', 'Results', 'Statuses', 'tests'],
     setup(props, context){
-
+      let orders = props.orders[0];
+      let results = props.Results;
+      let tests = props.tests;
+      let statuses = props.Statuses;
       const closePatientResultReport = () =>{
         context.emit('closeReport')
       }
-    return { closePatientResultReport }
+    return { closePatientResultReport, orders, results, statuses, tests }
   }
 });
 </script>

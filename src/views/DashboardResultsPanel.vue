@@ -1,5 +1,5 @@
 <template>
-  <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :orders="orders" :Results="Results" :Statuses="Statuses" :tests="tests"/>
+  <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :orders="orders" :Results="Results" :Statuses="Statuses"/>
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Details</p>
