@@ -5,6 +5,7 @@
 
       <div class="content has-text-left">
         <!-- Content -->
+        <patient-result-report/>
         
         
       </div>
@@ -14,14 +15,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch} from "vue";
+import PatientResultReport from "@/components/PatientResultReport.vue";
 
 export default defineComponent({
   name: "DashboardReportPanel",
-  setup(){
-
-    
- 
+  components: {
+    PatientResultReport
+  },
+  props: ['orders', 'Results', 'Statuses', 'tests'],
+    setup(props, context){
     return {  }
   }
 });
