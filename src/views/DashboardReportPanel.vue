@@ -2,12 +2,14 @@
   <div class="dashboard dashboard-results-panel tile is-parent is-10">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Client Result Report</p>
+      <div class="btn-close">
+        <a class="button is-primary mr-6" @click="ViewPatientResultReport"> Print Report </a>
+        <a class="button is-danger" @click="closePatientResultReport"> Close </a>  
+      </div>
 
       <div class="content has-text-left">
         <!-- Content -->
         <patient-result-report/>
-        
-        
       </div>
     </article>
   </div>
@@ -20,12 +22,17 @@ import PatientResultReport from "@/components/PatientResultReport.vue";
 
 export default defineComponent({
   name: "DashboardReportPanel",
+  emits: ['closeReport'],
   components: {
     PatientResultReport
   },
   props: ['orders', 'Results', 'Statuses', 'tests'],
     setup(props, context){
-    return {  }
+
+      const closePatientResultReport = () =>{
+        context.emit('closeReport')
+      }
+    return { closePatientResultReport }
   }
 });
 </script>
