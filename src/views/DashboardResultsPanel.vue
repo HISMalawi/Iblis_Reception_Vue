@@ -1,5 +1,5 @@
 <template>
-  <!-- <dashboard-report-panel/> -->
+  <dashboard-report-panel v-if="isPatientReportOpen" :orders="orders" :Results="Results" :Statuses="Statuses" :test="test"/>
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Details</p>
@@ -59,7 +59,10 @@
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Results</p>
 
-      <div class="btn-close"><a class="button is-primary" @click="closeDetails"> Close </a></div>
+      <div class="btn-close">
+        <a class="button is-primary mr-6" @click="ViewPatientResultReport"> View Patient Report </a>
+        <a class="button is-primary" @click="closeDetails"> Close </a>  
+      </div>
 
       <div v-if="!Results.length && message != '' > 0" class="notification is-primary">
           <button class="delete"></button>
@@ -116,11 +119,11 @@ export default defineComponent({
     DashboardReportPanel,
   },
   setup(props, context){
-
     const { search, orders, tests} = SearchOrder();
     const { fetchTestResults, message, Results, Statuses, code } = getTestsResults();
 
-    let specimen = ref<Specimen>(props.specimen)
+    let specimen = ref<Specimen>(props.specimen);
+    let isPatientReportOpen = ref<boolean>(false);
 
     search(specimen.value?.accession_number);
 
@@ -132,6 +135,10 @@ export default defineComponent({
       tests.value.length = 0
     }
 
+    const ViewPatientResultReport = () => {
+      isPatientReportOpen.value = true;
+    }
+
     watch(
       () => [tests.value],
       () => {
@@ -139,10 +146,8 @@ export default defineComponent({
     
       }
     );
-
-    
  
-    return { closeDetails, orders, Results, Statuses, tests, message }
+    return { closeDetails, ViewPatientResultReport, orders, Results, Statuses, tests, message, isPatientReportOpen }
   }
 });
 </script>
