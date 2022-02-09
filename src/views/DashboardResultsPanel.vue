@@ -1,5 +1,5 @@
 <template>
-  <dashboard-report-panel v-if="isPatientReportOpen" :orders="orders" :Results="Results" :Statuses="Statuses" :test="test"/>
+  <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :orders="orders" :Results="Results" :Statuses="Statuses" :tests="tests"/>
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Details</p>
@@ -138,6 +138,9 @@ export default defineComponent({
     const ViewPatientResultReport = () => {
       isPatientReportOpen.value = true;
     }
+    const closeResultReport = () => {
+     isPatientReportOpen.value = false; 
+    }
 
     watch(
       () => [tests.value],
@@ -147,7 +150,7 @@ export default defineComponent({
       }
     );
  
-    return { closeDetails, ViewPatientResultReport, orders, Results, Statuses, tests, message, isPatientReportOpen }
+    return { closeDetails, ViewPatientResultReport, closeResultReport, orders, Results, Statuses, tests, message, isPatientReportOpen }
   }
 });
 </script>
