@@ -63,16 +63,24 @@ function zplGenerate(zpl:any, zplTestNames: any, store: any, accessionNumber: an
   let patientDOB = store.getters.selectedPatient.dob
   let ward = store.getters.selectedWard.name
   zpl.value = `^XA;
-  ^FO20,330^ADN,36,20^FD${patientName} (${gender})^FS;
-  ^FO20,380^ADN,36,20^FD${patientDOB}^FS;
-  ^FO20,420^ADN,36,20^FD${ward} ^FS;
-  ^FO20, 460 ^BY 3 ^BC , 70, , , , A ^FD${accessionNumber.value}^FS \n`;
+  ^FO50,60^ADN,16,10^FD${patientName}(${gender})^FS;
+  ^FO50,90^ADN,16,10^FD${patientDOB}^FS;
+  ^FO50,120^ADN,16,10^FD${ward}^FS;
+  ^FO50, 140 ^BY 2 ^BC , 70, , , , A ^FD${accessionNumber.value}^FS \n`;
 
-  let zplTestXAxis = 20;
+  let zplTestXAxis = 50;
+  let zplTestYAxis = 250;
   zplTestNames.forEach((test:string) =>{
     if (test != null){
-      zpl.value += `^FO${zplTestXAxis},570^A0,36,25^FD${test}^FS; \n`;
-      zplTestXAxis += 80;
+      if (test.length <= 5){
+        zpl.value += `^FO${zplTestXAxis},${zplTestYAxis}^ADN,16,10^FD${test.replaceAll(/\s/g,'')}^FS \n`;
+        zplTestXAxis += 65;
+      }
+      else{
+        zpl.value += `^FO${zplTestXAxis},${zplTestYAxis}^ADN,16,10^FD${test.replaceAll(/\s/g,'')}^FS \n`;
+        zplTestXAxis = 50;
+        zplTestYAxis += 20;
+      }
     }
   })
   zpl.value += "^XZ"
