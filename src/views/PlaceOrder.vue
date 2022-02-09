@@ -179,7 +179,7 @@
           Test(s) is required
         </p>
       </div>
-      <div class="field is-grouped">
+      <div class="field is-grouped place-order-form-btns">
         <div class="control">
           <button type="submit" class="button is-primary is-medium">
             Save
@@ -194,8 +194,17 @@
             Cancel
           </button>
         </div>
+        
+        <div class="control">
+
+        <!-- v-if="zpl" -->
+
+          <button v-if="zpl" type="button" id="download-lbl" @click="download" class="button is-link is-medium">Reprint Label</button>
+         
+        </div>
+       
       </div>
-      <button v-if="zpl" type="button" id="download-lbl" @click="download" class="button is-link is-medium">Reprint Label</button>
+      
     </form>
   </div>
 </template>
@@ -456,9 +465,9 @@ export default defineComponent({
   
 }
 #download-lbl {
-  display: inline; /* the default for span */
   float: right;
   background-color: green;
 }
+
 
 </style>
