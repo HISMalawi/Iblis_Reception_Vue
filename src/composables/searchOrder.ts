@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import { OrderResult } from "@/interfaces/OrderResult";
 import TokenCheck from "@/composables/tokenCheck";
 import { TestResult } from "@/interfaces/TestResult";
+import { User } from "@/interfaces/User";
 
 const { logout } = TokenCheck()
 
@@ -11,6 +12,8 @@ const store = useStore();
 const orders = ref<OrderResult[]>([]);
 
 const tests = ref<TestResult[]>([]);
+
+const users = ref<User[]>([]);
 
 const SearchOrder = () => {
 
@@ -42,6 +45,8 @@ const SearchOrder = () => {
 
             tests.value = responseData.tests
 
+            users.value = responseData.users
+
             message.value = response.data.message;
           } else {
             message.value = response.data.message;
@@ -55,7 +60,7 @@ const SearchOrder = () => {
 
   };
   
-  return { search, message, orders, tests};
+  return { search, message, orders, tests, users};
 };
 
 export default SearchOrder;
