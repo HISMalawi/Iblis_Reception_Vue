@@ -1,5 +1,5 @@
 <template>
-        <div class="report-container container mt-6">
+        <div class="report-container container mt-6" id="report">
         <div class="report-header is-primary">
             <h3 class="has-text-weight-semibold">Patient Report</h3>
         </div>
@@ -80,7 +80,9 @@
                 <table  class="table is-bordered">
                     <tbody>
                       <tr>
-                        <th colspan="4"><span class="result">Results</span> <span class="authoratized">Test Authoratized({{testsAuthorized.length}})</span> </th>
+                        <th colspan="4"><span class="result">Results</span> <span class="authoratized" v-if="testsAuthorized.length > 0">Test Authoratized({{testsAuthorized.length}})</span>
+                            <span class="authoratized" v-if="testsPendindAuthorization.length > 0">Test Pendind Authoratization({{testsPendindAuthorization.length}})</span>
+                        </th>
                       </tr>
                       <tr>
                         <th>Test Type</th>
@@ -99,7 +101,8 @@
                                     </tr>
                                     <tr v-for="result in orderResult.result" :key="result.id">
                                         <td>{{result.measure}}</td>
-                                        <td>{{result.result}}</td>
+                                        <td v-if="result.result!=0">{{result.result}}</td>
+                                        <td v-else>Not done</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -108,12 +111,18 @@
                         <td>
                             <div class="test-status is-pulled-left">
                                 <h3 class="has-text-weight-semibold">Test Status</h3>
-                                <p>Authoratized</p>
-                                <p>By: Gwada malulo</p>
-                                <p>On: 2022-02-04 14:27:34</p>
+                                <div v-if="orderResult.TestStatusInfo.authorized">
+                                    <p>Authorized</p>
+                                    <p>By: {{orderResult.TestStatusInfo.authorized_by}}</p>
+                                    <p>On: {{orderResult.TestStatusInfo.authorized_on}}</p>
+                                </div>
+                                <div v-else>
+                                    <p>Authorization Pending</p>
+                                </div>
                                 <h3 class="has-text-weight-semibold mt-3">Performed By</h3>
-                                <p>tchaka zulu</p>
-                                <p>On 2022-02-04 13:18:04</p>
+                                <p>{{orderResult.TestStatusInfo.performed_by}}</p>
+                                <p>On {{orderResult.TestStatusInfo.performed_on}}</p>
+                                <p v-if="orderResult.machine_used" class="has-text-weight-semibold mt-3">Using: {{orderResult.machine_used}}</p>
                             </div>
                         </td>
                       </tr>
@@ -124,67 +133,104 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch} from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "PatientResultReport",
-  props: ['orders', 'results', 'statuses'],
-    setup(props, context){
-      let orders = props.orders;
-      let results = props.results;
-      let statuses = props.statuses;
-      
-    //   Patient details
-    let patientName = orders.patient[0].name;
-    let patientAge = calcAge(orders.patient[0].dob);
-    let gender = (orders.patient[0].gender == 1) ? "Female" : "Male";
-    let patientID = orders.patient[0].external_patient_number;
-    let physicalAddress = orders.patient[0].address;
+  props: ['orders', 'results', 'statuses','users'],
+  setup(props, context){
+        let orders = props.orders;
+        let results = props.results;
+        let statuses = props.statuses;
+        let users = props.users;
 
-    // Report access details
-    let today = new Date().toLocaleString('en-GB').slice(0,10).replaceAll('/','-');
+        //   Patient details
+        let patientName = orders.patient[0].name;
+        let patientAge = calcAge(orders.patient[0].dob);
+        let gender = (orders.patient[0].gender == 1) ? "Female" : "Male";
+        let patientID = orders.patient[0].external_patient_number;
+        let physicalAddress = orders.patient[0].address;
 
-    // Order details
-    let accessionNumber = orders.tracking_number;
-    let requestingPhysician = orders.requesting_physician
-    let location = orders.location;
-    let specimenType = orders.specimen_type;
-    let tests = orders.tests;
+        // Report access details
+        let today = new Date().toLocaleString('en-GB').slice(0,10).replaceAll('/','-');
 
-    // Results details
-    let testsAuthorized:string[] = []
-    tests.forEach((test:any, index:any) => {
-        if(test.id == statuses[index].id && statuses[index].status == 'verified') {
-            testsAuthorized.push(test);
-        }
-    })
-    let orderResults:string[] = [];
-    if (results.length > 0) {
-        tests.forEach((test:any, index:any) => {
-            let resultObj = {} as any;
-            let tempObj = {} as any;
-            let resultArray:string[] = []
-            results.forEach((result:any, i:any) => {
-                if (test.id == result.test_id){
-                    tempObj = {
-                        id: result.id,
-                        measure:result.measure_name,
-                        result:result.result,
+        // Order details
+        let accessionNumber = orders.tracking_number;
+        let requestingPhysician = orders.requesting_physician
+        let location = orders.location;
+        let specimenType = orders.specimen_type;
+        let tests = orders.tests;
+
+        // Results details
+        let testsAuthorized:string[] = [];
+        let testsPendindAuthorization:string[] = [];
+        let orderResults:string[] = [];
+        if (results.length > 0) {
+            tests.forEach((test:any, index:any) => {
+                let resultObj = {} as any;
+                let resultTempObj = {} as any;
+                let statusInfoTempObj = {} as any;
+                let resultArray:string[] = [];
+                let verified_by = '';
+                let tested_by = '';
+                let machine_used = '';
+                results.forEach((result:any, i:any) => {
+                    if (test.id == result.test_id){
+                        resultTempObj = {
+                            id: result.id,
+                            measure:result.measure_name,
+                            result:result.result,
+                        }
+                        machine_used = result.device_name;
+                        resultArray.push(resultTempObj)
                     }
-                    resultArray.push(tempObj)
+                })
+                users.forEach((user:any, i:any) => {
+                    if(test.id == statuses[index].id && statuses[index].status == 'verified') {
+                        if (test.verified_by == user.id){
+                            verified_by = user.lab_technician;
+                        }
+                        if (test.tested_by == user.id){
+                            tested_by = user.lab_technician;
+                        }
+                        statusInfoTempObj = {
+                            authorized: true,
+                            authorized_by: verified_by,
+                            authorized_on: test.time_verified,
+                            performed_by: tested_by,
+                            performed_on: test.time_completed
+                        }
+                    }
+                    else{
+                        if (test.tested_by == user.id){
+                            tested_by = user.lab_technician;
+                        }
+                        statusInfoTempObj = {
+                            authorized: false,
+                            authorized_by: verified_by,
+                            authorized_on: '',
+                            performed_by: tested_by,
+                            performed_on: test.time_completed
+                        } 
+                    }
+                }); 
+                if(test.id == statuses[index].id && statuses[index].status == 'verified') {
+                    testsAuthorized.push(test);
+                } else{
+                    testsPendindAuthorization.push(test);
                 }
+                resultObj['test_name'] = test.test_name;
+                resultObj['id'] = test.id;
+                resultObj['result'] = resultArray;
+                resultObj['machine_used'] = machine_used;
+                resultObj['TestStatusInfo'] = statusInfoTempObj;
+                orderResults.push(resultObj);
+                
             })
-            resultObj['test_name'] = test.test_name;
-            resultObj['id'] = test.id;
-            resultObj['result'] = resultArray;
-            orderResults.push(resultObj);
-        })
+        }
+        return { patientName, patientAge, gender,patientID,physicalAddress, today,accessionNumber,requestingPhysician, 
+        location, specimenType, tests,testsAuthorized,testsPendindAuthorization, orderResults}
     }
-    
-      console.log(testsAuthorized.length);
-    return { patientName, patientAge, gender,patientID,physicalAddress, today,accessionNumber,requestingPhysician, 
-    location, specimenType, tests,testsAuthorized, orderResults}
-  }
 });
 
 function calcAge(dateString:any) {
@@ -195,6 +241,9 @@ function calcAge(dateString:any) {
 
 
 <style scoped>
+    .report-container{
+        font-size: 10px;
+    }
     table {
             width: 100%;
     }
@@ -206,9 +255,10 @@ function calcAge(dateString:any) {
         height: 50px;
         width: 250px;
         margin-top: 20px;
-        margin-left: 400px;
+        margin-left: 200px;
     }
     .gov-logo{
+        margin-top: 20px;
         height: 80px;
         margin-left: 20px;
     }
@@ -220,6 +270,6 @@ function calcAge(dateString:any) {
         margin-left: 300px;
     }
     .authoratized{
-        margin-left: 450px;
+        margin-left: 250px;
     }
 </style>
