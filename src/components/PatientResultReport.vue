@@ -3,14 +3,14 @@
         <div class="report-header is-primary">
             <h3 class="has-text-weight-semibold">Patient Report</h3>
         </div>
-        <div class="facility-info is-flex is-flex-desktop-only">
+        <div class="facility-info is-flex is-flex-desktop-only mb-3">
             <div>
-                <img class="gov-logo" src="../assets/gov.gif" alt="GOV logo">
+                <img class="gov-logo mb-3" src="../assets/gov.gif" alt="GOV logo">
             </div>
             <div>
                 <img class="barcode" src="../assets/barcode.png" alt="" srcset="Facility Barcode">
             </div>
-            <div class="address has-text-weight-semibold">
+            <div class="address has-text-weight-semibold mt-5">
                 <p>KAMUZU CENTRAL HOSPITAL</p>
                 <p>P.O BOX 11,</p>
                 <p>LILONGWE</p>
@@ -64,13 +64,13 @@
                         <th>Test Type(s)</th>
                         <td><span v-for="(test,i) in tests" :key="test.id">{{test.test_name}} <span v-if="i != tests.length-1">, </span> </span></td>
                         <th>Lab Section</th>
-                        <td>Haematology</td>
+                        <td><span v-for="(section,i) in lab_section" :key="section.id">{{section.lab_location}} <span v-if="i != lab_section.length-1">, </span> </span></td>
                       </tr>
                       <tr>
                         <th>Specimen Status</th>
                         <td>Accepted</td>
                         <th>Received By</th>
-                        <td>Kosazi mbale</td>
+                        <td>{{receivedBy}}</td>
                       </tr>
                     </tbody>
                 </table>
@@ -80,8 +80,8 @@
                 <table  class="table is-bordered">
                     <tbody>
                       <tr>
-                        <th colspan="4"><span class="result">Results</span> <span class="authoratized" v-if="testsAuthorized.length > 0">Test Authoratized({{testsAuthorized.length}})</span>
-                            <span class="authoratized" v-if="testsPendindAuthorization.length > 0">Test Pendind Authoratization({{testsPendindAuthorization.length}})</span>
+                        <th colspan="4"><span class="result">Results</span> <span class="authoratized" v-if="testsAuthorized.length > 0">Test Authorized({{testsAuthorized.length}})</span>
+                            <span class="authoratized" v-if="testsPendindAuthorization.length > 0">Test Pending Authorization({{testsPendindAuthorization.length}})</span>
                         </th>
                       </tr>
                       <tr>
@@ -91,41 +91,41 @@
                         <th></th>
                       </tr>
                       <tr v-for="orderResult in orderResults" :key="orderResult.id">
-                        <td>{{ orderResult.test_name }}</td>
-                        <td>
-                            <table class="table is-bordered">
-                                <tbody>
-                                    <tr>
-                                    <th>Measure</th>
-                                    <th>Result</th>
-                                    </tr>
-                                    <tr v-for="result in orderResult.result" :key="result.id">
-                                        <td>{{result.measure}}</td>
-                                        <td v-if="result.result!=0">{{result.result}}</td>
-                                        <td v-else>Not done</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td>N/A</td>
-                        <td>
-                            <div class="test-status is-pulled-left">
-                                <h3 class="has-text-weight-semibold">Test Status</h3>
-                                <div v-if="orderResult.TestStatusInfo.authorized">
-                                    <p>Authorized</p>
-                                    <p>By: {{orderResult.TestStatusInfo.authorized_by}}</p>
-                                    <p>On: {{orderResult.TestStatusInfo.authorized_on}}</p>
+                            <td v-if="orderResult.result.length > 0">{{ orderResult.test_name }}</td>
+                            <td v-if="orderResult.result.length > 0">
+                                <table class="table is-bordered">
+                                    <tbody>
+                                        <tr>
+                                        <th>Measure</th>
+                                        <th>Result</th>
+                                        </tr>
+                                        <tr v-for="result in orderResult.result" :key="result.id">
+                                            <td>{{result.measure}}</td>
+                                            <td v-if="result.result!=0">{{result.result}}</td>
+                                            <td v-else>Not done</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td v-if="orderResult.result.length > 0">N/A</td>
+                            <td v-if="orderResult.result.length > 0">
+                                <div class="test-status is-pulled-left">
+                                    <h6 class="has-text-weight-semibold">Test Status</h6>
+                                    <div v-if="orderResult.TestStatusInfo.authorized">
+                                        <p>Authorized</p>
+                                        <p>By: {{orderResult.TestStatusInfo.authorized_by}}</p>
+                                        <p>On: {{orderResult.TestStatusInfo.authorized_on}}</p>
+                                    </div>
+                                    <div v-else>
+                                        <p>Authorization Pending</p>
+                                    </div>
+                                    <h6 class="has-text-weight-semibold mt-3">Performed By</h6>
+                                    <p>{{orderResult.TestStatusInfo.performed_by}}</p>
+                                    <p>On {{orderResult.TestStatusInfo.performed_on}}</p>
+                                    <p v-if="orderResult.machine_used" class="has-text-weight-semibold mt-3">Using: {{orderResult.machine_used}}</p>
                                 </div>
-                                <div v-else>
-                                    <p>Authorization Pending</p>
-                                </div>
-                                <h3 class="has-text-weight-semibold mt-3">Performed By</h3>
-                                <p>{{orderResult.TestStatusInfo.performed_by}}</p>
-                                <p>On {{orderResult.TestStatusInfo.performed_on}}</p>
-                                <p v-if="orderResult.machine_used" class="has-text-weight-semibold mt-3">Using: {{orderResult.machine_used}}</p>
-                            </div>
-                        </td>
-                      </tr>
+                            </td>
+                      </tr>  
                     </tbody>
                 </table>
             </div>
@@ -137,12 +137,14 @@ import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "PatientResultReport",
-  props: ['orders', 'results', 'statuses','users'],
+  props: ['orders', 'results', 'statuses','users','labSections', 'accepted_by'],
   setup(props, context){
         let orders = props.orders;
         let results = props.results;
         let statuses = props.statuses;
         let users = props.users;
+        let labSections = props.labSections[0];
+        let accepted_by = props.accepted_by;
 
         //   Patient details
         let patientName = orders.patient[0].name;
@@ -160,6 +162,8 @@ export default defineComponent({
         let location = orders.location;
         let specimenType = orders.specimen_type;
         let tests = orders.tests;
+        let lab_section:string[] = [];
+        let receivedBy = '';
 
         // Results details
         let testsAuthorized:string[] = [];
@@ -174,6 +178,11 @@ export default defineComponent({
                 let verified_by = '';
                 let tested_by = '';
                 let machine_used = '';
+                labSections.forEach((section:any, index:any) => {
+                    if (section.test_name == test.test_name) {
+                        lab_section.push(section);
+                    }
+                })
                 results.forEach((result:any, i:any) => {
                     if (test.id == result.test_id){
                         resultTempObj = {
@@ -186,6 +195,9 @@ export default defineComponent({
                     }
                 })
                 users.forEach((user:any, i:any) => {
+                    if (accepted_by == user.id){
+                        receivedBy = user.lab_technician;
+                    }
                     if(test.id == statuses[index].id && statuses[index].status == 'verified') {
                         if (test.verified_by == user.id){
                             verified_by = user.lab_technician;
@@ -229,7 +241,7 @@ export default defineComponent({
             })
         }
         return { patientName, patientAge, gender,patientID,physicalAddress, today,accessionNumber,requestingPhysician, 
-        location, specimenType, tests,testsAuthorized,testsPendindAuthorization, orderResults}
+        location, specimenType, tests,testsAuthorized,testsPendindAuthorization, orderResults, lab_section, receivedBy}
     }
 });
 
@@ -268,6 +280,7 @@ function calcAge(dateString:any) {
     }
     .address{
         margin-left: 300px;
+        font-size: 8px;
     }
     .authoratized{
         margin-left: 250px;
