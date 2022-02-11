@@ -14,6 +14,7 @@ const orders = ref<OrderResult[]>([]);
 const tests = ref<TestResult[]>([]);
 
 const users = ref<User[]>([]);
+const labSections:string[] = []
 
 const SearchOrder = () => {
 
@@ -46,6 +47,7 @@ const SearchOrder = () => {
             tests.value = responseData.tests
 
             users.value = responseData.users
+            labSections.push(responseData.labSections)
 
             message.value = response.data.message;
           } else {
@@ -60,7 +62,7 @@ const SearchOrder = () => {
 
   };
   
-  return { search, message, orders, tests, users};
+  return { search, message, orders, tests, users, labSections};
 };
 
 export default SearchOrder;
