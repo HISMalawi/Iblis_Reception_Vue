@@ -1,5 +1,6 @@
 <template>
-  <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :users="users" :orders="orders" :Results="Results" :Statuses="Statuses"/>
+  <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :users="users" :orders="orders" :Results="Results" :Statuses="Statuses" 
+    :accepted_by="accepted_by"  :labSections="labSections" />
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Details</p>
@@ -119,12 +120,12 @@ export default defineComponent({
     DashboardReportPanel,
   },
   setup(props, context){
-    const { search, orders, tests, users} = SearchOrder();
+    const { search, orders, tests, users, labSections} = SearchOrder();
     const { fetchTestResults, message, Results, Statuses, code } = getTestsResults();
 
     let specimen = ref<Specimen>(props.specimen);
     let isPatientReportOpen = ref<boolean>(false);
-
+    let accepted_by = specimen.value.accepted_by
     search(specimen.value?.accession_number);
 
     const closeDetails = () => {
@@ -150,7 +151,7 @@ export default defineComponent({
       }
     );
  
-    return { closeDetails, ViewPatientResultReport, closeResultReport, orders, Results, Statuses, tests, message,users, isPatientReportOpen }
+    return { closeDetails, ViewPatientResultReport, closeResultReport, orders, Results, Statuses, tests, message,users, isPatientReportOpen,labSections,accepted_by }
   }
 });
 </script>
