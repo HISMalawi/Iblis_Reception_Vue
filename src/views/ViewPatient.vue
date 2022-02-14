@@ -3,7 +3,7 @@
     <article
       class="custom-bg card tile is-child"
     >
-      <p class="subtitle">{{ $store.state.selectedPatient.name }}</p>
+      <p class="subtitle is-6">{{ $store.state.selectedPatient.name }}</p>
 
       <div class="tabs is-medium">
         <ul>

@@ -4,7 +4,7 @@
       <div class="card-content">
         <div class="content">
           <div class="field has-text-centered">
-            <figure class="image is-inline-block">
+            <figure class="image login-image is-inline-block">
               <img src="../assets/lock.png" />
               <p class="help is-danger is-size-6">{{ message }}</p>
             </figure>
@@ -13,7 +13,7 @@
             <div class="field">
               <p class="control has-icons-right">
                 <input
-                  class="input is-medium"
+                  class="input is-small"
                   type="text"
                   placeholder="Username"
                   v-model="authCred.username"
@@ -27,7 +27,7 @@
             <div class="field">
               <p class="control">
                 <input
-                  class="input is-medium"
+                  class="input is-small"
                   type="password"
                   placeholder="Password"
                   v-model="authCred.password"
@@ -35,9 +35,9 @@
               </p>
             </div>
 
-            <div class="field mb-6">
+            <div class="field mb-4">
               <div class="control">
-                <div class="select is-medium is-fullwidth">
+                <div class="select is-small is-fullwidth">
                   <select v-model="selectedWard">
                     <option :value="selectedWard">
                       {{ selectedWard.name }}
@@ -54,7 +54,7 @@
               <p class="control">
                 <button
                   type="submit"
-                  class="button is-medium is-success is-fullwidth"
+                  class="button is-small is-success is-fullwidth"
                 >
                   Login
                 </button>
@@ -127,10 +127,14 @@ export default defineComponent({
 
 <style>
 .login {
-  width: 600px;
+  width: 400px;
 }
 
 .login .container {
   margin: 30px;
+}
+
+.login-image {
+  width: 120px;
 }
 </style>

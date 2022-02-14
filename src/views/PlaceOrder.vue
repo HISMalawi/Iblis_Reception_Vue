@@ -9,7 +9,7 @@
         <label class="label">Visit Type</label>
         <div class="control">
           <div
-            class="select is-medium is-fullwidth"
+            class="select is-small is-fullwidth"
             :class="errors.includes('visit_type') ? 'is-danger' : ''"
           >
             <select v-model="selectedVisitType">
@@ -34,7 +34,7 @@
         <label class="label">Requesting Ward / Location</label>
         <div class="control">
           <div
-            class="select is-medium is-fullwidth"
+            class="select is-small is-fullwidth"
             :class="errors.includes('requesting_location') ? 'is-danger' : ''"
           >
             <select disabled v-model="selectedWard">
@@ -51,7 +51,7 @@
         <div class="control has-icons-right">
           <input
             v-model="requestingPhysician"
-            class="input is-success is-medium"
+            class="input is-success is-small"
             :class="errors.includes('requesting_physician') ? 'is-danger' : ''"
             type="text"
           />
@@ -71,7 +71,7 @@
         <label class="label">Specimen Type</label>
         <div class="control">
           <div
-            class="select is-medium is-fullwidth"
+            class="select is-small is-fullwidth"
             :class="errors.includes('specimen_type') ? 'is-danger' : ''"
           >
             <select v-model="selectedSpecimenType">
@@ -181,7 +181,7 @@
       </div>
       <div class="field is-grouped place-order-form-btns">
         <div class="control">
-          <button type="submit" class="button is-primary is-medium">
+          <button type="submit" class="button is-primary is-small">
             Save
           </button>
         </div>
@@ -189,7 +189,7 @@
           <button
             @click="ClearForm"
             type="reset"
-            class="button is-link is-light is-medium"
+            class="button is-link is-light is-small"
           >
             Cancel
           </button>
@@ -199,7 +199,7 @@
 
         <!-- v-if="zpl" -->
 
-          <button v-if="zpl" type="button" id="download-lbl" @click="download" class="button is-link is-medium">Reprint Label</button>
+          <button v-if="zpl" type="button" id="download-lbl" @click="download" class="button is-link is-small">Reprint Label</button>
          
         </div>
        

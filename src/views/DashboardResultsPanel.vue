@@ -2,7 +2,7 @@
   <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :users="users" :orders="orders" :Results="Results" :Statuses="Statuses"/>
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
-      <p class="pageTitle subtitle">Details</p>
+      <p class="pageTitle subtitle is-6">Details</p>
 
       <div class="content has-text-left">
         <!-- Content -->
@@ -57,15 +57,15 @@
   </div>
   <div class="dashboard dashboard-results-panel tile is-parent is-6">
     <article class="custom-height custom-bg tile is-child">
-      <p class="pageTitle subtitle">Results</p>
+      <p class="pageTitle subtitle is-6">Results</p>
 
       <div class="btn-close">
-        <a class="button is-primary mr-6" @click="ViewPatientResultReport"> View Patient Report </a>
-        <a class="button is-primary" @click="closeDetails"> Close </a>  
+        <a class="button is-primary is-small mr-6" @click="ViewPatientResultReport"> View Patient Report </a>
+        <a class="button is-primary is-small" @click="closeDetails"> Close </a>  
       </div>
 
       <div v-if="!Results.length && message != '' > 0" class="notification is-primary">
-          <button class="delete"></button>
+          <button class="delete is-small"></button>
           Results not available!
       </div>
       
@@ -157,15 +157,15 @@ export default defineComponent({
 
 <style>
 .dashboard article {
-  padding: 30px;
+  padding: 12px 30px !important;
 }
 
 .btn-close {
   position: relative;
-  top: -55px;
+  top: -40px;
   display: block !important;
   text-align: right;
-  margin-right: 6px;
+  margin-right: 25px;
 }
 .test-status {
   margin-left: 10px;

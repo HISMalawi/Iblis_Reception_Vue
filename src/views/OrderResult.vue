@@ -21,17 +21,17 @@
       @click="showDetails(Specimen)"
     >
       <div class="dash-p-details" v-for="Patient in Patients" :key="Patient.id">
-        <h4 class="title is-4" v-if="Patient.specimen_id == Specimen.id">
+        <h4 class="title is-6" v-if="Patient.specimen_id == Specimen.id">
           {{ Patient.name }}
           <span
-            class="title is-5"
+            class="title is-6"
             v-if="Patient.specimen_id == Specimen.id && Patient.gender == 1"
           >
             (F)
           </span>
 
           <span
-            class="title is-5"
+            class="title is-6"
             v-if="Patient.specimen_id == Specimen.id && Patient.gender == 0"
           >
             (M)
@@ -39,7 +39,7 @@
         </h4>
       </div>
       
-      <h4 class="title is-5 dash-acc-num">{{ Specimen.accession_number }}</h4>
+      <h4 class="title is-6 dash-acc-num">{{ Specimen.accession_number }}</h4>
       <hr class="dash-details-sep"/>
       <div class="dash-tests-container">
 
@@ -83,12 +83,14 @@ export default defineComponent({
 
 <style>
 .order-result {
-  padding-top: 15px;
+  padding-top: 0px;
+  
 }
 
+
 .result-card {
-  width: 400px;
-  height: 190px;
+  width: 230px;
+  height: 127px;
   border-radius: 8px !important;
   text-align: center;
   padding: 15px 5px;
@@ -149,18 +151,19 @@ export default defineComponent({
 }
 .dash-tests-container{
   position: relative;
-  top: -22px;
+  top: -26px;
   padding: 0 10px;
 }
 
 .dash-test {
-  height: 26px;
+  height: 20px;
   background-color: #d1e3e785;
   padding: 1px 5px;
   display: inline-block;
   border-radius: 6px;
   margin-left: 10px;
-  margin-bottom: 4px;
+  font-size: 12px;
+  margin-bottom: 1px;
 }
 
 .has {

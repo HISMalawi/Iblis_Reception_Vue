@@ -1,21 +1,21 @@
 <template>
   <div class="view-orders tile is-5 is-parent">
     <article class="custom-height panel custom-bg tile is-child">
-      <p class="pageTitle subtitle">View Orders</p>
+      <p class="pageTitle subtitle is-6">View Orders</p>
 
       <div class="content has-text-left">
         <!-- Content -->
         <div class="mb-5 field is-grouped">
           <p class="control is-expanded">
             <input
-              class="input is-medium"
+              class="input is-small"
               type="text"
               placeholder="Tracking Number"
               v-model="searchString"
             />
           </p>
           <p class="control">
-            <a @click="Search" class="button is-primary is-medium"> Search </a>
+            <a @click="Search" class="button is-primary is-small"> Search </a>
           </p>
         </div>
 

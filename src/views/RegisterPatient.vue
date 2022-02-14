@@ -4,7 +4,7 @@
       class="custom-height custom-bg card tile is-child"
     >
       <div class="content">
-        <p class="subtitle">Register Patient</p>
+        <p class="subtitle is-6">Register Patient</p>
 
         <div v-if="code !== ''" class="notification is-primary">
           <button class="delete"></button>
@@ -15,11 +15,11 @@
           <!-- Content -->
           <form @submit.prevent="SavePatient">
            <div class="field">
-              <label class="label">External Patient No.</label>
+              <label class="label is-6">External Patient No.</label>
               <div class="control has-icons-right">
                 <input
                   v-model="patientDetails.externalPatientNumber"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="text"
                   :class="errors.includes('external_number') ? 'is-danger' : ''"
                 />
@@ -40,7 +40,7 @@
               <div class="control has-icons-right">
                 <input
                   v-model="patientDetails.firstname"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="text"
                   :class="errors.includes('firstname') ? 'is-danger' : ''"
                 />
@@ -54,7 +54,7 @@
               <div class="control has-icons-right">
                 <input
                   v-model="patientDetails.lastname"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="text"
                   :class="errors.includes('lastname') ? 'is-danger' : ''"
                 />
@@ -69,7 +69,7 @@
               <div class="control has-icons-right">
                 <input
                   v-model="patientDetails.dob"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="date"
                   :class="errors.includes('dob') ? 'is-danger' : ''"
                 />
@@ -83,7 +83,7 @@
               <div class="control has-icons-right">
                 <input
                   v-model="age"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="number"
                   :class="errors.includes('age') ? 'is-danger' : ''"
                 />
@@ -123,7 +123,7 @@
               <div class="control has-icons-right">
                 <input
                   v-model="patientDetails.physicalAddress"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="text"
                   :class="errors.includes('address') ? 'is-danger' : ''"
                 />
@@ -137,7 +137,7 @@
               <div class="control has-icons-right">
                 <input
                   v-model="patientDetails.phoneNumber"
-                  class="input is-success is-medium"
+                  class="input is-success is-small"
                   type="text"
                   :class="errors.includes('phone') ? 'is-danger' : ''"
                 />
@@ -167,14 +167,14 @@
             
             <div class="field is-grouped">
               <div class="control">
-                <button type="submit" class="button is-primary is-medium">
+                <button type="submit" class="button is-primary is-small">
                   Save
                 </button>
               </div>
               <div class="control">
                 <button
                   @click="ClosePatientRegForm"
-                  class="button is-link is-light is-medium"
+                  class="button is-link is-light is-small"
                 >
                   Cancel
                 </button>

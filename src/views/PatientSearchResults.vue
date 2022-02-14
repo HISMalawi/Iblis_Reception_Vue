@@ -1,7 +1,7 @@
 <template>
   <div class="patients-serch-results tile is-5 is-parent">
     <article class="custom-height custom-bg tile is-child">
-      <p class="pageTitle subtitle">Search Results</p>
+      <p class="pageTitle subtitle is-6">Search Results</p>
     
         <div class="content has-text-left">
           <!-- Content -->
@@ -27,7 +27,7 @@ export default defineComponent({
 <style>
 
 .patients-serch-results article {
-  padding: 30px;
+  padding: 10px;
 }
 
 </style>

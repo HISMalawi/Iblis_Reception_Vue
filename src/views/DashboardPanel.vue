@@ -6,7 +6,7 @@
   />
   <div class="dashboard tile is-10 is-parent">
     <article class="custom-height custom-bg tile is-child">
-      <p class="pageTitle subtitle">Dashboard</p>
+      <p class="pageTitle subtitle is-6">Dashboard</p>
 
       <div class="field dashboard-panel-tool-bar">
         <div class="field is-horizontal tool-bar-date-field">
@@ -15,10 +15,10 @@
             <div class="field">
               <div class="field has-addons">
                 <p class="control">
-                  <a class="button is-static"> From : </a>
+                  <a class="button is-static is-small"> From : </a>
                 </p>
                 <p class="control is-expanded">
-                  <input class="input" type="date" v-model="fromDate" />
+                  <input class="input is-small" type="date" v-model="fromDate" />
                 </p>
               </div>
             </div>
@@ -31,17 +31,17 @@
             <div class="field">
               <div class="field has-addons">
                 <p class="control">
-                  <a class="button is-static"> To : </a>
+                  <a class="button is-small is-static"> To : </a>
                 </p>
                 <p class="control is-expanded">
-                  <input class="input" type="date" v-model="toDate" />
+                  <input class="input is-small" type="date" v-model="toDate" />
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="select is-normal filter">
+        <div class="select is-small filter">
           <select v-model="ResultsFilter">
             <option>All</option>
             <option>With Results</option>
@@ -52,10 +52,10 @@
         <span class="p-search">
         <div class="field has-addons">
           <div class="control">
-            <input class="input" v-model="PatientFilter" type="text" placeholder="Patient name" />
+            <input class="input is-small" v-model="PatientFilter" type="text" placeholder="Patient name" />
           </div>
           <div class="control">
-            <a class="button"> Search </a>
+            <a class="button is-small"> Search </a>
           </div>
         </div>
         </span>

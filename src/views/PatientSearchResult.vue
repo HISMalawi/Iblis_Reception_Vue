@@ -26,7 +26,7 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">{{patient.name}}</p>
+        <p class="title is-5">{{patient.name}}</p>
         <p class="subtitle is-6" v-if="patient.gender == 1">Female</p>
         <p class="subtitle is-6" v-if="patient.gender == 0">Male</p>
       </div>
@@ -76,11 +76,15 @@ export default defineComponent({
 
 <style>
   .patient-search-result {
-    padding-top: 15px;
+    padding-top: 0px;
   }
 
   .patient-search-result .media:hover {
     background-color: rgba(0, 0, 0, 0.075);
+  }
+
+  .patient-search-result .media .media-content{
+    padding-top: 5px;
   }
 
   .patient-search-result > .selected {

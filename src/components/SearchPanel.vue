@@ -5,14 +5,14 @@
         <div class="field has-addons">
           <div class="control">
             <input
-              class="input is-medium"
+              class="input is-small"
               type="text"
               placeholder="Search Patient"
               v-model="searchString"
             />
           </div>
           <div class="control">
-            <a @click="Search" class="button is-primary is-medium"> Search </a>
+            <a @click="Search" class="button is-primary is-small"> Search </a>
           </div>
         </div>
       </div> 
@@ -101,8 +101,9 @@ export default defineComponent({
 </script>
 <style>
 .search-card {
-  max-height: 98px !important;
+  max-height: 80px !important;
   max-width: 530px !important;
   margin: 0 auto;
+  
 }
 </style>

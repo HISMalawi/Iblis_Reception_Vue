@@ -60,5 +60,5 @@ html {
     overflow-y: auto;
     /* height: 1600px; */
     padding: 0 20px;
-    height: calc(100vh - 430px);
+    height: calc(100vh - 300px);
 }

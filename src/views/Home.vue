@@ -214,8 +214,8 @@ export default defineComponent({
 }
 
 .theme-switch .label {
-  width: 50px;
-  height: 26px;
+  width: 42px;
+  height: 20px;
   background-color: rgb(221, 217, 217);
   display: flex;
   border-radius: 50px;
@@ -228,8 +228,8 @@ export default defineComponent({
 }
 
 .theme-switch .ball {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   background-color: rgba(95, 93, 93, 0.849);
   position: absolute;
   top: 2px;
@@ -261,12 +261,12 @@ export default defineComponent({
 }
 
 .settings-switch {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-color: rgb(221, 217, 217);
   position: absolute;
-  right: 280px;
-  top: 28px;
+  right: 260px;
+  top: 30px;
   border-radius: 50%;
   transition: transform 0.2s linear;
   padding: 5px;
