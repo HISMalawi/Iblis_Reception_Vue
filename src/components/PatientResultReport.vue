@@ -64,7 +64,7 @@
                         <th>Test Type(s)</th>
                         <td><span v-for="(test,i) in tests" :key="test.id">{{test.test_name}} <span v-if="i != tests.length-1">, </span> </span></td>
                         <th>Lab Section</th>
-                        <td><span v-for="(section,i) in lab_section" :key="section.id">{{section.lab_location}} <span v-if="i != lab_section.length-1">, </span> </span></td>
+                        <td><span v-for="(section,i) in lab_section" :key="section.id">{{section}} <span v-if="i != lab_section.length-1">, </span> </span></td>
                       </tr>
                       <tr>
                         <th>Specimen Status</th>
@@ -98,11 +98,13 @@
                                         <tr>
                                         <th>Measure</th>
                                         <th>Result</th>
+                                        <th>Range</th>
                                         </tr>
                                         <tr v-for="result in orderResult.result" :key="result.id">
                                             <td>{{result.measure}}</td>
-                                            <td v-if="result.result!=0">{{result.result}}</td>
+                                            <td v-if="result.result!=0">{{result.result}} {{result.measure_unit}}</td>
                                             <td v-else>Not done</td>
+                                            <td v-if="result.range_lower != null" class="has-text-weight-semibold">({{result.range_lower}}-{{result.range_upper}})</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -162,7 +164,7 @@ export default defineComponent({
         let location = orders.location;
         let specimenType = orders.specimen_type;
         let tests = orders.tests;
-        let lab_section:string[] = [];
+        let lab_section:any = [];
         let receivedBy = '';
 
         // Results details
@@ -180,15 +182,20 @@ export default defineComponent({
                 let machine_used = '';
                 labSections.forEach((section:any, index:any) => {
                     if (section.test_name == test.test_name) {
-                        lab_section.push(section);
+                        // filter unique locations
+                        lab_section.push(section.lab_location);
                     }
                 })
+                lab_section = [... new Set(lab_section)]
                 results.forEach((result:any, i:any) => {
                     if (test.id == result.test_id){
                         resultTempObj = {
                             id: result.id,
                             measure:result.measure_name,
                             result:result.result,
+                            measure_unit:result.measure_unit,
+                            range_upper: result.range_upper,
+                            range_lower: result.range_lower
                         }
                         machine_used = result.device_name;
                         resultArray.push(resultTempObj)
