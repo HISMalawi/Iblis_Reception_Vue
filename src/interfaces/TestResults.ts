@@ -6,4 +6,7 @@ export interface TestResults {
     test_id: number
     device_name: string;
     time_entered: string;
+    measure_unit: string;
+    range_lower: number;
+    range_upper: number;
   }
