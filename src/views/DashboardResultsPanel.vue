@@ -1,6 +1,6 @@
 <template>
   <dashboard-report-panel @closeReport="closeResultReport" v-if="isPatientReportOpen" :users="users" :orders="orders" :Results="Results" :Statuses="Statuses" 
-    :accepted_by="accepted_by"  :labSections="labSections" />
+    :accepted_by="accepted_by"  :labSections="labSections" :specimen="specimen" :printCount="printCount"/>
   <div class="dashboard dashboard-results-panel tile is-parent is-4">
     <article class="custom-height custom-bg tile is-child">
       <p class="pageTitle subtitle">Details</p>
@@ -120,7 +120,7 @@ export default defineComponent({
     DashboardReportPanel,
   },
   setup(props, context){
-    const { search, orders, tests, users, labSections} = SearchOrder();
+    const { search, orders, tests, users, labSections, printCount} = SearchOrder();
     const { fetchTestResults, message, Results, Statuses, code } = getTestsResults();
 
     let specimen = ref<Specimen>(props.specimen);
@@ -151,7 +151,7 @@ export default defineComponent({
       }
     );
  
-    return { closeDetails, ViewPatientResultReport, closeResultReport, orders, Results, Statuses, tests, message,users, isPatientReportOpen,labSections,accepted_by }
+    return { closeDetails, ViewPatientResultReport, closeResultReport,specimen, orders, Results, Statuses, tests, message,users, isPatientReportOpen,labSections,accepted_by,printCount }
   }
 });
 </script>

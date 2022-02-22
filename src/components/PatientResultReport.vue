@@ -20,8 +20,8 @@
         <div class="report-info ml-3 mb-3">
             <p class="has-text-weight-semibold">
                 <span class="date-accessed">Patient Report - {{today}}</span>
-                <span class="times-printed ml-6">No. Printed: 0</span>
-                <span class="date-sample-collected ml-6">Date Sample Collected: 07-02-2022</span>
+                <span class="times-printed ml-6">No. Printed: {{printCount}}</span>
+                <span class="date-sample-collected ml-6">Date Sample Collected: {{date_of_collection}}</span>
             </p>
         </div>
         <div class="patient-info box">
@@ -58,7 +58,7 @@
                         <th>Specimen Type</th>
                         <td>{{specimenType}}</td>
                         <th>Date Registered</th>
-                        <td>2022-02-01 14:38:13</td>
+                        <td>{{tests[0].time_created}}</td>
                       </tr>
                       <tr>
                         <th>Test Type(s)</th>
@@ -68,7 +68,7 @@
                       </tr>
                       <tr>
                         <th>Specimen Status</th>
-                        <td>Accepted</td>
+                        <td>{{specimen_status}}</td>
                         <th>Received By</th>
                         <td>{{receivedBy}}</td>
                       </tr>
@@ -139,7 +139,7 @@ import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "PatientResultReport",
-  props: ['orders', 'results', 'statuses','users','labSections', 'accepted_by'],
+  props: ['orders', 'results', 'statuses','users','labSections', 'accepted_by', 'specimen_status','printCount', 'date_of_collection'],
   setup(props, context){
         let orders = props.orders;
         let results = props.results;
@@ -147,7 +147,9 @@ export default defineComponent({
         let users = props.users;
         let labSections = props.labSections[0];
         let accepted_by = props.accepted_by;
-
+        let specimen_status = props.specimen_status;
+        let printCount = props.printCount;
+        let date_of_collection = props.date_of_collection;
         //   Patient details
         let patientName = orders.patient[0].name;
         let patientAge = calcAge(orders.patient[0].dob);
@@ -248,7 +250,8 @@ export default defineComponent({
             })
         }
         return { patientName, patientAge, gender,patientID,physicalAddress, today,accessionNumber,requestingPhysician, 
-        location, specimenType, tests,testsAuthorized,testsPendindAuthorization, orderResults, lab_section, receivedBy}
+        location, specimenType, tests,testsAuthorized,testsPendindAuthorization, orderResults, lab_section, receivedBy,
+         specimen_status,printCount,date_of_collection}
     }
 });
 
