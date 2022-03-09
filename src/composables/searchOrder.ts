@@ -14,6 +14,8 @@ const orders = ref<OrderResult[]>([]);
 const tests = ref<TestResult[]>([]);
 
 const users = ref<User[]>([]);
+const labSections:string[] = []
+let printCount = 0;
 
 const SearchOrder = () => {
 
@@ -46,6 +48,8 @@ const SearchOrder = () => {
             tests.value = responseData.tests
 
             users.value = responseData.users
+            labSections.push(responseData.labSections)
+            printCount = responseData.printCount[0].number_printed;
 
             message.value = response.data.message;
           } else {
@@ -60,7 +64,7 @@ const SearchOrder = () => {
 
   };
   
-  return { search, message, orders, tests, users};
+  return { search, message, orders, tests, users, labSections,printCount };
 };
 
 export default SearchOrder;
